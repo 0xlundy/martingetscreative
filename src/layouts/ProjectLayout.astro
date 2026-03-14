@@ -1,0 +1,307 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+
+interface Props {
+  title:        string;
+  description:  string;
+  category:     string;
+  cover:        string;
+  coverAlt?:    string;
+  client?:      string;
+  role?:        string;
+  year?:        number;
+  tags?:        string[];
+  vimeoId?:     string;
+  youtubeId?:   string;
+  url?:         string;
+  publishDate:  Date;
+  backHref?:    string;
+  backLabel?:   string;
+}
+
+const {
+  title, description, category, cover, coverAlt,
+  client, role, year, tags = [],
+  vimeoId, youtubeId, url, publishDate,
+  backHref = '/editorial', backLabel = 'Commercial',
+} = Astro.props;
+
+const categorySlug = category.toLowerCase().replace(/[^a-z0-9]/g, '');
+const hasVideo = vimeoId || youtubeId;
+---
+
+<BaseLayout title={`${title} — Martin Van Londen`} description={description} image={cover}>
+
+  <article class="project-page">
+
+    <!-- ─── Hero ─────────────────────────── -->
+    <header class="project-hero">
+      {hasVideo ? (
+        <div class="hero-video container">
+          <VideoEmbed
+            vimeoId={vimeoId}
+            youtubeId={youtubeId}
+            title={title}
+          />
+        </div>
+      ) : (
+        <div class="hero-image-wrap">
+          <img src={cover} alt={coverAlt ?? title} class="hero-image" />
+        </div>
+      )}
+    </header>
+
+    <!-- ─── Meta bar ─────────────────────── -->
+    <div class="container">
+      <div class="meta-bar">
+        <div class="meta-left">
+          <span class:list={['category-pill', categorySlug]}>{category}</span>
+          <h1 class="project-title text-heading">{title}</h1>
+          <p class="project-description">{description}</p>
+        </div>
+        <dl class="meta-details">
+          {client && (
+            <>
+              <dt>Client</dt>
+              <dd>{client}</dd>
+            </>
+          )}
+          {role && (
+            <>
+              <dt>Role</dt>
+              <dd>{role}</dd>
+            </>
+          )}
+          {year && (
+            <>
+              <dt>Year</dt>
+              <dd>{year}</dd>
+            </>
+          )}
+          {url && (
+            <>
+              <dt>Link</dt>
+              <dd>
+                <a href={url} target="_blank" rel="noopener noreferrer" class="meta-link">
+                  View Live ↗
+                </a>
+              </dd>
+            </>
+          )}
+        </dl>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ─── Body content (from markdown) ── -->
+    <div class="container project-body">
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+
+    <!-- ─── Tags ──────────────────────────── -->
+    {tags.length > 0 && (
+      <div class="container">
+        <div class="divider"></div>
+        <div class="tag-row">
+          {tags.map(tag => (
+            <span class="tag">#{tag}</span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- ─── Back link ─────────────────────── -->
+    <div class="container back-wrap">
+      <a href={backHref} class="back-link">← Back to {backLabel}</a>
+    </div>
+
+  </article>
+
+</BaseLayout>
+
+<style>
+  .project-page {
+    padding-top: 72px;
+  }
+
+  /* Hero */
+  .project-hero {
+    background-color: var(--color-surface);
+    margin-bottom: 0;
+  }
+
+  .hero-video {
+    padding-block: 3rem;
+  }
+
+  .hero-image-wrap {
+    max-height: 600px;
+    overflow: hidden;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Meta bar */
+  .meta-bar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: start;
+    padding-block: 3rem;
+  }
+
+  .project-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-description {
+    font-size: 1rem;
+    color: var(--color-muted);
+    max-width: 520px;
+    line-height: 1.65;
+  }
+
+  .meta-details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.625rem 1.5rem;
+    align-content: start;
+    min-width: 200px;
+  }
+
+  .meta-details dt {
+    font-family: var(--font-family-display);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    white-space: nowrap;
+  }
+
+  .meta-details dd {
+    font-size: 0.85rem;
+    color: var(--color-text);
+  }
+
+  .meta-link {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  /* Prose (markdown content) */
+  .project-body {
+    padding-block: 3.5rem;
+  }
+
+  .prose {
+    max-width: 720px;
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-family-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .prose :global(h3) {
+    font-family: var(--font-family-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .prose :global(p) {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--color-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-left: 1.25rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .prose :global(li) {
+    font-size: 0.95rem;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .prose :global(strong) {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .prose :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Tags */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    padding-block: 2rem;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    font-family: var(--font-family-display);
+    font-weight: 600;
+    color: var(--color-muted);
+    letter-spacing: 0.05em;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 0.25rem 0.625rem;
+    border-radius: 2px;
+  }
+
+  /* Back link */
+  .back-wrap {
+    padding-block: 2rem 4rem;
+  }
+
+  .back-link {
+    font-family: var(--font-family-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    transition: color 150ms ease;
+  }
+
+  .back-link:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 767px) {
+    .meta-bar {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

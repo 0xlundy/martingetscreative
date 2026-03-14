@@ -1,0 +1,1 @@
+{"compilerOptions":{"target":"ES2022","module":"ESNext","moduleResolution":"bundler","allowImportingTsExtensions":true,"resolveJsonModule":true,"allowJs":true,"checkJs":false,"jsx":"preserve","jsxImportSource":"astro","strict":false,"noEmit":true,"strictNullChecks":true}}

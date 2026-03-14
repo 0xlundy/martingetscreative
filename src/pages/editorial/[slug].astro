@@ -1,0 +1,36 @@
+---
+import ProjectLayout from '../../layouts/ProjectLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const works = await getCollection('editorial');
+  return works.map(work => ({
+    params: { slug: work.slug },
+    props:  { work },
+  }));
+}
+
+const { work }  = Astro.props;
+const { Content } = await render(work);
+const d = work.data;
+---
+
+<ProjectLayout
+  title={d.title}
+  description={d.description}
+  category="Commercial"
+  cover={d.cover}
+  coverAlt={d.coverAlt}
+  client={d.client}
+  role={d.role}
+  year={d.year}
+  tags={d.tags}
+  vimeoId={d.vimeoId}
+  youtubeId={d.youtubeId}
+  url={d.url}
+  publishDate={d.publishDate}
+  backHref="/editorial"
+  backLabel="Commercial"
+>
+  <Content />
+</ProjectLayout>

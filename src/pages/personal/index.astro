@@ -1,0 +1,93 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal — Martin Gets Creative</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a0a; color: #f0f0f0; font-family: sans-serif; }
+
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 2rem;
+      background: rgba(10,10,10,0.9);
+    }
+    .site-nav a { color: #f0f0f0; text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .site-nav .logo { font-weight: 700; color: #e6420a; }
+    .nav-links { display: flex; gap: 2rem; }
+
+    .gallery-hero {
+      padding: 8rem 2rem 3rem;
+      text-align: center;
+    }
+    .gallery-hero h1 {
+      font-size: clamp(2rem, 6vw, 5rem);
+      letter-spacing: 0.15em;
+      color: #f0f0f0;
+    }
+    .gallery-hero .subtitle {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+
+    .gallery-grid {
+      columns: 2;
+      column-gap: 3px;
+      padding: 0 0 5rem;
+    }
+    .gallery-grid a {
+      display: block;
+      break-inside: avoid;
+      margin-bottom: 3px;
+      overflow: hidden;
+      background: #111;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    .gallery-grid a:hover img { opacity: 0.85; }
+
+    @media (max-width: 640px) {
+      .gallery-grid { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="logo">MGC</a>
+    <div class="nav-links">
+      <a href="/editorial">Work</a>
+      <a href="/personal">Personal</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="gallery-hero">
+      <h1>PERSONAL</h1>
+      <p class="subtitle">Photography · Personal Work · Self-Directed</p>
+    </div>
+
+    <div class="gallery-grid">
+      <!-- Drop images into public/images/personal/ and add entries here -->
+    </div>
+  </main>
+
+  <footer style="padding: 3rem 2rem; text-align: center; font-size: 0.75rem; letter-spacing: 0.1em; color: #666; border-top: 1px solid #1a1a1a;">
+    <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
+      <a href="https://instagram.com/martin_van_londen" target="_blank" rel="noopener noreferrer" style="color: #888; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem;">Instagram</a>
+      <a href="https://vimeo.com/" target="_blank" rel="noopener noreferrer" style="color: #888; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem;">Vimeo</a>
+    </div>
+    <a href="mailto:martinvanlonden@gmail.com" style="color: #e6420a; text-decoration: none;">martinvanlonden@gmail.com</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,73 @@
+---
+/**
+ * WorkGrid — tight A24-style grid. No padding, minimal gap.
+ * Images are the content.
+ */
+import WorkCard from './WorkCard.astro';
+
+interface Work {
+  slug:  string;
+  data: {
+    title:       string;
+    cover:       string;
+    coverAlt?:   string;
+    client?:     string;
+    order:       number;
+    orientation: 'landscape' | 'portrait';
+  };
+}
+
+interface Props {
+  works:   Work[];
+  section: 'editorial' | 'personal';
+}
+
+const { works, section } = Astro.props;
+
+const sorted = [...works].sort((a, b) => {
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return 0;
+});
+---
+
+{sorted.length > 0 ? (
+  <div class="work-grid">
+    {sorted.map(work => (
+      <WorkCard
+        title={work.data.title}
+        cover={work.data.cover}
+        coverAlt={work.data.coverAlt}
+        slug={work.slug}
+        section={section}
+        client={work.data.client}
+        orientation={work.data.orientation}
+      />
+    ))}
+  </div>
+) : (
+  <p class="empty-state">No work here yet — check back soon.</p>
+)}
+
+<style>
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: clamp(200px, 22vw, 340px);
+    gap: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .work-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .work-grid { grid-template-columns: 1fr; }
+  }
+
+  .empty-state {
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    padding: 6rem 2rem;
+  }
+</style>

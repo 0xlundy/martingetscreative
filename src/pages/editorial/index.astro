@@ -1,0 +1,216 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work | Martin Gets Creative</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a0a; color: #f0f0f0; font-family: sans-serif; }
+    .site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 2rem;
+      background: rgba(10,10,10,0.9);
+    }
+    .site-nav a { color: #f0f0f0; text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; }
+    .site-nav .logo { font-weight: 700; color: #e6420a; }
+    .nav-links { display: flex; gap: 2rem; }
+    .gallery-hero {
+      padding: 8rem 2rem 3rem;
+      text-align: center;
+    }
+    .gallery-hero h1 {
+      font-size: clamp(2rem, 6vw, 5rem);
+      letter-spacing: 0.15em;
+      color: #f0f0f0;
+    }
+    .gallery-hero .subtitle {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+    .act { margin-bottom: 5rem; }
+    .act-header {
+      padding: 0.75rem 1.5rem;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+    .act-number {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: #e6420a;
+      text-transform: uppercase;
+    }
+    .act-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-transform: uppercase;
+    }
+
+    /* Full-width images */
+    .full-width {
+      display: block;
+      width: 100%;
+      margin-bottom: 3px;
+    }
+    .full-width img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    .full-width:hover img { opacity: 0.85; }
+
+    /* Masonry column layout */
+    .gallery-grid {
+      columns: 2;
+      column-gap: 3px;
+    }
+    .gallery-grid a {
+      display: block;
+      break-inside: avoid;
+      margin-bottom: 3px;
+      overflow: hidden;
+      background: #111;
+    }
+    .gallery-grid img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    .gallery-grid a:hover img { opacity: 0.85; }
+
+    @media (max-width: 640px) {
+      .gallery-grid { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="/" class="logo">MGC</a>
+    <div class="nav-links">
+      <a href="/editorial">Work</a>
+      <a href="/personal">Personal</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="gallery-hero">
+      <h1>WORK</h1>
+      <p class="subtitle">Cinematography · Photography · Editorial</p>
+    </div>
+
+    <!-- ACT I: FACES -->
+    <section class="act">
+      <div class="act-header">
+        <span class="act-number">Act I</span>
+        <span class="act-title">Faces</span>
+      </div>
+
+      <!-- Opener: full-width -->
+      <a class="full-width" href="/images/portraits/01-dscf3979.jpg" target="_blank">
+        <img src="/images/portraits/01-dscf3979.jpg" alt="Portrait" loading="lazy" />
+      </a>
+
+      <!-- 10-image grid: +DSCF0576 (introspective studio) +DSCF3257 (masked/chains)
+           Evenly distributed to dilute the height impact of 05 (full-body) -->
+      <div class="gallery-grid">
+        <a href="/images/portraits/03-cg2i3851.jpg" target="_blank"><img src="/images/portraits/03-cg2i3851.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/stories/17-ne0a3681.jpg" target="_blank"><img src="/images/stories/17-ne0a3681.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/02-dscf4314.jpg" target="_blank"><img src="/images/portraits/02-dscf4314.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/DSCF0576.jpg" target="_blank"><img src="/images/portraits/DSCF0576.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/08-dscf7929.jpg" target="_blank"><img src="/images/portraits/08-dscf7929.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/04-dscf4385.jpg" target="_blank"><img src="/images/portraits/04-dscf4385.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/07-dscf6551.jpg" target="_blank"><img src="/images/portraits/07-dscf6551.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/05-ig-post-4.jpg" target="_blank"><img src="/images/portraits/05-ig-post-4.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/DSCF3257.jpg" target="_blank"><img src="/images/portraits/DSCF3257.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/06-dscf6116.jpg" target="_blank"><img src="/images/portraits/06-dscf6116.jpg" alt="Portrait" loading="lazy" /></a>
+        <a href="/images/portraits/DSCF5188.jpg" target="_blank"><img src="/images/portraits/DSCF5188.jpg" alt="Portrait" loading="lazy" /></a>
+      </div>
+    </section>
+
+    <!-- ACT II: THE CRAFT -->
+    <!-- 11 as full-width opener — 4-image grid: 10+DSCF2955 / 12+DSCF5220 -->
+    <section class="act">
+      <div class="act-header">
+        <span class="act-number">Act II</span>
+        <span class="act-title">The Craft</span>
+      </div>
+      <a class="full-width" href="/images/on-set/10-dscf2102.jpg" target="_blank">
+        <img src="/images/on-set/10-dscf2102.jpg" alt="On Set" loading="lazy" />
+      </a>
+      <div class="gallery-grid">
+        <a href="/images/on-set/11-dscf2117.jpg" target="_blank"><img src="/images/on-set/11-dscf2117.jpg" alt="On Set" loading="lazy" /></a>
+        <a href="/images/on-set/DSCF2955.jpg" target="_blank"><img src="/images/on-set/DSCF2955.jpg" alt="On Set" loading="lazy" /></a>
+        <a href="/images/on-set/12-dscf2988.jpg" target="_blank"><img src="/images/on-set/12-dscf2988.jpg" alt="On Set" loading="lazy" /></a>
+        <a href="/images/on-set/DSCF5220.jpg" target="_blank"><img src="/images/on-set/DSCF5220.jpg" alt="On Set" loading="lazy" /></a>
+      </div>
+    </section>
+
+    <!-- ACT III: STORIES -->
+    <!-- +DSCF3302 (HBCU fraternity reading) +DSCF4570 (HBCU classroom) — 8 images total -->
+    <section class="act">
+      <div class="act-header">
+        <span class="act-number">Act III</span>
+        <span class="act-title">Stories</span>
+      </div>
+      <div class="gallery-grid">
+        <a href="/images/stories/16-dscf5004.jpg" target="_blank"><img src="/images/stories/16-dscf5004.jpg" alt="Stories" loading="lazy" /></a>
+        <a href="/images/stories/DSCF3302.jpg" target="_blank"><img src="/images/stories/DSCF3302.jpg" alt="Stories" loading="lazy" /></a>
+        <a href="/images/stories/13-dscf5257.jpg" target="_blank"><img src="/images/stories/13-dscf5257.jpg" alt="Stories" loading="lazy" /></a>
+        <a href="/images/stories/DSCF4570.jpg" target="_blank"><img src="/images/stories/DSCF4570.jpg" alt="Stories" loading="lazy" /></a>
+        <a href="/images/stories/14-dscf6926.jpg" target="_blank"><img src="/images/stories/14-dscf6926.jpg" alt="Stories" loading="lazy" /></a>
+        <a href="/images/stories/18-cg2i8745.jpg" target="_blank"><img src="/images/stories/18-cg2i8745.jpg" alt="Stories" loading="lazy" /></a>
+        <a href="/images/stories/20-dscf7092.jpg" target="_blank"><img src="/images/stories/20-dscf7092.jpg" alt="Stories" loading="lazy" /></a>
+        <a href="/images/stories/19-screenshot-street.jpg" target="_blank"><img src="/images/stories/19-screenshot-street.jpg" alt="Stories" loading="lazy" /></a>
+      </div>
+    </section>
+
+    <!-- ACT IV: THINGS -->
+    <section class="act">
+      <div class="act-header">
+        <span class="act-number">Act IV</span>
+        <span class="act-title">Things</span>
+      </div>
+      <div class="gallery-grid">
+        <a href="/images/product/21-dscf3670.jpg" target="_blank"><img src="/images/product/21-dscf3670.jpg" alt="Product" loading="lazy" /></a>
+        <a href="/images/stories/15-dscf7874.jpg" target="_blank"><img src="/images/stories/15-dscf7874.jpg" alt="Product" loading="lazy" /></a>
+        <a href="/images/product/22-dscf3694.jpg" target="_blank"><img src="/images/product/22-dscf3694.jpg" alt="Product" loading="lazy" /></a>
+        <a href="/images/product/24-b0000052.jpg" target="_blank"><img src="/images/product/24-b0000052.jpg" alt="Product" loading="lazy" /></a>
+        <a href="/images/product/25-ig-post-2.jpg" target="_blank"><img src="/images/product/25-ig-post-2.jpg" alt="Product" loading="lazy" /></a>
+        <a href="/images/product/26-ecascadia.jpg" target="_blank"><img src="/images/product/26-ecascadia.jpg" alt="Product" loading="lazy" /></a>
+        <a href="/images/product/27-dscf7695.jpg" target="_blank"><img src="/images/product/27-dscf7695.jpg" alt="Product" loading="lazy" /></a>
+      </div>
+    </section>
+
+    <!-- CLOSE: RETURN — Mt. Hood landscape as closer -->
+    <section class="act">
+      <div class="act-header">
+        <span class="act-number">Close</span>
+        <span class="act-title">Return</span>
+      </div>
+      <a class="full-width" href="/images/featured/29-screenshot-landscape.jpg" target="_blank">
+        <img src="/images/featured/29-screenshot-landscape.jpg" alt="Landscape" loading="lazy" />
+      </a>
+    </section>
+
+  </main>
+
+  <footer style="padding: 3rem 2rem; text-align: center; font-size: 0.75rem; letter-spacing: 0.1em; color: #666;">
+    <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
+      <a href="https://instagram.com/martin_van_londen" target="_blank" rel="noopener noreferrer" style="color: #888; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem;">Instagram</a>
+      <a href="https://vimeo.com/" target="_blank" rel="noopener noreferrer" style="color: #888; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem;">Vimeo</a>
+    </div>
+    <a href="mailto:martinvanlonden@gmail.com" style="color: #e6420a; text-decoration: none;">martinvanlonden@gmail.com</a>
+  </footer>
+</body>
+</html>
