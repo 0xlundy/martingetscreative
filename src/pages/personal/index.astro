@@ -5,7 +5,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Personal — Martin Gets Creative</title>
+  <title>Personal Work — Martin Van Londen | Photography & Creative Projects</title>
+  <meta name="description" content="Personal photography and self-directed creative projects by Martin Van Londen — fashion, portraiture, still life, and street work. Portland, OR." />
+  <link rel="canonical" href="https://martingetscreative.com/personal" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://martingetscreative.com/personal" />
+  <meta property="og:title"       content="Personal Work — Martin Van Londen | Photography & Creative Projects" />
+  <meta property="og:description" content="Personal photography and self-directed creative projects by Martin Van Londen — fashion, portraiture, still life, and street work." />
+  <meta property="og:image"       content="https://martingetscreative.com/images/personal/ethereal%20cloud%20portrait.jpg" />
+  <meta property="og:image:alt"   content="Ethereal portrait by Martin Van Londen" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Personal Work — Martin Van Londen" />
+  <meta name="twitter:description" content="Personal photography and self-directed creative projects — fashion, portraiture, still life, and street work. Portland, OR." />
+  <meta name="twitter:image"       content="https://martingetscreative.com/images/personal/ethereal%20cloud%20portrait.jpg" />
+
+  <!-- Structured data: ImageGallery -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "name": "Personal Work — Martin Van Londen",
+    "description": "Personal photography and self-directed creative projects by Martin Van Londen",
+    "url": "https://martingetscreative.com/personal",
+    "author": {
+      "@type": "Person",
+      "name": "Martin Van Londen",
+      "url": "https://martingetscreative.com"
+    }
+  }
+  </script>
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0a0a0a; color: #f0f0f0; font-family: sans-serif; }
@@ -37,12 +70,48 @@
       margin-top: 0.5rem;
     }
 
+    .full-width {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 3px;
+    }
+    .full-width img {
+      width: 100%;
+      max-height: 85vh;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    .pair-row {
+      column-span: all;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      margin-bottom: 3px;
+    }
+    .pair-row a {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      background: #111;
+    }
+    .pair-row img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: opacity 0.3s ease;
+    }
+    .pair-row a:hover img { opacity: 0.85; }
+
     .gallery-grid {
       columns: 2;
       column-gap: 3px;
       padding: 0 0 5rem;
     }
     .gallery-grid a {
+      position: relative;
       display: block;
       break-inside: avoid;
       margin-bottom: 3px;
@@ -56,6 +125,35 @@
       transition: opacity 0.3s ease;
     }
     .gallery-grid a:hover img { opacity: 0.85; }
+
+    /* Hover overlay */
+    .img-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      padding: 2.5rem 0.85rem 0.85rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+    .gallery-grid a:hover .img-overlay,
+    .pair-row a:hover .img-overlay { opacity: 1; }
+    .img-title {
+      display: block;
+      color: #f0f0f0;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .img-desc {
+      display: block;
+      color: #aaa;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
 
     @media (max-width: 640px) {
       .gallery-grid { columns: 1; }
@@ -77,15 +175,115 @@
       <p class="subtitle">Photography · Personal Work · Self-Directed</p>
     </div>
 
+    <!-- Header: full-width opener — no hover -->
+    <a class="full-width" href="/images/personal/ethereal%20cloud%20portrait.jpg" target="_blank">
+      <img src="/images/personal/ethereal%20cloud%20portrait.jpg" alt="Ethereal portrait against cotton candy sky, Martin Van Londen Photography" loading="eager" fetchpriority="high" />
+    </a>
+
     <div class="gallery-grid">
-      <!-- Drop images into public/images/personal/ and add entries here -->
+      <!-- Wild Things pair — forced side by side across full width -->
+      <div class="pair-row">
+        <a href="/images/personal/DSCF1534.jpg" target="_blank">
+          <img src="/images/personal/DSCF1534.jpg" alt="Wild Things fashion shoot — zebra print pants, satin top, front view" loading="lazy" />
+          <div class="img-overlay">
+            <span class="img-title">Wild Things</span>
+            <span class="img-desc">Lookbook, 2024</span>
+          </div>
+        </a>
+        <a href="/images/personal/DSCF1684.jpg" target="_blank">
+          <img src="/images/personal/DSCF1684.jpg" alt="Wild Things fashion shoot — satin top, back view with chain necklace" loading="lazy" />
+          <div class="img-overlay">
+            <span class="img-title">Wild Things</span>
+            <span class="img-desc">Lookbook, 2024</span>
+          </div>
+        </a>
+      </div>
+      <!-- Pink Siifu — full-body stage figure -->
+      <a href="/images/portraits/05-ig-post-4.jpg" target="_blank">
+        <img src="/images/portraits/05-ig-post-4.jpg" alt="Full-length fashion portrait, leather vest and bandana on stage platform" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Pink Siifu</span>
+          <span class="img-desc">BTS Music Video</span>
+        </div>
+      </a>
+      <!-- Rasheed Jamal — B&W film portrait -->
+      <a href="/images/personal/85320006.jpg" target="_blank">
+        <img src="/images/personal/85320006.jpg" alt="Black and white 35mm film portrait, brick wall with window light" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Rasheed Jamal</span>
+          <span class="img-desc">120mm, 2022</span>
+        </div>
+      </a>
+      <!-- Pink Siifu — Rimowa suitcase -->
+      <a href="/images/personal/IG-Post.jpg" target="_blank">
+        <img src="/images/personal/IG-Post.jpg" alt="Rimowa suitcase with hooded leather jacket, travel editorial" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Pink Siifu</span>
+          <span class="img-desc">BTS Music Video</span>
+        </div>
+      </a>
+      <!-- Pho French Dip — sandwich through sticky notes -->
+      <a href="/images/personal/CG2I0275.jpg" target="_blank">
+        <img src="/images/personal/CG2I0275.jpg" alt="Sandwich viewed through sticky notes wall, conceptual still life" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Pho French Dip</span>
+          <span class="img-desc">Bodega LES NYC 2018</span>
+        </div>
+      </a>
+      <!-- Maraschino Cherry — clean still life -->
+      <a href="/images/personal/CG2I2330.jpg" target="_blank">
+        <img src="/images/personal/CG2I2330.jpg" alt="Single cherry on white background, minimalist still life photography" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Maraschino Cherry</span>
+          <span class="img-desc">Macro Still Life</span>
+        </div>
+      </a>
+      <!-- New York — skyline at dusk -->
+      <a href="/images/personal/CG2I0590.jpg" target="_blank">
+        <img src="/images/personal/CG2I0590.jpg" alt="New York City skyline at dusk, cityscape photography" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">New York</span>
+          <span class="img-desc">First Light From Dumbo NYC 2018</span>
+        </div>
+      </a>
+      <!-- Spectrum Painting — RGB light painting -->
+      <a href="/images/personal/DSCF5312.jpg" target="_blank">
+        <img src="/images/personal/DSCF5312.jpg" alt="RGB light painting, abstract long exposure photography" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Spectrum Painting</span>
+          <span class="img-desc">Long Exposure Study</span>
+        </div>
+      </a>
+      <!-- Lincoln Continental — black vintage car -->
+      <a href="/images/personal/IG-Post-1.jpg" target="_blank">
+        <img src="/images/personal/IG-Post-1.jpg" alt="Black vintage car with doors open, automotive photography" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Lincoln Continental</span>
+          <span class="img-desc">Suicide Doors 2024</span>
+        </div>
+      </a>
+      <!-- Mercury League + Individualist street portrait -->
+      <a href="/images/personal/DSCF3443.jpg" target="_blank">
+        <img src="/images/personal/DSCF3443.jpg" alt="Street portrait, red flannel shirt against graffiti wall" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Mercury League + Individualist</span>
+          <span class="img-desc">Editorial 2025</span>
+        </div>
+      </a>
+      <!-- Fixie Bike — bottom -->
+      <a href="/images/personal/IMG_0022-1.jpg" target="_blank">
+        <img src="/images/personal/IMG_0022-1.jpg" alt="Fixed gear bicycle with spinning wheels, urban photography" loading="lazy" />
+        <div class="img-overlay">
+          <span class="img-title">Fixie Bike</span>
+          <span class="img-desc">Portland 2019</span>
+        </div>
+      </a>
     </div>
   </main>
 
   <footer style="padding: 3rem 2rem; text-align: center; font-size: 0.75rem; letter-spacing: 0.1em; color: #666; border-top: 1px solid #1a1a1a;">
     <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem;">
       <a href="https://instagram.com/martin_van_londen" target="_blank" rel="noopener noreferrer" style="color: #888; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem;">Instagram</a>
-      <a href="https://vimeo.com/" target="_blank" rel="noopener noreferrer" style="color: #888; text-decoration: none; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.65rem;">Vimeo</a>
     </div>
     <a href="mailto:martinvanlonden@gmail.com" style="color: #e6420a; text-decoration: none;">martinvanlonden@gmail.com</a>
   </footer>
