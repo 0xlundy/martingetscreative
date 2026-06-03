@@ -5,7 +5,5 @@
 [build.environment]
   NODE_VERSION = "22"
 
-[[redirects]]
-  from = "/*"
-  to = "/404"
-  status = 404
+# Astro generates dist/404.html which Netlify serves automatically
+# for any unmatched path — no explicit redirect needed.
