@@ -8,10 +8,11 @@
   --color-bg:           #070707;
   --color-surface:      #0e0e0e;
   --color-surface-alt:  #151515;
-  --color-border:       #1e1e1e;
+  --color-border:       #2a2a2a;
   --color-text:         #f0efee;
-  --color-muted:        #5a5a5a;
-  --color-accent:       #e6420a;  /* electric lime — swap to rebrand */
+  --color-muted:        #9a9a9a;
+  --color-faint:        #707070;
+  --color-accent:       #e6420a;
 
   /* Typography */
   --font-family-display: 'Syne', system-ui, sans-serif;

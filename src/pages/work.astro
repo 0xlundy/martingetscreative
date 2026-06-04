@@ -61,34 +61,58 @@ const defaultCategory: Category = 'editorial';
         block.type === 'shoot' ? (
           <div class="work-tile shoot-row" data-category={category} data-shoot={block.shoot}>
             {block.items.map(it => (
-              <a href={it.src} target="_blank" class="work-item shoot-item">
+              <button
+                type="button"
+                class="work-item shoot-item"
+                data-src={it.src}
+                data-title={it.title}
+                data-desc={it.desc}
+                data-alt={it.alt}
+                aria-label={`Open ${it.title}`}
+              >
                 <img src={it.src} alt={it.alt} />
                 <div class="img-overlay">
                   <span class="img-title">{it.title}</span>
                   <span class="img-desc">{it.desc}</span>
                 </div>
-              </a>
+              </button>
             ))}
           </div>
         ) : (
-          <a
-            href={block.item.src}
-            target="_blank"
+          <button
+            type="button"
             class:list={['work-tile work-item', { 'is-wide': block.item.wide }]}
             data-category={category}
+            data-src={block.item.src}
+            data-title={block.item.title}
+            data-desc={block.item.desc}
+            data-alt={block.item.alt}
+            aria-label={`Open ${block.item.title}`}
           >
             <img src={block.item.src} alt={block.item.alt} />
             <div class="img-overlay">
               <span class="img-title">{block.item.title}</span>
               <span class="img-desc">{block.item.desc}</span>
             </div>
-          </a>
+          </button>
         )
       ))
     ))}
   </div>
 
   <p class="work-empty" id="work-empty" hidden>Nothing in this category yet. Check back soon.</p>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button type="button" class="lb-close" aria-label="Close (Esc)">&times;</button>
+    <button type="button" class="lb-prev" aria-label="Previous image">&#x2039;</button>
+    <button type="button" class="lb-next" aria-label="Next image">&#x203A;</button>
+    <img class="lb-img" alt="" />
+    <div class="lb-meta">
+      <span class="lb-title"></span>
+      <span class="lb-desc"></span>
+    </div>
+  </div>
 </BaseLayout>
 
 <!-- JSON-LD: ImageGallery -->
@@ -111,35 +135,52 @@ const defaultCategory: Category = 'editorial';
   const empty = document.getElementById('work-empty');
   const valid = ['editorial', 'commissioned', 'street', 'conceptual'];
 
-  // Row sizing — tiles span N rows of ROW_PX each.
   const ROW_PX = 10;
   const GAP_PX = 3;
-  const COL_COUNT = 2;
+
+  function getColCount(): number {
+    if (!grid) return 1;
+    const cs = getComputedStyle(grid);
+    const cols = (cs.gridTemplateColumns || '').split(' ').filter(Boolean).length;
+    return Math.max(1, cols);
+  }
 
   function aspect(img: HTMLImageElement): number {
     if (img.naturalWidth && img.naturalHeight) return img.naturalWidth / img.naturalHeight;
-    return 3 / 4; // placeholder portrait-ish ratio
+    return 3 / 4;
   }
 
-  function computeTileHeight(tile: HTMLElement, colWidth: number): number {
+  function computeTileHeight(tile: HTMLElement, colWidth: number, colCount: number): number {
     const imgs = tile.querySelectorAll<HTMLImageElement>('img');
-    if (tile.classList.contains('shoot-row')) {
-      // Shoot rows are full grid width (span all columns)
-      const rowWidth = colWidth * COL_COUNT + GAP_PX * (COL_COUNT - 1);
-      const gapTotal = GAP_PX * (imgs.length - 1);
-      const usable = rowWidth - gapTotal;
-      let sumAspect = 0;
-      imgs.forEach(img => { sumAspect += aspect(img); });
-      if (sumAspect === 0) return rowWidth * 0.4;
-      return usable / sumAspect;
-    } else if (tile.classList.contains('is-wide')) {
-      // Wide single: full grid width
-      const rowWidth = colWidth * COL_COUNT + GAP_PX * (COL_COUNT - 1);
+    const isShoot = tile.classList.contains('shoot-row');
+    const isWide  = tile.classList.contains('is-wide');
+
+    if (isShoot) {
+      // Shoot rows always render side-by-side on desktop, stacked on mobile (1 col)
+      if (colCount === 1) {
+        // Stacked: sum of individual heights
+        let total = 0;
+        imgs.forEach((img, i) => {
+          total += colWidth / aspect(img);
+          if (i < imgs.length - 1) total += GAP_PX;
+        });
+        return total;
+      } else {
+        const rowWidth = colWidth * colCount + GAP_PX * (colCount - 1);
+        const gapTotal = GAP_PX * (imgs.length - 1);
+        const usable = rowWidth - gapTotal;
+        let sumAspect = 0;
+        imgs.forEach(img => { sumAspect += aspect(img); });
+        if (sumAspect === 0) return rowWidth * 0.4;
+        return usable / sumAspect;
+      }
+    } else if (isWide) {
+      // Wide single spans grid width (which is just colWidth on single-col mobile)
+      const rowWidth = colWidth * colCount + GAP_PX * (colCount - 1);
       const img = imgs[0];
       if (!img) return rowWidth * 0.4;
       return rowWidth / aspect(img);
     } else {
-      // Single image, 1 col wide
       const img = imgs[0];
       if (!img) return colWidth * 0.75;
       return colWidth / aspect(img);
@@ -148,18 +189,17 @@ const defaultCategory: Category = 'editorial';
 
   function applyMasonry() {
     if (!grid) return;
+    const colCount = getColCount();
     const gridWidth = grid.clientWidth;
-    const totalGap = GAP_PX * (COL_COUNT - 1);
-    const colWidth = (gridWidth - totalGap) / COL_COUNT;
+    const totalGap = GAP_PX * (colCount - 1);
+    const colWidth = (gridWidth - totalGap) / colCount;
 
     grid.querySelectorAll<HTMLElement>('.work-tile').forEach(tile => {
       if (tile.style.display === 'none') return;
-      const h = computeTileHeight(tile, colWidth);
+      const h = computeTileHeight(tile, colWidth, colCount);
       const span = Math.max(1, Math.ceil((h + GAP_PX) / (ROW_PX + GAP_PX)));
       tile.style.gridRowEnd = `span ${span}`;
 
-      // For shoot rows, set each item's flex based on its aspect ratio so all
-      // images share the same height across the row.
       if (tile.classList.contains('shoot-row')) {
         tile.querySelectorAll<HTMLElement>('.shoot-item').forEach(item => {
           const im = item.querySelector('img') as HTMLImageElement | null;
@@ -215,6 +255,72 @@ const defaultCategory: Category = 'editorial';
     const h = window.location.hash.replace('#', '');
     if (valid.includes(h)) applyFilter(h);
   });
+
+  // ─── Lightbox ────────────────────────────────────
+  const lightbox = document.getElementById('lightbox') as HTMLElement | null;
+  const lbImg    = lightbox?.querySelector('.lb-img')   as HTMLImageElement | null;
+  const lbTitle  = lightbox?.querySelector('.lb-title') as HTMLElement | null;
+  const lbDesc   = lightbox?.querySelector('.lb-desc')  as HTMLElement | null;
+  const lbClose  = lightbox?.querySelector('.lb-close') as HTMLElement | null;
+  const lbPrev   = lightbox?.querySelector('.lb-prev')  as HTMLElement | null;
+  const lbNext   = lightbox?.querySelector('.lb-next')  as HTMLElement | null;
+
+  let currentIndex = -1;
+  function visibleItems(): HTMLElement[] {
+    if (!grid) return [];
+    return Array.from(grid.querySelectorAll<HTMLElement>('.work-item'))
+      .filter(el => {
+        const tile = el.closest<HTMLElement>('.work-tile') || el;
+        return tile.style.display !== 'none';
+      });
+  }
+
+  function openAt(index: number) {
+    const items = visibleItems();
+    if (!items.length || !lightbox || !lbImg || !lbTitle || !lbDesc) return;
+    currentIndex = (index + items.length) % items.length;
+    const el = items[currentIndex];
+    lbImg.src = el.dataset.src || '';
+    lbImg.alt = el.dataset.alt || '';
+    lbTitle.textContent = el.dataset.title || '';
+    lbDesc.textContent = el.dataset.desc || '';
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+    currentIndex = -1;
+  }
+
+  function step(delta: number) {
+    if (currentIndex < 0) return;
+    openAt(currentIndex + delta);
+  }
+
+  document.querySelectorAll<HTMLElement>('.work-item').forEach((el, _) => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      const items = visibleItems();
+      const idx = items.indexOf(el);
+      if (idx >= 0) openAt(idx);
+    });
+  });
+
+  lbClose?.addEventListener('click', closeLightbox);
+  lbPrev?.addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  lbNext?.addEventListener('click', e => { e.stopPropagation(); step(1); });
+  lightbox?.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (!lightbox || lightbox.hidden) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft')  step(-1);
+  });
 </script>
 
 <style>
@@ -227,18 +333,18 @@ const defaultCategory: Category = 'editorial';
   .work-title {
     font-family: var(--font-family-display);
     font-weight: 800;
-    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-size: clamp(2.75rem, 6vw, 5rem);
     letter-spacing: 0.12em;
     color: var(--color-text);
   }
 
   .work-sub {
     font-family: var(--font-family-display);
-    font-size: 0.72rem;
+    font-size: 0.85rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--color-muted);
-    margin-top: 0.75rem;
+    margin-top: 0.9rem;
   }
 
   /* ─── Filter bar ───────────────────────────────── */
@@ -253,11 +359,11 @@ const defaultCategory: Category = 'editorial';
 
   .filter-chip {
     font-family: var(--font-family-display);
-    font-size: 0.68rem;
+    font-size: 0.82rem;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    padding: 0.55rem 1.1rem;
+    padding: 0.65rem 1.25rem;
     border: 1px solid var(--color-border);
     background: transparent;
     color: var(--color-muted);
@@ -278,9 +384,6 @@ const defaultCategory: Category = 'editorial';
   }
 
   /* ─── Row-span Grid Masonry ────────────────────── */
-  /* Singles take 1 column, shoot rows span both columns and lay out their
-     items as a horizontal flex row. grid-auto-flow: dense backfills empty
-     cells with later 1-col singles, eliminating dead gaps. */
   .work-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -291,16 +394,29 @@ const defaultCategory: Category = 'editorial';
   }
 
   .work-tile {
-    grid-row-end: span 30; /* placeholder; JS overrides */
+    grid-row-end: span 30;
     overflow: hidden;
+    border: none;
+    padding: 0;
+    background: transparent;
   }
 
-  a.work-item {
+  .work-tile.is-wide {
+    grid-column: 1 / -1;
+  }
+
+  button.work-item {
     position: relative;
     display: block;
     overflow: hidden;
     background: #111;
     height: 100%;
+    width: 100%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
   }
 
   .work-item img {
@@ -313,14 +429,6 @@ const defaultCategory: Category = 'editorial';
 
   .work-item:hover img { opacity: 0.85; }
 
-  /* Wide single: spans full grid width */
-  .work-tile.is-wide {
-    grid-column: 1 / -1;
-  }
-
-  /* Shoot rows span the full grid width as a horizontal flex row.
-     Each item's flex-grow is set to its aspect ratio so all images share
-     the same height. */
   .shoot-row {
     grid-column: 1 / -1;
     display: flex;
@@ -342,8 +450,8 @@ const defaultCategory: Category = 'editorial';
   .img-overlay {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.72));
-    padding: 2.5rem 0.85rem 0.85rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    padding: 2.5rem 1rem 1rem;
     opacity: 0;
     transition: opacity 0.25s ease;
     pointer-events: none;
@@ -353,20 +461,20 @@ const defaultCategory: Category = 'editorial';
 
   .img-title {
     display: block;
-    color: #f0f0f0;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
+    color: #ffffff;
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .img-desc {
     display: block;
-    color: #aaa;
-    font-size: 0.6rem;
+    color: #d4d4d4;
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
   }
 
   /* ─── Empty state ──────────────────────────────── */
@@ -374,15 +482,94 @@ const defaultCategory: Category = 'editorial';
     text-align: center;
     padding: 4rem 2rem;
     font-family: var(--font-family-display);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     letter-spacing: 0.1em;
     color: var(--color-muted);
+  }
+
+  /* ─── Lightbox ─────────────────────────────────── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 7, 7, 0.97);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem 6rem;
+  }
+  .lightbox[hidden] { display: none; }
+
+  .lb-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .lb-close,
+  .lb-prev,
+  .lb-next {
+    position: absolute;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.75rem;
+    line-height: 1;
+    font-family: var(--font-family-display);
+    transition: opacity 150ms ease;
+  }
+
+  .lb-close { top: 1rem; right: 1.25rem; font-size: 2rem; }
+  .lb-prev  { left: 1rem; top: 50%; transform: translateY(-50%); font-size: 3rem; }
+  .lb-next  { right: 1rem; top: 50%; transform: translateY(-50%); font-size: 3rem; }
+
+  .lb-close:hover,
+  .lb-prev:hover,
+  .lb-next:hover { opacity: 0.7; }
+
+  .lb-meta {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-family: var(--font-family-display);
+    pointer-events: none;
+  }
+
+  .lb-title {
+    display: block;
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .lb-desc {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.35rem;
   }
 
   /* ─── Responsive ───────────────────────────────── */
   @media (max-width: 640px) {
     .work-grid { grid-template-columns: 1fr; }
-    .filter-chip { font-size: 0.62rem; padding: 0.45rem 0.85rem; }
+    .work-hero { padding: 6rem 1.25rem 1.5rem; }
+    .work-sub { font-size: 0.92rem; margin-top: 1rem; }
+    .filter-chip { font-size: 0.85rem; padding: 0.7rem 1.1rem; }
     .shoot-row { flex-direction: column; }
+    .img-title { font-size: 0.9rem; }
+    .img-desc { font-size: 0.78rem; }
+
+    .lb-close { top: 0.5rem; right: 0.75rem; font-size: 2.25rem; }
+    .lb-prev, .lb-next { font-size: 2.5rem; }
+    .lb-title { font-size: 0.95rem; }
+    .lb-desc { font-size: 0.8rem; }
   }
 </style>
