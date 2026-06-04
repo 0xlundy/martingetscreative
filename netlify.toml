@@ -5,5 +5,18 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# Astro generates dist/404.html which Netlify serves automatically
-# for any unmatched path — no explicit redirect needed.
+# 301 the legacy gallery URLs to the new /work page.
+[[redirects]]
+  from = "/editorial"
+  to = "/work#editorial"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/personal"
+  to = "/work"
+  status = 301
+  force = true
+
+# Astro generates dist/404.html, which Netlify serves automatically
+# for any unmatched path. No explicit redirect needed.
