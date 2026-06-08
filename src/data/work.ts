@@ -25,12 +25,11 @@ export const categories: { id: Category; label: string }[] = [
 
 export const work: WorkItem[] = [
   // ─── Editorial (event + BTS) ─────────────────────────────
-  // Top row: set photos / BTS (5)
-  { src: '/images/on-set/10-dscf2102.jpg',           alt: 'Arriflex film camera on set',                title: 'Cine Rent West',         desc: 'Behind the Scenes',                  category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/DSCF2955.jpg',              alt: 'Film crew and talent on set',                title: 'Cine Rent West',         desc: 'Behind the Scenes',                  category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/12-dscf2988.jpg',           alt: 'On-set photography production',              title: 'Cine Rent West',         desc: 'Behind the Scenes',                  category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/11-dscf2117.jpg',           alt: 'Behind the scenes on film set',              title: 'Fly Anakin Music Video', desc: 'BTS 2023',                           category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/stories/19-screenshot-street.jpg', alt: 'David Cress interview, documentary still',  title: 'Make It Here',           desc: 'David Cress Interview, Oregon Film', category: 'editorial', shoot: 'crw-bts' },
+  // Top row: set photos / BTS (4)
+  { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/DSCF2955.jpg',    alt: 'Film crew and talent on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/12-dscf2988.jpg', alt: 'On-set photography production', title: 'Cine Rent West',       desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS 2023',         category: 'editorial', shoot: 'crw-bts' },
 
   // Olipop BTS (3)
   { src: '/images/on-set/DSCF5220.jpg', alt: 'Behind the scenes, Olipop production', title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
@@ -98,10 +97,9 @@ export const work: WorkItem[] = [
 
 
   // ─── Street ──────────────────────────────────────────────
-  { src: '/images/personal/CG2I0590.jpg',                alt: 'New York City skyline at dusk',                     title: 'New York',        desc: 'First Light from Dumbo, 2018', category: 'street' },
-  { src: '/images/personal/CG2I0275.jpg',                alt: 'Sandwich viewed through sticky notes wall',         title: 'Pho French Dip',  desc: 'Bodega LES NYC, 2018',         category: 'street' },
-  { src: '/images/personal/85320006.jpg',                alt: 'Black and white 35mm film portrait, brick wall',    title: 'Rasheed Jamal',   desc: '120mm, 2022',                  category: 'street' },
-  { src: '/images/featured/29-screenshot-landscape.jpg', alt: 'Mt. Hood at dusk, Pacific Northwest landscape',     title: 'Mt. Hood',        desc: 'Dusk',                         category: 'street' },
+  { src: '/images/personal/CG2I0590.jpg', alt: 'New York City skyline at dusk',                  title: 'New York',       desc: 'First Light from Dumbo, 2018', category: 'street' },
+  { src: '/images/personal/CG2I0275.jpg', alt: 'Sandwich viewed through sticky notes wall',      title: 'Pho French Dip', desc: 'Bodega LES NYC, 2018',         category: 'street' },
+  { src: '/images/personal/85320006.jpg', alt: 'Black and white 35mm film portrait, brick wall', title: 'Rasheed Jamal',  desc: '120mm, 2022',                  category: 'street' },
 
 
   // ─── Conceptual ──────────────────────────────────────────

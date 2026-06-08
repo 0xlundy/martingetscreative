@@ -24,9 +24,23 @@ if (!vimeoId && !youtubeId) {
 
 // Build thumbnail and embed URLs
 const isVimeo = Boolean(vimeoId);
-const thumbSrc  = isVimeo
-  ? `https://vumbnail.com/${vimeoId}.jpg`
-  : `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+
+// Fetch fresh thumbnail at build time from Vimeo's oEmbed API
+// (vumbnail.com caches aggressively and lags behind Vimeo thumb updates)
+let thumbSrc: string;
+if (isVimeo) {
+  try {
+    const oembed = await fetch(
+      `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}&width=1920`
+    );
+    const data = await oembed.json();
+    thumbSrc = data.thumbnail_url || `https://vumbnail.com/${vimeoId}.jpg`;
+  } catch {
+    thumbSrc = `https://vumbnail.com/${vimeoId}.jpg`;
+  }
+} else {
+  thumbSrc = `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
+}
 
 const embedUrl = isVimeo
   ? `https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=ccff00&title=0&byline=0&portrait=0`
