@@ -1,5 +1,6 @@
 // All work items, single source of truth.
-// Categories: editorial, commissioned, street, conceptual
+// Categories (id): editorial, commissioned, street, conceptual
+//   note: the 'street' category is labeled "Field Notes" on the site (observational work).
 // Items with the same `shoot` slug render together as a row.
 // Add new items here. The /work page picks them up automatically.
 
@@ -19,32 +20,14 @@ export interface WorkItem {
 export const categories: { id: Category; label: string }[] = [
   { id: 'editorial',    label: 'Editorial' },
   { id: 'commissioned', label: 'Commissioned' },
-  { id: 'street',       label: 'Street' },
+  { id: 'street',       label: 'Field Notes' },
   { id: 'conceptual',   label: 'Conceptual' },
 ];
 
 export const work: WorkItem[] = [
   // ─── Editorial (event + BTS) ─────────────────────────────
-  // Top row: set photos / BTS (4)
-  { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/DSCF2955.jpg',    alt: 'Film crew and talent on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/12-dscf2988.jpg', alt: 'On-set photography production', title: 'Cine Rent West',       desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS 2023',         category: 'editorial', shoot: 'crw-bts' },
-
-  // Olipop BTS (3)
-  { src: '/images/on-set/DSCF5220.jpg', alt: 'Behind the scenes, Olipop production', title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
-  { src: '/images/on-set/DSCF5218.jpg', alt: 'On-set portrait, blue background',     title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
-  { src: '/images/on-set/DSCF5188.jpg', alt: 'BTS film production photography',      title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
-
-  // Pink Siifu BTS Music Video (2)
-  { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
-  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
-
-  // Portland Cocktail Week (4)
-  { src: '/images/stories/14-dscf6926.jpg', alt: 'Documentary portrait at cocktail event',           title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/stories/15-dscf7874.jpg', alt: 'Havana Club rum bar scene',                        title: 'Portland Cocktail Week', desc: 'Havana Club',        category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/product/27-dscf7695.jpg', alt: 'Pink cosmo cocktails on round table',              title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/product/23-dscf6693.jpg', alt: 'Cocktails in mason jars with citrus garnish',     title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+  // Opener
+  { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
 
   // Sensi Sensibility (2)
   { src: '/images/portraits/08-dscf7929.jpg', alt: 'Sensi Sensibility set photo, Ontario Oregon', title: 'Sensi Sensibility', desc: 'Documentary Set',          category: 'editorial', shoot: 'sensi-sensibility' },
@@ -66,17 +49,49 @@ export const work: WorkItem[] = [
   { src: '/images/stories/DSCF9472_look.jpg',   alt: 'Motorcycle on a red-lit stage with a dachshund walking past',  title: 'Honcho', desc: 'After Dark',    category: 'editorial', shoot: 'honcho-night' },
   { src: '/images/stories/honcho-set-2988.jpg', alt: 'Honcho stage set with motorcycles under red and blue lighting', title: 'Honcho', desc: 'The Set',       category: 'editorial', shoot: 'honcho-night' },
 
-  // Against the Code — documentary stills (4)
-  { src: '/images/stories/DSCF7135.jpg', alt: 'Subject writing at a desk beside a vintage TV glowing with static in a dark studio', title: 'Against the Code', desc: 'Concept Still', category: 'editorial', shoot: 'against-the-code' },
-  { src: '/images/stories/DSCF7273.jpg', alt: 'Two subjects pointing at the camera against a black backdrop',                       title: 'Against the Code', desc: 'Concept Still', category: 'editorial', shoot: 'against-the-code' },
-  { src: '/images/stories/DSCF7297.jpg', alt: 'Two subjects reviewing papers on a brightly lit table in a dark studio',            title: 'Against the Code', desc: 'On Set',       category: 'editorial', shoot: 'against-the-code' },
-  { src: '/images/stories/DSCF7326.jpg', alt: 'Studio portrait of a subject in an ATC jacket holding a tablet',                     title: 'Against the Code', desc: 'Portrait',     category: 'editorial', shoot: 'against-the-code' },
+  // Cine Rent West / BTS (4)
+  { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/DSCF2955.jpg',    alt: 'Film crew and talent on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/12-dscf2988.jpg', alt: 'On-set photography production', title: 'Cine Rent West',       desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS 2023',         category: 'editorial', shoot: 'crw-bts' },
 
-  // Singles
-  { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
+  // Olipop BTS (3)
+  { src: '/images/on-set/DSCF5220.jpg', alt: 'Behind the scenes, Olipop production', title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
+  { src: '/images/on-set/DSCF5218.jpg', alt: 'On-set portrait, blue background',     title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
+  { src: '/images/on-set/DSCF5188.jpg', alt: 'BTS film production photography',      title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
+
+  // Pink Siifu BTS Music Video (2)
+  { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
+  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
+
+  // Portland Cocktail Week (4)
+  { src: '/images/stories/14-dscf6926.jpg', alt: 'Documentary portrait at cocktail event',           title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/stories/15-dscf7874.jpg', alt: 'Havana Club rum bar scene',                        title: 'Portland Cocktail Week', desc: 'Havana Club',        category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/product/27-dscf7695.jpg', alt: 'Pink cosmo cocktails on round table',              title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/product/23-dscf6693.jpg', alt: 'Cocktails in mason jars with citrus garnish',     title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
 
 
   // ─── Commissioned (portraits / product / campaign / lookbook) ─────────
+  // Sotheby's (2)
+  { src: '/images/product/21-dscf3670.jpg', alt: 'Gold Air Jordan 3s',             title: "Sotheby's", desc: "Spike Lee's Golden Jordan 3s", category: 'commissioned', shoot: 'sothebys' },
+  { src: '/images/product/22-dscf3694.jpg', alt: 'Nike Air Jordan 1s sole detail', title: "Sotheby's", desc: 'Jordan 1 Colette',             category: 'commissioned', shoot: 'sothebys' },
+
+  // Trail Blazers HBCU (3)
+  { src: '/images/stories/16-dscf5004.jpg', alt: 'Trail Blazers HBCU activation, purple fraternity', title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
+  { src: '/images/stories/DSCF4570.jpg',    alt: 'HBCU classroom documentary photography',          title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
+  { src: '/images/stories/DSCF3302.jpg',    alt: 'HBCU fraternity documentary',                     title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
+
+  // Rashad Floyd — Emmys (3)
+  { src: '/images/portraits/DSCF4523_web.jpg', alt: 'Rashad Floyd raising his arms behind three Emmy statuettes', title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
+  { src: '/images/portraits/DSCF4601_web.jpg', alt: 'Rashad Floyd holding two Emmy statuettes',                   title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
+  { src: '/images/portraits/DSCF4640_web.jpg', alt: 'Overhead portrait of Rashad Floyd with his Emmys',          title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
+
+  // Against the Code — documentary stills (4)
+  { src: '/images/stories/DSCF7135.jpg', alt: 'Subject writing at a desk beside a vintage TV glowing with static in a dark studio', title: 'Against the Code', desc: 'Concept Still', category: 'commissioned', shoot: 'against-the-code' },
+  { src: '/images/stories/DSCF7273.jpg', alt: 'Two subjects pointing at the camera against a black backdrop',                       title: 'Against the Code', desc: 'Concept Still', category: 'commissioned', shoot: 'against-the-code' },
+  { src: '/images/stories/DSCF7297.jpg', alt: 'Two subjects reviewing papers on a brightly lit table in a dark studio',            title: 'Against the Code', desc: 'On Set',       category: 'commissioned', shoot: 'against-the-code' },
+  { src: '/images/stories/DSCF7326.jpg', alt: 'Studio portrait of a subject in an ATC jacket holding a tablet',                     title: 'Against the Code', desc: 'Portrait',     category: 'commissioned', shoot: 'against-the-code' },
+
   // Mercury League (3)
   { src: '/images/portraits/07-dscf6551.jpg', alt: 'Studio portrait, editorial photography',             title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
   { src: '/images/portraits/06-dscf6116.jpg', alt: 'Editorial portrait, soft lighting',                  title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
@@ -90,10 +105,6 @@ export const work: WorkItem[] = [
   { src: '/images/personal/DSCF1534.jpg', alt: 'Wild Things fashion shoot, zebra print pants, front view', title: 'Wild Things', desc: 'Lookbook 2024', category: 'commissioned', shoot: 'wild-things' },
   { src: '/images/personal/DSCF1684.jpg', alt: 'Wild Things fashion shoot, satin top, back view',          title: 'Wild Things', desc: 'Lookbook 2024', category: 'commissioned', shoot: 'wild-things' },
 
-  // Sotheby's (2)
-  { src: '/images/product/21-dscf3670.jpg', alt: 'Gold Air Jordan 3s',             title: "Sotheby's", desc: "Spike Lee's Golden Jordan 3s", category: 'commissioned', shoot: 'sothebys' },
-  { src: '/images/product/22-dscf3694.jpg', alt: 'Nike Air Jordan 1s sole detail', title: "Sotheby's", desc: 'Jordan 1 Colette',             category: 'commissioned', shoot: 'sothebys' },
-
   // National Ice Cream Day (3)
   { src: '/images/product/National%20Ice%20Cream%20Day%20Shoot-083.jpg', alt: 'Assorted ice cream cups overhead', title: 'National Ice Cream Day', desc: 'Campaign Photography', category: 'commissioned', shoot: 'ice-cream-day' },
   { src: '/images/product/National%20Ice%20Cream%20Day%20Shoot-169.jpg', alt: 'Ice cream scoops on metal tray',   title: 'National Ice Cream Day', desc: 'Campaign Photography', category: 'commissioned', shoot: 'ice-cream-day' },
@@ -103,16 +114,6 @@ export const work: WorkItem[] = [
   { src: '/images/stories/18-cg2i8745.jpg', alt: 'Adidas Boston Marathon documentary', title: 'Adidas Boston Marathon', desc: '2019 Social Content', category: 'commissioned', shoot: 'adidas-boston' },
   { src: '/images/product/24-b0000052.jpg', alt: 'Adidas Boston running shoes',        title: 'Adidas Boston',          desc: 'Product Campaign',    category: 'commissioned', shoot: 'adidas-boston' },
 
-  // Trail Blazers HBCU (3)
-  { src: '/images/stories/16-dscf5004.jpg', alt: 'Trail Blazers HBCU activation, purple fraternity', title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
-  { src: '/images/stories/DSCF4570.jpg',    alt: 'HBCU classroom documentary photography',          title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
-  { src: '/images/stories/DSCF3302.jpg',    alt: 'HBCU fraternity documentary',                     title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
-
-  // Rashad Floyd — Emmys (3)
-  { src: '/images/portraits/DSCF4523_web.jpg', alt: 'Rashad Floyd raising his arms behind three Emmy statuettes', title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
-  { src: '/images/portraits/DSCF4601_web.jpg', alt: 'Rashad Floyd holding two Emmy statuettes',                   title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
-  { src: '/images/portraits/DSCF4640_web.jpg', alt: 'Overhead portrait of Rashad Floyd with his Emmys',          title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
-
   // Singles
   { src: '/images/portraits/01-dscf3979.jpg', alt: 'Full-length editorial portrait',                          title: 'Editorial Portrait', desc: 'Commercial',                category: 'commissioned' },
   { src: '/images/portraits/02-dscf4314.jpg', alt: 'Close-up portrait with dramatic shadow',                  title: 'M A J I K  S T I C K', desc: 'Commercial Portrait, 2023', category: 'commissioned' },
@@ -120,11 +121,13 @@ export const work: WorkItem[] = [
   { src: '/images/portraits/IG%20Post.5.jpg', alt: 'Full-length commercial portrait, utility vest and jeans', title: 'ILoveMakonnen',      desc: 'Press Photos 2025',         category: 'commissioned' },
   { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art, 2023',           category: 'commissioned' },
   { src: '/images/product/NE0A0560.jpg',      alt: 'Don Pancho Cilantro Lime Crema with street tacos',        title: 'Don Pancho',         desc: 'Product Photography',       category: 'commissioned' },
-  { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                   title: 'eCascadia',          desc: 'CES 2019 Promo',            category: 'commissioned' },
-  { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike', desc: 'Studio Product', category: 'commissioned' },
+
+  // Vehicles (2) — paired row
+  { src: '/images/product/DSCF5603.jpg',     alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike', desc: 'Studio Product', category: 'commissioned', shoot: 'vehicles' },
+  { src: '/images/product/26-ecascadia.jpg', alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia', desc: 'CES 2019 Promo', category: 'commissioned', shoot: 'vehicles' },
 
 
-  // ─── Street ──────────────────────────────────────────────
+  // ─── Field Notes (observational: landscape / city / people) ──────────
   { src: '/images/personal/CG2I0590.jpg', alt: 'New York City skyline at dusk',                  title: 'New York',       desc: 'First Light from Dumbo, 2018', category: 'street' },
   { src: '/images/personal/CG2I0275.jpg', alt: 'Sandwich viewed through sticky notes wall',      title: 'Pho French Dip', desc: 'Bodega LES NYC, 2018',         category: 'street' },
   { src: '/images/personal/85320006.jpg', alt: 'Black and white 35mm film portrait, brick wall', title: 'Rasheed Jamal',  desc: '120mm, 2022',                  category: 'street' },
