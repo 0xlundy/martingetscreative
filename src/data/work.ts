@@ -29,9 +29,9 @@ export const work: WorkItem[] = [
   // Opener
   { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
 
-  // Sensi Sensibility (2)
-  { src: '/images/portraits/08-dscf7929.jpg', alt: 'Sensi Sensibility set photo, Ontario Oregon', title: 'Sensi Sensibility', desc: 'Documentary Set',          category: 'editorial', shoot: 'sensi-sensibility' },
-  { src: '/images/stories/20-dscf7092.jpg',   alt: 'Documentary portrait, candid editorial',     title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Set Photo', category: 'editorial', shoot: 'sensi-sensibility' },
+  // Sansei Sensibility (2)
+  { src: '/images/portraits/08-dscf7929.jpg', alt: 'Carol, documentary interview portrait for Sensi Sensibility',                 title: 'Sensi Sensibility', desc: 'Carol',                                  category: 'editorial', shoot: 'sensi-sensibility' },
+  { src: '/images/stories/20-dscf7092.jpg',   alt: 'Oregon Supreme Court Justice Lynn Nakamoto, documentary interview portrait', title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Oregon Supreme Court Justice', category: 'editorial', shoot: 'sensi-sensibility' },
 
   // Portland Book Festival — Literary Arts (4)
   { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival' },
@@ -39,15 +39,21 @@ export const work: WorkItem[] = [
   { src: '/images/stories/DSCF2668.jpg', alt: 'Festival audience seated for a session',                              title: 'Portland Book Festival', desc: 'Festival Crowd', category: 'editorial', shoot: 'portland-book-festival' },
   { src: '/images/stories/DSCF2702.jpg', alt: 'Authors in conversation at the microphone during a panel',           title: 'Portland Book Festival', desc: 'Author Panel',   category: 'editorial', shoot: 'portland-book-festival' },
 
-  // Honcho scooter rally — day (3)
-  { src: '/images/stories/DSCF9436_look.jpg', alt: 'Rider on a red Vespa scooter at the Honcho rally', title: 'Honcho', desc: 'Scooter Rally', category: 'editorial', shoot: 'honcho-day' },
-  { src: '/images/stories/DSCF9459_look.jpg', alt: 'Group portrait of the scooter crew',               title: 'Honcho', desc: 'The Crew',      category: 'editorial', shoot: 'honcho-day' },
-  { src: '/images/stories/DSCF9489_look.jpg', alt: 'Crowd gathered among motorcycles at the event',    title: 'Honcho', desc: 'Scooter Rally', category: 'editorial', shoot: 'honcho-day' },
+  // Honcho — One Moto Opening Party — day (3)
+  { src: '/images/stories/DSCF9436_look.jpg', alt: 'Rider on a red Vespa scooter at the Honcho One Moto opening party', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
+  { src: '/images/stories/DSCF9459_look.jpg', alt: 'Group portrait of the scooter crew at Honcho',                     title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
+  { src: '/images/stories/DSCF9489_look.jpg', alt: 'Crowd gathered among motorcycles at the Honcho party',            title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
 
-  // Honcho scooter rally — after dark (3)
-  { src: '/images/stories/DSCF9434_look.jpg',   alt: 'Detail of a customized scooter front end',                     title: 'Honcho', desc: 'Machine Detail', category: 'editorial', shoot: 'honcho-night' },
-  { src: '/images/stories/DSCF9472_look.jpg',   alt: 'Motorcycle on a red-lit stage with a dachshund walking past',  title: 'Honcho', desc: 'After Dark',    category: 'editorial', shoot: 'honcho-night' },
-  { src: '/images/stories/honcho-set-2988.jpg', alt: 'Honcho stage set with motorcycles under red and blue lighting', title: 'Honcho', desc: 'The Set',       category: 'editorial', shoot: 'honcho-night' },
+  // Honcho — One Moto Opening Party — after dark (3)
+  { src: '/images/stories/DSCF9434_look.jpg',   alt: 'Detail of a customized scooter front end at Honcho',           title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
+  { src: '/images/stories/DSCF9472_look.jpg',   alt: 'Motorcycle on a red-lit stage with a dachshund walking past',  title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
+  { src: '/images/stories/honcho-set-2988.jpg', alt: 'Honcho stage set with motorcycles under red and blue lighting', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
+
+  // Portland Cocktail Week (4)
+  { src: '/images/stories/14-dscf6926.jpg', alt: 'Documentary portrait at cocktail event',           title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/stories/15-dscf7874.jpg', alt: 'Havana Club rum bar scene',                        title: 'Portland Cocktail Week', desc: 'Havana Club',        category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/product/27-dscf7695.jpg', alt: 'Pink cosmo cocktails on round table',              title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/product/23-dscf6693.jpg', alt: 'Cocktails in mason jars with citrus garnish',     title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
 
   // Cine Rent West / BTS (4)
   { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
@@ -63,12 +69,6 @@ export const work: WorkItem[] = [
   // Pink Siifu BTS Music Video (2)
   { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
   { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
-
-  // Portland Cocktail Week (4)
-  { src: '/images/stories/14-dscf6926.jpg', alt: 'Documentary portrait at cocktail event',           title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/stories/15-dscf7874.jpg', alt: 'Havana Club rum bar scene',                        title: 'Portland Cocktail Week', desc: 'Havana Club',        category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/product/27-dscf7695.jpg', alt: 'Pink cosmo cocktails on round table',              title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/product/23-dscf6693.jpg', alt: 'Cocktails in mason jars with citrus garnish',     title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
 
 
   // ─── Commissioned (portraits / product / campaign / lookbook) ─────────
@@ -86,9 +86,8 @@ export const work: WorkItem[] = [
   { src: '/images/portraits/DSCF4601_web.jpg', alt: 'Rashad Floyd holding two Emmy statuettes',                   title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
   { src: '/images/portraits/DSCF4640_web.jpg', alt: 'Overhead portrait of Rashad Floyd with his Emmys',          title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
 
-  // Against the Code — documentary stills (4)
+  // Against the Code — documentary stills (3)
   { src: '/images/stories/DSCF7135.jpg', alt: 'Subject writing at a desk beside a vintage TV glowing with static in a dark studio', title: 'Against the Code', desc: 'Concept Still', category: 'commissioned', shoot: 'against-the-code' },
-  { src: '/images/stories/DSCF7273.jpg', alt: 'Two subjects pointing at the camera against a black backdrop',                       title: 'Against the Code', desc: 'Concept Still', category: 'commissioned', shoot: 'against-the-code' },
   { src: '/images/stories/DSCF7297.jpg', alt: 'Two subjects reviewing papers on a brightly lit table in a dark studio',            title: 'Against the Code', desc: 'On Set',       category: 'commissioned', shoot: 'against-the-code' },
   { src: '/images/stories/DSCF7326.jpg', alt: 'Studio portrait of a subject in an ATC jacket holding a tablet',                     title: 'Against the Code', desc: 'Portrait',     category: 'commissioned', shoot: 'against-the-code' },
 
@@ -120,7 +119,6 @@ export const work: WorkItem[] = [
   { src: '/images/portraits/DSCF0576.jpg',    alt: 'Introspective studio portrait',                           title: 'Chi Duly',           desc: 'Press Photos',              category: 'commissioned' },
   { src: '/images/portraits/IG%20Post.5.jpg', alt: 'Full-length commercial portrait, utility vest and jeans', title: 'ILoveMakonnen',      desc: 'Press Photos 2025',         category: 'commissioned' },
   { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art, 2023',           category: 'commissioned' },
-  { src: '/images/product/NE0A0560.jpg',      alt: 'Don Pancho Cilantro Lime Crema with street tacos',        title: 'Don Pancho',         desc: 'Product Photography',       category: 'commissioned' },
 
   // Vehicles (2) — paired row
   { src: '/images/product/DSCF5603.jpg',     alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike', desc: 'Studio Product', category: 'commissioned', shoot: 'vehicles' },
