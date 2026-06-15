@@ -50,6 +50,28 @@ export const work: WorkItem[] = [
   { src: '/images/portraits/08-dscf7929.jpg', alt: 'Sensi Sensibility set photo, Ontario Oregon', title: 'Sensi Sensibility', desc: 'Documentary Set',          category: 'editorial', shoot: 'sensi-sensibility' },
   { src: '/images/stories/20-dscf7092.jpg',   alt: 'Documentary portrait, candid editorial',     title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Set Photo', category: 'editorial', shoot: 'sensi-sensibility' },
 
+  // Portland Book Festival — Literary Arts (4)
+  { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival' },
+  { src: '/images/stories/DSCF2588.jpg', alt: 'On-stage conversation under the Literary Arts backdrop',              title: 'Portland Book Festival', desc: 'Main Stage',     category: 'editorial', shoot: 'portland-book-festival' },
+  { src: '/images/stories/DSCF2668.jpg', alt: 'Festival audience seated for a session',                              title: 'Portland Book Festival', desc: 'Festival Crowd', category: 'editorial', shoot: 'portland-book-festival' },
+  { src: '/images/stories/DSCF2702.jpg', alt: 'Authors in conversation at the microphone during a panel',           title: 'Portland Book Festival', desc: 'Author Panel',   category: 'editorial', shoot: 'portland-book-festival' },
+
+  // Honcho scooter rally — day (3)
+  { src: '/images/stories/DSCF9436_look.jpg', alt: 'Rider on a red Vespa scooter at the Honcho rally', title: 'Honcho', desc: 'Scooter Rally', category: 'editorial', shoot: 'honcho-day' },
+  { src: '/images/stories/DSCF9459_look.jpg', alt: 'Group portrait of the scooter crew',               title: 'Honcho', desc: 'The Crew',      category: 'editorial', shoot: 'honcho-day' },
+  { src: '/images/stories/DSCF9489_look.jpg', alt: 'Crowd gathered among motorcycles at the event',    title: 'Honcho', desc: 'Scooter Rally', category: 'editorial', shoot: 'honcho-day' },
+
+  // Honcho scooter rally — after dark (3)
+  { src: '/images/stories/DSCF9434_look.jpg',   alt: 'Detail of a customized scooter front end',                     title: 'Honcho', desc: 'Machine Detail', category: 'editorial', shoot: 'honcho-night' },
+  { src: '/images/stories/DSCF9472_look.jpg',   alt: 'Motorcycle on a red-lit stage with a dachshund walking past',  title: 'Honcho', desc: 'After Dark',    category: 'editorial', shoot: 'honcho-night' },
+  { src: '/images/stories/honcho-set-2988.jpg', alt: 'Honcho stage set with motorcycles under red and blue lighting', title: 'Honcho', desc: 'The Set',       category: 'editorial', shoot: 'honcho-night' },
+
+  // Against the Code — documentary stills (4)
+  { src: '/images/stories/DSCF7135.jpg', alt: 'Subject writing at a desk beside a vintage TV glowing with static in a dark studio', title: 'Against the Code', desc: 'Concept Still', category: 'editorial', shoot: 'against-the-code' },
+  { src: '/images/stories/DSCF7273.jpg', alt: 'Two subjects pointing at the camera against a black backdrop',                       title: 'Against the Code', desc: 'Concept Still', category: 'editorial', shoot: 'against-the-code' },
+  { src: '/images/stories/DSCF7297.jpg', alt: 'Two subjects reviewing papers on a brightly lit table in a dark studio',            title: 'Against the Code', desc: 'On Set',       category: 'editorial', shoot: 'against-the-code' },
+  { src: '/images/stories/DSCF7326.jpg', alt: 'Studio portrait of a subject in an ATC jacket holding a tablet',                     title: 'Against the Code', desc: 'Portrait',     category: 'editorial', shoot: 'against-the-code' },
+
   // Singles
   { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
 
@@ -86,6 +108,11 @@ export const work: WorkItem[] = [
   { src: '/images/stories/DSCF4570.jpg',    alt: 'HBCU classroom documentary photography',          title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
   { src: '/images/stories/DSCF3302.jpg',    alt: 'HBCU fraternity documentary',                     title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu' },
 
+  // Rashad Floyd — Emmys (3)
+  { src: '/images/portraits/DSCF4523_web.jpg', alt: 'Rashad Floyd raising his arms behind three Emmy statuettes', title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
+  { src: '/images/portraits/DSCF4601_web.jpg', alt: 'Rashad Floyd holding two Emmy statuettes',                   title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
+  { src: '/images/portraits/DSCF4640_web.jpg', alt: 'Overhead portrait of Rashad Floyd with his Emmys',          title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
+
   // Singles
   { src: '/images/portraits/01-dscf3979.jpg', alt: 'Full-length editorial portrait',                          title: 'Editorial Portrait', desc: 'Commercial',                category: 'commissioned' },
   { src: '/images/portraits/02-dscf4314.jpg', alt: 'Close-up portrait with dramatic shadow',                  title: 'M A J I K  S T I C K', desc: 'Commercial Portrait, 2023', category: 'commissioned' },
@@ -94,12 +121,14 @@ export const work: WorkItem[] = [
   { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art, 2023',           category: 'commissioned' },
   { src: '/images/product/NE0A0560.jpg',      alt: 'Don Pancho Cilantro Lime Crema with street tacos',        title: 'Don Pancho',         desc: 'Product Photography',       category: 'commissioned' },
   { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                   title: 'eCascadia',          desc: 'CES 2019 Promo',            category: 'commissioned' },
+  { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike', desc: 'Studio Product', category: 'commissioned' },
 
 
   // ─── Street ──────────────────────────────────────────────
   { src: '/images/personal/CG2I0590.jpg', alt: 'New York City skyline at dusk',                  title: 'New York',       desc: 'First Light from Dumbo, 2018', category: 'street' },
   { src: '/images/personal/CG2I0275.jpg', alt: 'Sandwich viewed through sticky notes wall',      title: 'Pho French Dip', desc: 'Bodega LES NYC, 2018',         category: 'street' },
   { src: '/images/personal/85320006.jpg', alt: 'Black and white 35mm film portrait, brick wall', title: 'Rasheed Jamal',  desc: '120mm, 2022',                  category: 'street' },
+  { src: '/images/personal/DSCF8336.jpg', alt: 'Pink moon rising over forested hills at blue hour', title: 'Moonrise', desc: 'Blue Hour', category: 'street' },
 
 
   // ─── Conceptual ──────────────────────────────────────────
