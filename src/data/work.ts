@@ -113,16 +113,14 @@ export const work: WorkItem[] = [
   { src: '/images/stories/18-cg2i8745.jpg', alt: 'Adidas Boston Marathon documentary', title: 'Adidas Boston Marathon', desc: '2019 Social Content', category: 'commissioned', shoot: 'adidas-boston' },
   { src: '/images/product/24-b0000052.jpg', alt: 'Adidas Boston running shoes',        title: 'Adidas Boston',          desc: 'Product Campaign',    category: 'commissioned', shoot: 'adidas-boston' },
 
-  // Singles
+  // Singles — Superbike + eCascadia lead, side by side (independent, not a locked row)
+  { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike',          desc: 'Studio Product',            category: 'commissioned' },
+  { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia',          desc: 'CES 2019 Promo',            category: 'commissioned' },
   { src: '/images/portraits/01-dscf3979.jpg', alt: 'Full-length editorial portrait',                          title: 'Editorial Portrait', desc: 'Commercial',                category: 'commissioned' },
   { src: '/images/portraits/02-dscf4314.jpg', alt: 'Close-up portrait with dramatic shadow',                  title: 'M A J I K  S T I C K', desc: 'Commercial Portrait, 2023', category: 'commissioned' },
   { src: '/images/portraits/DSCF0576.jpg',    alt: 'Introspective studio portrait',                           title: 'Chi Duly',           desc: 'Press Photos',              category: 'commissioned' },
   { src: '/images/portraits/IG%20Post.5.jpg', alt: 'Full-length commercial portrait, utility vest and jeans', title: 'ILoveMakonnen',      desc: 'Press Photos 2025',         category: 'commissioned' },
   { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art, 2023',           category: 'commissioned' },
-
-  // Vehicles (2) — paired row
-  { src: '/images/product/DSCF5603.jpg',     alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike', desc: 'Studio Product', category: 'commissioned', shoot: 'vehicles' },
-  { src: '/images/product/26-ecascadia.jpg', alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia', desc: 'CES 2019 Promo', category: 'commissioned', shoot: 'vehicles' },
 
 
   // ─── Field Notes (observational: landscape / city / people) ──────────
