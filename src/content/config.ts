@@ -23,9 +23,14 @@ const workSchema = z.object({
   client:      z.string().optional(),
   role:        z.string().optional(),
   year:        z.number().optional(),
+  status:      z.string().optional(),   // e.g. "Ongoing" — renders as a badge on cards
+
   orientation: z.enum(['landscape', 'portrait']).default('landscape'),
   vimeoId:     z.string().optional(),
+  vimeoHash:   z.string().optional(),   // privacy hash for unlisted Vimeo videos (the part after the / )
   youtubeId:   z.string().optional(),
+  video:       z.string().optional(),   // self-hosted video file, e.g. /videos/crw-sizzle.mp4
+  videoPoster: z.string().optional(),   // poster image for the self-hosted video
   url:         z.string().url().optional(),
   order:       z.number().default(99),
 });

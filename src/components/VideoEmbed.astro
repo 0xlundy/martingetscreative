@@ -11,12 +11,14 @@
  */
 interface Props {
   vimeoId?:   string;
+  vimeoHash?: string;   // privacy hash for unlisted Vimeo videos
   youtubeId?: string;
+  poster?:    string;   // explicit thumbnail (skips oEmbed) — e.g. a local cover image
   title?:     string;
   autoplay?:  boolean;
 }
 
-const { vimeoId, youtubeId, title = 'Video', autoplay = false } = Astro.props;
+const { vimeoId, vimeoHash, youtubeId, poster, title = 'Video', autoplay = false } = Astro.props;
 
 if (!vimeoId && !youtubeId) {
   throw new Error('VideoEmbed requires either a vimeoId or youtubeId prop.');
@@ -25,13 +27,16 @@ if (!vimeoId && !youtubeId) {
 // Build thumbnail and embed URLs
 const isVimeo = Boolean(vimeoId);
 
-// Fetch fresh thumbnail at build time from Vimeo's oEmbed API
-// (vumbnail.com caches aggressively and lags behind Vimeo thumb updates)
+// Prefer an explicit poster (reliable, no network). Otherwise fetch a fresh
+// thumbnail at build time from Vimeo's oEmbed API (vumbnail.com lags behind).
 let thumbSrc: string;
-if (isVimeo) {
+if (poster) {
+  thumbSrc = poster;
+} else if (isVimeo) {
+  const vimeoUrl = `https://vimeo.com/${vimeoId}${vimeoHash ? `/${vimeoHash}` : ''}`;
   try {
     const oembed = await fetch(
-      `https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}&width=1920`
+      `https://vimeo.com/api/oembed.json?url=${encodeURIComponent(vimeoUrl)}&width=1920`
     );
     const data = await oembed.json();
     thumbSrc = data.thumbnail_url || `https://vumbnail.com/${vimeoId}.jpg`;
@@ -43,7 +48,7 @@ if (isVimeo) {
 }
 
 const embedUrl = isVimeo
-  ? `https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=ccff00&title=0&byline=0&portrait=0`
+  ? `https://player.vimeo.com/video/${vimeoId}?autoplay=1&color=ccff00&title=0&byline=0&portrait=0${vimeoHash ? `&h=${vimeoHash}` : ''}`
   : `https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0`;
 ---
 

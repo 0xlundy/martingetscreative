@@ -13,7 +13,10 @@ interface Props {
   year?:        number;
   tags?:        string[];
   vimeoId?:     string;
+  vimeoHash?:   string;
   youtubeId?:   string;
+  video?:       string;
+  videoPoster?: string;
   url?:         string;
   publishDate:  Date;
   backHref?:    string;
@@ -23,7 +26,7 @@ interface Props {
 const {
   title, description, category, cover, coverAlt,
   client, role, year, tags = [],
-  vimeoId, youtubeId, url, publishDate,
+  vimeoId, vimeoHash, youtubeId, video, videoPoster, url, publishDate,
   backHref = '/editorial', backLabel = 'Commercial',
 } = Astro.props;
 
@@ -31,7 +34,7 @@ const categorySlug = category.toLowerCase().replace(/[^a-z0-9]/g, '');
 const hasVideo = vimeoId || youtubeId;
 ---
 
-<BaseLayout title={`${title} — Martin Van Londen`} description={description} image={cover}>
+<BaseLayout title={`${title} | Martin Van Londen`} description={description} image={cover}>
 
   <article class="project-page">
 
@@ -41,13 +44,19 @@ const hasVideo = vimeoId || youtubeId;
         <div class="hero-video container">
           <VideoEmbed
             vimeoId={vimeoId}
+            vimeoHash={vimeoHash}
             youtubeId={youtubeId}
+            poster={cover}
             title={title}
           />
         </div>
-      ) : (
+      ) : cover ? (
         <div class="hero-image-wrap">
           <img src={cover} alt={coverAlt ?? title} class="hero-image" />
+        </div>
+      ) : (
+        <div class="hero-image-wrap hero-placeholder">
+          <span>{title}</span>
         </div>
       )}
     </header>
@@ -58,7 +67,6 @@ const hasVideo = vimeoId || youtubeId;
         <div class="meta-left">
           <span class:list={['category-pill', categorySlug]}>{category}</span>
           <h1 class="project-title text-heading">{title}</h1>
-          <p class="project-description">{description}</p>
         </div>
         <dl class="meta-details">
           {client && (
@@ -101,6 +109,29 @@ const hasVideo = vimeoId || youtubeId;
         <slot />
       </div>
     </div>
+
+    <!-- ─── Reel (self-hosted video, shown at the bottom) ── -->
+    {video && (
+      <div class="container">
+        <div class="divider"></div>
+        <section class="project-reel">
+          <h2 class="reel-heading">The Reel</h2>
+          <div class="hero-self-video">
+            <video
+              src={video}
+              poster={videoPoster || cover || undefined}
+              class="hero-video-el"
+              controls
+              playsinline
+              muted
+              loop
+              autoplay
+              preload="metadata"
+            ></video>
+          </div>
+        </section>
+      </div>
+    )}
 
     <!-- ─── Tags ──────────────────────────── -->
     {tags.length > 0 && (
@@ -147,6 +178,53 @@ const hasVideo = vimeoId || youtubeId;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /* Self-hosted video hero (handles vertical/portrait reels) */
+  .hero-self-video {
+    display: flex;
+    justify-content: center;
+    background: #000;
+    padding-block: 1.5rem;
+  }
+
+  .hero-self-video .hero-video-el {
+    max-height: 80vh;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    background: #000;
+  }
+
+  .project-reel {
+    padding-block: 0.5rem 1rem;
+  }
+
+  .reel-heading {
+    font-family: var(--font-family-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    background: linear-gradient(135deg, var(--color-surface), #0d0d0d);
+  }
+
+  .hero-placeholder span {
+    font-family: var(--font-family-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    color: var(--color-muted);
+    letter-spacing: -0.02em;
+    text-align: center;
+    padding: 2rem;
   }
 
   /* Meta bar */
@@ -258,6 +336,51 @@ const hasVideo = vimeoId || youtubeId;
     color: var(--color-accent);
     text-decoration: underline;
     text-underline-offset: 3px;
+  }
+
+  .prose :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 1.75rem 0;
+    border: 1px solid var(--color-border);
+  }
+
+  /* Stat grid (e.g. growth metrics) */
+  .prose :global(.stat-grid) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .prose :global(.stat) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.25rem 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+
+  .prose :global(.stat-num) {
+    font-family: var(--font-family-display);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  .prose :global(.stat-label) {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    line-height: 1.35;
+  }
+
+  @media (max-width: 640px) {
+    .prose :global(.stat-grid) { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* Tags */

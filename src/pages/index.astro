@@ -1,10 +1,34 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
+import { getCollection } from 'astro:content';
 
 // ── Swap this with your real Vimeo ID ──────────────────────────
 const REEL_VIMEO_ID = '901325832';
 // ───────────────────────────────────────────────────────────────
+
+// ── Selected Projects — lead roles, shown in this order ────────
+// Each entry resolves to a case-study page. Add a vimeoId/youtubeId
+// in the project's .md frontmatter to enable a video hero + card play.
+const editorial = await getCollection('editorial');
+const personal  = await getCollection('personal');
+const pick = (coll: typeof editorial, slug: string) => coll.find((e) => e.slug === slug);
+
+const showcase = [
+  { entry: pick(editorial, 'make-it-here'),   base: 'editorial' },
+  { entry: pick(editorial, 'cine-rent-west'), base: 'editorial' },
+  { entry: pick(personal,  'against-the-code'), base: 'personal' },
+]
+  .filter((x) => x.entry)
+  .map(({ entry, base }) => ({
+    href:     `/${base}/${entry!.slug}`,
+    title:    entry!.data.title,
+    role:     entry!.data.role,
+    status:   entry!.data.status,
+    cover:    entry!.data.cover,
+    coverAlt: entry!.data.coverAlt ?? entry!.data.title,
+    hasVideo: Boolean(entry!.data.vimeoId || entry!.data.youtubeId || entry!.data.video),
+  }));
 ---
 
 <BaseLayout
@@ -15,7 +39,7 @@ const REEL_VIMEO_ID = '901325832';
   <!-- ══ REEL ════════════════════════════════════════════════ -->
   <section class="reel-section">
     <div class="reel-wrap">
-      <VideoEmbed vimeoId={REEL_VIMEO_ID} title="Martin Van Londen — Reel" />
+      <VideoEmbed vimeoId={REEL_VIMEO_ID} title="Martin Van Londen Reel" />
     </div>
   </section>
 
@@ -42,7 +66,7 @@ const REEL_VIMEO_ID = '901325832';
 
       <div class="about-right">
         <p class="bio-lead">Twenty years behind the frame. I know what makes a story land, and how to build the shot that gets it there.</p>
-        <p class="bio-body">Director, DP, and commercial photographer based in Portland, Oregon. My documentary work has been supported by the Andy Warhol Foundation. On the commercial side, I've shot campaigns and editorial content for clients across the Pacific Northwest and beyond. I think in strategy as much as images. Available worldwide for the right project.</p>
+        <p class="bio-body">Director, DP, and commercial photographer based in Portland, Oregon. My documentary work has been supported by the Andy Warhol Foundation. On the commercial side, I've shot campaigns and editorial content for clients across the Pacific Northwest and beyond. I think in strategy as much as images. I produce content and direct social alongside the shooting and the edit. Available worldwide for the right project.</p>
         <div class="about-links">
           <a href="/work" class="about-link">View Work →</a>
         </div>
@@ -71,11 +95,42 @@ const REEL_VIMEO_ID = '901325832';
         </div>
         <div class="service-item">
           <span class="service-title">Strategy</span>
-          <span class="service-detail">Social Media Campaign Planning, Narrative Interview Writing</span>
+          <span class="service-detail">Content Production, Post Strategy, Social Media Direction, Campaign Planning, Narrative Interview Writing</span>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ══ SELECTED PROJECTS ════════════════════════════════════ -->
+  <section class="projects-section">
+    <div class="projects-inner">
+      <p class="projects-label">Selected Projects</p>
+      <div class="projects-grid">
+        {showcase.map((p) => (
+          <a href={p.href} class="project-card">
+            <div class="project-media">
+              {p.cover ? (
+                <img src={p.cover} alt={p.coverAlt} loading="lazy" />
+              ) : (
+                <span class="project-placeholder">{p.title}</span>
+              )}
+              {p.status && <span class="project-status">{p.status}</span>}
+              {p.hasVideo && (
+                <span class="project-play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+                </span>
+              )}
+            </div>
+            <div class="project-info">
+              <span class="project-name">{p.title}</span>
+              {p.role && <span class="project-role">{p.role}</span>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- ══ WORK TILES ══════════════════════════════════════════ -->
   <section class="work-tiles">
     <a href="/work#editorial" class="tile">
@@ -114,7 +169,7 @@ const REEL_VIMEO_ID = '901325832';
     "addressRegion": "OR",
     "addressCountry": "US"
   },
-  "knowsAbout": ["Commercial Photography", "Cinematography", "Documentary Photography", "Campaign Photography", "Photo Direction", "Video Production", "Post Production", "Creative Strategy"]
+  "knowsAbout": ["Commercial Photography", "Cinematography", "Documentary Photography", "Campaign Photography", "Photo Direction", "Video Production", "Content Production", "Social Media Direction", "Post Production", "Creative Strategy"]
 }
 </script>
 
@@ -256,6 +311,26 @@ const REEL_VIMEO_ID = '901325832';
   .service-detail { font-size: 0.92rem; line-height: 1.6; color: var(--color-muted); }
   @media (max-width: 860px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; } .services-inner { padding: 2.5rem 1.5rem; } }
+
+  /* ─── Selected Projects ──────────────── */
+  .projects-section { border-bottom: 1px solid var(--color-border); }
+  .projects-inner { max-width: 1440px; margin-inline: auto; padding: 3.5rem 2rem; }
+  .projects-label { font-family: var(--font-family-display); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 2rem; }
+  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .project-card { display: flex; flex-direction: column; text-decoration: none; }
+  .project-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background-color: var(--color-surface); border: 1px solid var(--color-border); }
+  .project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; }
+  .project-card:hover .project-media img { transform: scale(1.04); }
+  .project-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; font-family: var(--font-family-display); font-weight: 800; font-size: clamp(1.1rem, 2vw, 1.6rem); letter-spacing: -0.01em; color: var(--color-muted); background: linear-gradient(135deg, var(--color-surface), #0d0d0d); }
+  .project-status { position: absolute; top: 0.75rem; left: 0.75rem; display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-family-display); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text); background: rgba(7,7,7,0.7); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid var(--color-border); padding: 0.3rem 0.55rem; border-radius: 2px; }
+  .project-play { position: absolute; inset: 0; margin: auto; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(7,7,7,0.55); border: 1px solid rgba(255,255,255,0.4); border-radius: 50%; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: background 200ms ease, transform 200ms ease; }
+  .project-card:hover .project-play { background: var(--color-accent); transform: scale(1.08); }
+  .project-info { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 1rem; }
+  .project-name { font-family: var(--font-family-display); font-size: 1.05rem; font-weight: 700; color: var(--color-text); transition: color 200ms ease; }
+  .project-card:hover .project-name { color: var(--color-accent); }
+  .project-role { font-family: var(--font-family-display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); }
+  @media (max-width: 860px) { .projects-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .projects-inner { padding: 2.5rem 1.5rem; } }
 
   /* ─── Work tiles ─────────────────────── */
   .work-tiles {
