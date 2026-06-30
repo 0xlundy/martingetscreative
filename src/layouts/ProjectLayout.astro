@@ -170,7 +170,9 @@ const hasVideo = vimeoId || youtubeId;
   }
 
   .hero-image-wrap {
-    max-height: 600px;
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    max-height: 860px;
     overflow: hidden;
   }
 
@@ -178,6 +180,7 @@ const hasVideo = vimeoId || youtubeId;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 55%;
   }
 
   /* Self-hosted video hero (handles vertical/portrait reels) */

@@ -16,7 +16,7 @@ order: 1
 
 ## Overview
 
-*Make It Here* is a short film I made with Oregon Film, the state's official film office and support body for the Oregon film industry. I developed and led it in partnership with Cine Rent West and North East Productions, working as producer, DP, and co-editor.
+*Make It Here* brought together Oregon Film, North East Productions, and Cine Rent West on a single short film. Oregon Film is the state's official film office and support body for the Oregon film industry. I developed and led the project as producer, DP, and co-editor, from the pitch to the final cut.
 
 ![Behind the scenes on Make It Here, collaborating at the camera](/images/editorial/make-it-here-01.jpg)
 
