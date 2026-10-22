@@ -7,12 +7,15 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  /** Index-style pages (home, reel): one mono typeface, all caps. */
+  mono?: boolean;
 }
 
 const {
   title = 'Martin Van Londen | Cinematographer & Commercial Photographer, Portland, OR',
   description = 'Director, DP, and commercial photographer based in Portland, OR. Twenty years creating campaign, documentary, and editorial content. Available worldwide.',
   image = '/og-image.jpg',
+  mono = false,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://martingetscreative.com');
@@ -52,9 +55,15 @@ const ogImage = new URL(image, Astro.site ?? 'https://martingetscreative.com');
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;1,14..32,400&display=swap"
       rel="stylesheet"
     />
+    {mono && (
+      <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet"
+      />
+    )}
   </head>
 
-  <body>
+  <body class:list={{ 'is-mono': mono }}>
     <Nav />
     <main id="main-content">
       <slot />

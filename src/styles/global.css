@@ -54,6 +54,33 @@ a {
 }
 
 /* ============================================
+   MONO PAGES (home index, reel)
+   One typeface, uppercase, small. Nav + footer follow.
+   ============================================ */
+body.is-mono {
+  --font-family-display: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --font-family-sans:    'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Nav + footer line up with the full-bleed grid and drop the bold display look. */
+body.is-mono .nav-inner,
+body.is-mono .footer-inner,
+body.is-mono .footer-bottom { max-width: none; padding-inline: 5px; }
+body.is-mono .nav-logo,
+body.is-mono .nav-link,
+body.is-mono .footer-logo,
+body.is-mono .footer-tagline,
+body.is-mono .footer-email,
+body.is-mono .footer-bottom,
+body.is-mono .s-link { font-size: 12px; font-weight: 500; letter-spacing: 0.02em; }
+body.is-mono .nav-logo,
+body.is-mono .footer-logo { color: var(--color-text); }
+body.is-mono footer { margin-top: 72px; }
+
+/* ============================================
    SELECTION & FOCUS
    ============================================ */
 ::selection {

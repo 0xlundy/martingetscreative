@@ -1,0 +1,154 @@
+---
+// The reel on its own page, one full screen, followed by the film case studies
+// that used to sit on the home page.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import { getCollection } from 'astro:content';
+
+// ── Reel Vimeo ID (swap when the reel is re-cut) ────────────
+const REEL_VIMEO_ID = '901325832';
+// Vimeo's own thumbnail for the reel, so the poster never depends on a build-time lookup.
+const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683a715fbbfdbd2ac269731a8783d993195b8c81f3b9523b-d_1280?region=us';
+
+const editorial = await getCollection('editorial');
+const personal = await getCollection('personal');
+const pick = (coll: typeof editorial, slug: string) => coll.find((e) => e.slug === slug);
+
+const films = [
+  { entry: pick(editorial, 'make-it-here'), base: 'editorial' },
+  { entry: pick(editorial, 'cine-rent-west'), base: 'editorial' },
+  { entry: pick(personal, 'against-the-code'), base: 'personal' },
+]
+  .filter((x) => x.entry)
+  .map(({ entry, base }, i) => ({
+    num: String(i + 1).padStart(3, '0'),
+    href: `/${base}/${entry!.slug}`,
+    title: entry!.data.title,
+    client: entry!.data.client,
+    role: entry!.data.role,
+    status: entry!.data.status,
+    year: entry!.data.year,
+    cover: entry!.data.cover,
+    coverAlt: entry!.data.coverAlt ?? entry!.data.title,
+  }));
+---
+
+<BaseLayout
+  mono
+  title="Reel | Martin Van Londen, Cinematographer, Portland OR"
+  description="Cinematography reel and selected films by Martin Van Londen, director of photography based in Portland, Oregon. Available worldwide."
+>
+  <section class="rl-stage">
+    <div class="rl-player">
+      <VideoEmbed vimeoId={REEL_VIMEO_ID} poster={REEL_POSTER} title="Martin Van Londen Reel" />
+    </div>
+    <div class="rl-caption">
+      <h1>Reel</h1>
+      <span>Martin Van Londen — Director of Photography</span>
+      <span class="rl-dim">Portland, OR</span>
+    </div>
+  </section>
+
+  <section class="rl-films" aria-labelledby="films-label">
+    <p id="films-label" class="rl-label">Films</p>
+    <ol class="rl-list">
+      {films.map((f) => (
+        <li>
+          <a href={f.href} class="rl-film">
+            <span class="rl-frame">
+              {f.cover && <img src={f.cover} alt={f.coverAlt} loading="lazy" decoding="async" />}
+            </span>
+            <span class="rl-meta">
+              <span class="rl-num">{f.num}</span>
+              <span class="rl-title">{f.title}{f.client && f.client !== f.title ? ` — ${f.client}` : ''}</span>
+              <span class="rl-role">{f.role}</span>
+              <span class="rl-year">{f.status ?? f.year}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="rl-back"><a href="/">← Photo index</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  /* One full screen: the player is as large as the viewport allows at 16:9. */
+  .rl-stage {
+    min-height: 100svh;
+    padding: 64px 5px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .rl-player {
+    width: min(100%, calc((100svh - 64px - 60px) * 16 / 9));
+  }
+  .rl-caption {
+    width: min(100%, calc((100svh - 64px - 60px) * 16 / 9));
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    color: var(--color-text);
+  }
+  .rl-caption h1 { font: inherit; }
+  .rl-dim { color: var(--color-faint); margin-left: auto; }
+
+  /* Restyle the shared player for this page: square corners, text button. */
+  .rl-player :global(.video-facade) { border-radius: 0; }
+  .rl-player :global(.play-btn) {
+    width: auto;
+    height: auto;
+    padding: 8px 14px;
+    border-radius: 2px;
+    background: var(--color-text);
+    color: var(--color-bg);
+  }
+  .rl-player :global(.play-btn svg) { width: 12px; height: 13px; }
+  .rl-player :global(.video-title) { display: none; }
+
+  /* ─── Films ──────────────────────────────────── */
+  .rl-films { padding: 56px 5px 0; }
+  .rl-label { color: var(--color-faint); margin-bottom: 14px; }
+  .rl-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px 5px;
+  }
+  .rl-film { display: block; }
+  .rl-frame {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+  .rl-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .rl-meta {
+    display: grid;
+    grid-template-columns: 3.2em 1fr auto;
+    column-gap: 6px;
+    padding: 6px 10px 0 0;
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+  .rl-num   { color: var(--color-faint); grid-row: span 2; }
+  .rl-title { color: var(--color-text); }
+  .rl-year  { color: var(--color-faint); grid-column: 3; grid-row: 1; }
+  .rl-role  { color: var(--color-muted); grid-column: 2 / -1; }
+  .rl-film:hover .rl-title { text-decoration: underline; text-underline-offset: 3px; }
+
+  .rl-back { margin-top: 40px; color: var(--color-muted); }
+  .rl-back a:hover { color: var(--color-text); }
+
+  @media (max-width: 899px) {
+    .rl-stage { min-height: auto; padding-top: 80px; }
+    .rl-player, .rl-caption { width: 100%; }
+    .rl-caption { padding-inline: 7px; gap: 4px 14px; }
+    .rl-dim { margin-left: 0; }
+    .rl-films { padding: 40px 5px 0; }
+    .rl-list { grid-template-columns: 1fr; }
+  }
+</style>

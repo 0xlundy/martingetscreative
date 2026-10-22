@@ -14,6 +14,12 @@ const currentPath = Astro.url.pathname;
           Work
         </a>
       </li>
+      <li>
+        <a href="/reel"
+          class:list={['nav-link', { 'is-active': currentPath.startsWith('/reel') }]}>
+          Reel
+        </a>
+      </li>
     </ul>
 
     <!-- Mobile toggle -->
@@ -26,6 +32,7 @@ const currentPath = Astro.url.pathname;
   <!-- Mobile menu -->
   <div id="mobile-menu" aria-hidden="true">
     <a href="/work" class="mob-link">Work</a>
+    <a href="/reel" class="mob-link">Reel</a>
   </div>
 </header>
 
@@ -156,8 +163,9 @@ const currentPath = Astro.url.pathname;
 
   .mob-link:hover { color: var(--color-text); }
 
+  /* Two links fit on any phone, so they stay visible (no hamburger). */
   @media (max-width: 640px) {
-    .nav-links { display: none; }
-    #menu-toggle { display: flex; }
+    .nav-inner { padding-inline: 1rem; }
+    .nav-links { gap: 1.5rem; }
   }
 </style>

@@ -1,403 +1,372 @@
 ---
+// Home = the photo index. Every still from src/data/work.ts in one dense grid,
+// numbered, with filters that fade (never reshuffle). The reel lives at /reel.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import VideoEmbed from '../components/VideoEmbed.astro';
-import { getCollection } from 'astro:content';
+import { work, categories } from '../data/work';
+import { thumb, thumbSrcset } from '../data/thumbs';
 
-// ── Swap this with your real Vimeo ID ──────────────────────────
-const REEL_VIMEO_ID = '901325832';
-// ───────────────────────────────────────────────────────────────
-
-// ── Selected Projects — lead roles, shown in this order ────────
-// Each entry resolves to a case-study page. Add a vimeoId/youtubeId
-// in the project's .md frontmatter to enable a video hero + card play.
-const editorial = await getCollection('editorial');
-const personal  = await getCollection('personal');
-const pick = (coll: typeof editorial, slug: string) => coll.find((e) => e.slug === slug);
-
-const showcase = [
-  { entry: pick(editorial, 'make-it-here'),   base: 'editorial' },
-  { entry: pick(editorial, 'cine-rent-west'), base: 'editorial' },
-  { entry: pick(personal,  'against-the-code'), base: 'personal' },
-]
-  .filter((x) => x.entry)
-  .map(({ entry, base }) => ({
-    href:     `/${base}/${entry!.slug}`,
-    title:    entry!.data.title,
-    role:     entry!.data.role,
-    status:   entry!.data.status,
-    cover:    entry!.data.cover,
-    coverAlt: entry!.data.coverAlt ?? entry!.data.title,
-    hasVideo: Boolean(entry!.data.vimeoId || entry!.data.youtubeId || entry!.data.video),
-  }));
+const catLabel = Object.fromEntries(categories.map((c) => [c.id, c.label]));
+const counts = Object.fromEntries(categories.map((c) => [c.id, work.filter((w) => w.category === c.id).length]));
+const pad = (n: number) => String(n).padStart(3, '0');
+const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 ---
 
 <BaseLayout
+  mono
   title="Cinematographer & Commercial Photographer Portland OR | Martin Van Londen"
   description="Portland, OR cinematographer and commercial photographer with twenty years creating campaign, documentary, and editorial content. Available for projects worldwide."
 >
+  <section class="ix-head">
+    <div class="ix-id">
+      <h1>Martin Van Londen</h1>
+      <p>Director of Photography + Photographer</p>
+      <p>Portland, OR · Available worldwide</p>
+      <a href="mailto:martinvanlonden@gmail.com">martinvanlonden@gmail.com</a>
+    </div>
 
-  <!-- ══ REEL ════════════════════════════════════════════════ -->
-  <section class="reel-section">
-    <div class="reel-wrap">
-      <VideoEmbed vimeoId={REEL_VIMEO_ID} title="Martin Van Londen Reel" />
+    <div class="ix-filters" role="group" aria-label="Filter photos by category">
+      <button type="button" class="ix-filter is-active" data-filter="all" aria-pressed="true">
+        All <span>{work.length}</span>
+      </button>
+      {categories.map((c) => (
+        <button type="button" class="ix-filter" data-filter={c.id} aria-pressed="false">
+          {c.label} <span>{counts[c.id]}</span>
+        </button>
+      ))}
     </div>
   </section>
 
-  <!-- ══ ABOUT ═══════════════════════════════════════════════ -->
-  <section class="about-section">
-    <div class="about-inner">
+  <ol class="ix-grid" id="ix-grid">
+    {work.map((w, i) => (
+      <li class="ix-cell" data-category={w.category}>
+        <button
+          type="button"
+          class="ix-item"
+          data-index={i}
+          data-src={w.src}
+          data-alt={w.alt}
+          data-title={w.title}
+          data-desc={w.desc}
+          aria-label={`Open ${w.title}, ${w.desc}`}
+        >
+          <span class="ix-frame">
+            <img
+              src={thumb(w.src, 480)}
+              srcset={thumbSrcset(w.src)}
+              sizes={SIZES}
+              alt={w.alt}
+              loading={i < 8 ? 'eager' : 'lazy'}
+              fetchpriority={i < 4 ? 'high' : 'auto'}
+              decoding="async"
+            />
+          </span>
+          <span class="ix-meta">
+            <span class="ix-num">{pad(i + 1)}</span>
+            <span class="ix-title">{w.title}</span>
+            <span class="ix-desc">{w.desc}</span>
+            <span class="ix-cat">{catLabel[w.category]}</span>
+          </span>
+        </button>
+      </li>
+    ))}
+  </ol>
 
-      <div class="about-left">
-        <div class="name-block">
-          <h1 class="name">Martin<br/>Van Londen</h1>
-          <div class="avail-badge">
-            <span class="avail-dot" aria-hidden="true"></span>
-            Available for Projects
-          </div>
-        </div>
-        <div class="about-meta">
-          <p class="meta-line">Cinematography · Photography · Strategy</p>
-          <p class="meta-line">Portland, OR. Available Worldwide.</p>
-          <a href="mailto:martinvanlonden@gmail.com" class="meta-email">
-            martinvanlonden@gmail.com
-          </a>
-        </div>
-      </div>
-
-      <div class="about-right">
-        <p class="bio-lead">Twenty years behind the frame. I know what makes a story land, and how to build the shot that gets it there.</p>
-        <p class="bio-body">Director, DP, and commercial photographer based in Portland, Oregon. My documentary work has been supported by the Andy Warhol Foundation. On the commercial side, I've shot campaigns and editorial content for clients across the Pacific Northwest and beyond. I think in strategy as much as images. I produce content and direct social, not just shoot and edit. Available worldwide for the right project.</p>
-        <div class="about-links">
-          <a href="/work" class="about-link">View Work →</a>
-        </div>
-      </div>
-
+  <section class="ix-about">
+    <div class="ix-col">
+      <p class="ix-label">About</p>
+      <p>Twenty years behind the frame. I know what makes a story land, and how to build the shot that gets it there.</p>
+      <p>Director, DP, and commercial photographer based in Portland, Oregon. My documentary work has been supported by the Andy Warhol Foundation. On the commercial side, I've shot campaigns and editorial content for clients across the Pacific Northwest and beyond. I think in strategy as much as images. I produce content and direct social, not just shoot and edit.</p>
+    </div>
+    <div class="ix-col">
+      <p class="ix-label">Services</p>
+      <ul>
+        <li>Cinematography — camera department key creative</li>
+        <li>Photography — commercial, editorial, documentary, art direction, retouching</li>
+        <li>Editorial — documentary + social editing, post supervision</li>
+        <li>Strategy — content production, social direction, campaign planning</li>
+      </ul>
+    </div>
+    <div class="ix-col">
+      <p class="ix-label">Motion</p>
+      <p><a href="/reel">Watch the reel →</a></p>
+      <p><a href="/work">Full work archive →</a></p>
     </div>
   </section>
 
-
-  <!-- ══ SERVICES ═════════════════════════════════════════════ -->
-  <section class="services-section">
-    <div class="services-inner">
-      <p class="services-label">How to activate me on your project</p>
-      <div class="services-grid">
-        <div class="service-item">
-          <span class="service-title">Cinematography</span>
-          <span class="service-detail">Camera Department Key Creative</span>
-        </div>
-        <div class="service-item">
-          <span class="service-title">Editorial Photography</span>
-          <span class="service-detail">Lead Commercial Photographer, Documentary Photography, Photo Producer, Art Direction, Retouching</span>
-        </div>
-        <div class="service-item">
-          <span class="service-title">Editorial</span>
-          <span class="service-detail">Documentary Editing, Social Media Editing, Post Supervision</span>
-        </div>
-        <div class="service-item">
-          <span class="service-title">Strategy</span>
-          <span class="service-detail">Content Production, Post Strategy, Social Media Direction, Campaign Planning, Narrative Interview Writing</span>
-        </div>
-      </div>
+  <!-- Lightbox: full-size original -->
+  <div id="ix-lb" class="ix-lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <img class="ix-lb-img" alt="" />
+    <div class="ix-lb-bar">
+      <span class="ix-lb-count"></span>
+      <span class="ix-lb-title"></span>
+      <span class="ix-lb-ctrl">
+        <button type="button" class="ix-lb-prev" aria-label="Previous photo">Prev</button>
+        <button type="button" class="ix-lb-next" aria-label="Next photo">Next</button>
+        <button type="button" class="ix-lb-close" aria-label="Close viewer">Close</button>
+      </span>
     </div>
-  </section>
-
-  <!-- ══ SELECTED PROJECTS ════════════════════════════════════ -->
-  <section class="projects-section">
-    <div class="projects-inner">
-      <p class="projects-label">Selected Projects</p>
-      <div class="projects-grid">
-        {showcase.map((p) => (
-          <a href={p.href} class="project-card">
-            <div class="project-media">
-              {p.cover ? (
-                <img src={p.cover} alt={p.coverAlt} loading="lazy" />
-              ) : (
-                <span class="project-placeholder">{p.title}</span>
-              )}
-              {p.status && <span class="project-status">{p.status}</span>}
-              {p.hasVideo && (
-                <span class="project-play" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
-                </span>
-              )}
-            </div>
-            <div class="project-info">
-              <span class="project-name">{p.title}</span>
-              {p.role && <span class="project-role">{p.role}</span>}
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ WORK TILES ══════════════════════════════════════════ -->
-  <section class="work-tiles">
-    <a href="/work#editorial" class="tile">
-      <span class="tile-label">Editorial</span>
-      <span class="tile-sub">Event &amp; BTS</span>
-    </a>
-    <a href="/work#commissioned" class="tile">
-      <span class="tile-label">Commissioned</span>
-      <span class="tile-sub">Client Work</span>
-    </a>
-    <a href="/work#street" class="tile">
-      <span class="tile-label">Field Notes</span>
-      <span class="tile-sub">Observational</span>
-    </a>
-    <a href="/work#conceptual" class="tile">
-      <span class="tile-label">Conceptual</span>
-      <span class="tile-sub">Studio &amp; Self-Directed</span>
-    </a>
-  </section>
-
+  </div>
 </BaseLayout>
 
-<!-- JSON-LD: Person schema for SEO -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Martin Van Londen",
-  "jobTitle": "Cinematographer & Commercial Photographer",
-  "url": "https://martingetscreative.com",
-  "email": "martinvanlonden@gmail.com",
-  "description": "Portland, OR cinematographer and commercial photographer with twenty years of experience creating campaign, documentary, and brand content for global clients.",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "Portland",
-    "addressRegion": "OR",
-    "addressCountry": "US"
-  },
-  "knowsAbout": ["Commercial Photography", "Cinematography", "Documentary Photography", "Campaign Photography", "Photo Direction", "Video Production", "Content Production", "Social Media Direction", "Post Production", "Creative Strategy"]
-}
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Martin Van Londen',
+  jobTitle: 'Cinematographer & Commercial Photographer',
+  url: 'https://martingetscreative.com',
+  email: 'martinvanlonden@gmail.com',
+  description: 'Portland, OR cinematographer and commercial photographer with twenty years of experience creating campaign, documentary, and brand content for global clients.',
+  address: { '@type': 'PostalAddress', addressLocality: 'Portland', addressRegion: 'OR', addressCountry: 'US' },
+  knowsAbout: ['Commercial Photography', 'Cinematography', 'Documentary Photography', 'Campaign Photography', 'Photo Direction', 'Video Production', 'Content Production', 'Social Media Direction', 'Post Production', 'Creative Strategy'],
+})} />
+
+<script>
+  const grid = document.getElementById('ix-grid');
+  const cells = Array.from(document.querySelectorAll<HTMLElement>('.ix-cell'));
+  const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('.ix-filter'));
+  const valid = ['all', 'editorial', 'commissioned', 'street', 'conceptual'];
+  let active = 'all';
+
+  // Filtering fades non-matching photos in place; the grid never moves.
+  function setFilter(f: string, updateHash = true) {
+    active = valid.includes(f) ? f : 'all';
+    cells.forEach((c) => c.classList.toggle('is-dim', active !== 'all' && c.dataset.category !== active));
+    filters.forEach((b) => {
+      const on = b.dataset.filter === active;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    if (updateHash) history.replaceState(null, '', active === 'all' ? location.pathname : '#' + active);
+  }
+  filters.forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.filter || 'all')));
+  setFilter(location.hash.slice(1) || 'all', false);
+
+  // ─── Lightbox ───────────────────────────────────
+  const lb = document.getElementById('ix-lb') as HTMLElement;
+  const lbImg = lb.querySelector('.ix-lb-img') as HTMLImageElement;
+  const lbTitle = lb.querySelector('.ix-lb-title') as HTMLElement;
+  const lbCount = lb.querySelector('.ix-lb-count') as HTMLElement;
+  let order: HTMLElement[] = [];
+  let pos = -1;
+  let opener: HTMLElement | null = null;
+
+  const items = () =>
+    cells.filter((c) => !c.classList.contains('is-dim')).map((c) => c.querySelector('.ix-item') as HTMLElement);
+
+  function show(i: number) {
+    pos = (i + order.length) % order.length;
+    const el = order[pos];
+    lbImg.src = el.dataset.src || '';
+    lbImg.alt = el.dataset.alt || '';
+    lbTitle.textContent = `${el.dataset.title} — ${el.dataset.desc}`;
+    lbCount.textContent = `${String(pos + 1).padStart(3, '0')} / ${String(order.length).padStart(3, '0')}`;
+  }
+  function open(el: HTMLElement) {
+    order = items();
+    opener = el;
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    show(order.indexOf(el));
+    (lb.querySelector('.ix-lb-close') as HTMLElement).focus();
+  }
+  function close() {
+    lb.hidden = true;
+    lbImg.removeAttribute('src');
+    document.body.style.overflow = '';
+    opener?.focus();
+  }
+
+  grid?.addEventListener('click', (e) => {
+    const el = (e.target as HTMLElement).closest<HTMLElement>('.ix-item');
+    if (!el || el.closest('.is-dim')) return;
+    open(el);
+  });
+  lb.querySelector('.ix-lb-prev')?.addEventListener('click', () => show(pos - 1));
+  lb.querySelector('.ix-lb-next')?.addEventListener('click', () => show(pos + 1));
+  lb.querySelector('.ix-lb-close')?.addEventListener('click', close);
+  lbImg.addEventListener('click', () => show(pos + 1));
+  document.addEventListener('keydown', (e) => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') show(pos + 1);
+    if (e.key === 'ArrowLeft') show(pos - 1);
+  });
+
+  // Swipe on phones
+  let x0: number | null = null;
+  lb.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) show(pos + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
 </script>
 
 <style>
-  /* ─── Reel ──────────────────────────── */
-  .reel-section {
-    padding-top: 64px; /* nav height */
+  /* ─── Head ───────────────────────────────────── */
+  .ix-head {
+    padding: 88px 5px 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    align-items: end;
   }
+  .ix-id h1 { font: inherit; font-weight: 500; color: var(--color-text); }
+  .ix-id p, .ix-id a { color: var(--color-muted); }
+  .ix-id a:hover { color: var(--color-text); }
 
-  .reel-wrap {
+  .ix-filters {
+    grid-column: 2 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    justify-content: flex-end;
+  }
+  .ix-filter {
+    font: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    background: none;
+    border: 0;
+    padding: 4px 0;
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+  .ix-filter span { color: var(--color-faint); margin-left: 2px; }
+  .ix-filter:hover { color: var(--color-text); }
+  .ix-filter.is-active { color: var(--color-text); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ─── Grid ───────────────────────────────────── */
+  .ix-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px 5px;
+    padding: 0 5px;
+  }
+  @media (min-width: 1200px) { .ix-grid { grid-template-columns: repeat(5, 1fr); } }
+
+  .ix-cell { position: relative; }
+
+  .ix-item {
+    display: block;
     width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    cursor: zoom-in;
   }
 
-  /* Override VideoEmbed border-radius for full-bleed feel */
-  .reel-wrap :global(.video-facade) {
-    border-radius: 0;
+  .ix-frame {
+    display: block;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--color-surface);
   }
+  .ix-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-  /* ─── About ─────────────────────────── */
-  .about-section {
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .about-inner {
-    max-width: 1440px;
-    margin-inline: auto;
-    padding: 5rem 2rem;
+  .ix-meta {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: start;
+    grid-template-columns: 3.2em 1fr auto;
+    column-gap: 6px;
+    padding: 6px 10px 0 0;
+    font-size: 10.5px;
+    line-height: 1.45;
   }
+  .ix-num   { color: var(--color-faint); grid-row: span 2; }
+  .ix-title { color: var(--color-text); }
+  .ix-cat   { color: var(--color-faint); grid-column: 3; grid-row: 1; }
+  .ix-desc  { color: var(--color-muted); grid-column: 2 / -1; }
 
-  /* Left */
-  .name-block {
-    margin-bottom: 2.5rem;
+  .ix-item:hover .ix-title,
+  .ix-item:focus-visible .ix-title { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Filter fade: dimmed photos keep their place under a page-colored veil. */
+  .ix-cell::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
   }
+  .ix-cell.is-dim::after { opacity: 0.86; pointer-events: auto; }
+  .ix-cell.is-dim .ix-item { cursor: default; }
 
-  .name {
-    font-family: var(--font-family-display);
-    font-weight: 800;
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.25rem;
-  }
-
-  .avail-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-family-display);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  /* ─── About (below the work) ─────────────────── */
+  .ix-about {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px 5px;
+    padding: 72px 5px 0;
     color: var(--color-muted);
-  }
-
-  .avail-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background-color: #00d0bf;
-    box-shadow: 0 0 6px #00d0bf88;
-    animation: pulse 2.5s ease infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.4; }
-  }
-
-  .about-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .meta-line {
-    font-family: var(--font-family-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-muted);
-  }
-
-  .meta-email {
-    font-size: 0.95rem;
-    color: var(--color-accent);
-    transition: opacity 150ms ease;
-  }
-
-  .meta-email:hover { opacity: 0.7; }
-
-  /* Right */
-  .bio-lead {
-    font-size: 1.25rem;
     line-height: 1.6;
-    color: var(--color-text);
-    margin-bottom: 1.25rem;
   }
+  .ix-about .ix-col:first-child { grid-column: span 2; padding-right: 2rem; }
+  .ix-about p + p { margin-top: 0.8em; }
+  .ix-about ul { list-style: none; }
+  .ix-about li + li { margin-top: 0.4em; }
+  .ix-label { color: var(--color-faint); margin-bottom: 0.8em; }
+  .ix-about a { color: var(--color-text); }
+  .ix-about a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-  .bio-body {
-    font-size: 1rem;
-    line-height: 1.75;
-    color: var(--color-muted);
-    margin-bottom: 1rem;
-  }
-
-  .about-links {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .about-link {
-    font-family: var(--font-family-display);
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    transition: opacity 150ms ease;
-  }
-
-  .about-link:hover { opacity: 0.7; }
-
-
-  /* Services */
-  .services-section { border-bottom: 1px solid var(--color-border); }
-  .services-inner { max-width: 1440px; margin-inline: auto; padding: 3.5rem 2rem; }
-  .services-label { font-family: var(--font-family-display); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 2rem; }
-  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-  .service-item { display: flex; flex-direction: column; gap: 0.5rem; }
-  .service-title { font-family: var(--font-family-display); font-size: 0.98rem; font-weight: 700; color: var(--color-text); }
-  .service-detail { font-size: 0.92rem; line-height: 1.6; color: var(--color-muted); }
-  @media (max-width: 860px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 640px) { .services-grid { grid-template-columns: 1fr; } .services-inner { padding: 2.5rem 1.5rem; } }
-
-  /* ─── Selected Projects ──────────────── */
-  .projects-section { border-bottom: 1px solid var(--color-border); }
-  .projects-inner { max-width: 1440px; margin-inline: auto; padding: 3.5rem 2rem; }
-  .projects-label { font-family: var(--font-family-display); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 2rem; }
-  .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .project-card { display: flex; flex-direction: column; text-decoration: none; }
-  .project-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background-color: var(--color-surface); border: 1px solid var(--color-border); }
-  .project-media img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; }
-  .project-card:hover .project-media img { transform: scale(1.04); }
-  .project-placeholder { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; font-family: var(--font-family-display); font-weight: 800; font-size: clamp(1.1rem, 2vw, 1.6rem); letter-spacing: -0.01em; color: var(--color-muted); background: linear-gradient(135deg, var(--color-surface), #0d0d0d); }
-  .project-status { position: absolute; top: 0.75rem; left: 0.75rem; display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-family-display); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text); background: rgba(7,7,7,0.7); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid var(--color-border); padding: 0.3rem 0.55rem; border-radius: 2px; }
-  .project-play { position: absolute; inset: 0; margin: auto; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(7,7,7,0.55); border: 1px solid rgba(255,255,255,0.4); border-radius: 50%; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); transition: background 200ms ease, transform 200ms ease; }
-  .project-card:hover .project-play { background: var(--color-accent); transform: scale(1.08); }
-  .project-info { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 1rem; }
-  .project-name { font-family: var(--font-family-display); font-size: 1.05rem; font-weight: 700; color: var(--color-text); transition: color 200ms ease; }
-  .project-card:hover .project-name { color: var(--color-accent); }
-  .project-role { font-family: var(--font-family-display); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); }
-  @media (max-width: 860px) { .projects-grid { grid-template-columns: 1fr; } }
-  @media (max-width: 640px) { .projects-inner { padding: 2.5rem 1.5rem; } }
-
-  /* ─── Work tiles ─────────────────────── */
-  .work-tiles {
+  /* ─── Lightbox ───────────────────────────────── */
+  .ix-lb {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--color-bg);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid var(--color-border);
+    grid-template-rows: 1fr auto;
   }
-
-  .tile {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 4rem 2rem;
-    border-right: 1px solid var(--color-border);
-    text-decoration: none;
-    transition: background-color 200ms ease;
-    container-type: inline-size;
+  .ix-lb[hidden] { display: none; }
+  .ix-lb-img {
+    min-height: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 16px 16px 0;
+    cursor: e-resize;
   }
-
-  .tile:last-child { border-right: none; }
-  .tile:hover { background-color: var(--color-surface); }
-
-  .tile-label {
-    font-family: var(--font-family-display);
-    font-size: clamp(1.2rem, 6cqi, 3.5rem);
-    font-weight: 800;
-    color: var(--color-text);
-    letter-spacing: -0.02em;
-    display: block;
-    margin-bottom: 0.5rem;
-    transition: color 200ms ease;
-  }
-
-  .tile:hover .tile-label { color: var(--color-accent); }
-
-  .tile-sub {
-    font-family: var(--font-family-display);
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+  .ix-lb-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    padding: 12px 16px 16px;
     color: var(--color-muted);
-    display: block;
   }
-
-  /* ─── Responsive ─────────────────────── */
-  @media (max-width: 860px) {
-    .about-inner {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
+  .ix-lb-title { color: var(--color-text); }
+  .ix-lb-ctrl { display: flex; gap: 16px; }
+  .ix-lb-ctrl button {
+    font: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--color-muted);
+    cursor: pointer;
   }
+  .ix-lb-ctrl button:hover { color: var(--color-text); }
 
-  @media (max-width: 640px) {
-    .about-inner { padding: 3rem 1.5rem; }
-
-    /* keep the name to two lines on phones: Martin / Van Londen */
-    .name { font-size: clamp(2rem, 9vw, 3rem); white-space: nowrap; }
-
-    .work-tiles { grid-template-columns: 1fr; }
-
-    .tile {
-      border-right: none;
-      border-bottom: 1px solid var(--color-border);
-      padding: 3rem 1.5rem;
-    }
-
-    .tile:last-child { border-bottom: none; }
+  /* ─── Phones ─────────────────────────────────── */
+  @media (max-width: 899px) {
+    .ix-head { grid-template-columns: 1fr; gap: 14px; padding-top: 80px; }
+    .ix-filters { grid-column: auto; justify-content: flex-start; gap: 2px 14px; }
+    .ix-grid { grid-template-columns: repeat(2, 1fr); gap: 12px 5px; }
+    .ix-meta { grid-template-columns: 2.8em 1fr; font-size: 10px; }
+    .ix-cat { display: none; }
+    .ix-about { grid-template-columns: 1fr; padding: 56px 12px 0; }
+    .ix-about .ix-col:first-child { grid-column: auto; padding-right: 0; }
+    .ix-lb-bar { grid-template-columns: 1fr auto; }
+    .ix-lb-title { grid-column: 1 / -1; grid-row: 2; }
+    .ix-lb-img { padding: 8px 0 0; }
   }
 </style>
