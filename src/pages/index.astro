@@ -7,7 +7,20 @@ import { thumb, thumbSrcset } from '../data/thumbs';
 
 const catLabel = Object.fromEntries(categories.map((c) => [c.id, c.label]));
 const counts = Object.fromEntries(categories.map((c) => [c.id, work.filter((w) => w.category === c.id).length]));
-const pad = (n: number) => String(n).padStart(3, '0');
+const pad2 = (n: number) => String(n).padStart(2, '0');
+
+// Keep each shoot together: every shoot (and each run of one-off photos in a
+// category) starts on a fresh row and is numbered as one project, e.g. 04.1, 04.2.
+let group = 0;
+let sub = 0;
+const cells = work.map((w, i) => {
+  const prev = work[i - 1];
+  const sameGroup = prev && prev.category === w.category && (prev.shoot ?? null) === (w.shoot ?? null);
+  if (sameGroup) sub++;
+  else { group++; sub = 1; }
+  return { w, i, start: !sameGroup, group, num: `${pad2(group)}.${sub}` };
+});
+const groupSize = (g: number) => cells.filter((c) => c.group === g).length;
 const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 ---
 
@@ -37,8 +50,8 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   </section>
 
   <ol class="ix-grid" id="ix-grid">
-    {work.map((w, i) => (
-      <li class="ix-cell" data-category={w.category}>
+    {cells.map(({ w, i, start, group, num }) => (
+      <li class:list={['ix-cell', { 'ix-start': start }]} data-category={w.category} data-size={start ? groupSize(group) : undefined}>
         <button
           type="button"
           class="ix-item"
@@ -61,7 +74,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
             />
           </span>
           <span class="ix-meta">
-            <span class="ix-num">{pad(i + 1)}</span>
+            <span class="ix-num">{num}</span>
             <span class="ix-title">{w.title}</span>
             <span class="ix-desc">{w.desc}</span>
             <span class="ix-cat">{catLabel[w.category]}</span>
@@ -127,6 +140,24 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   const valid = ['all', 'editorial', 'commissioned', 'street', 'conceptual'];
   let active = 'all';
 
+  // Keep each shoot on one row: if a shoot won't fit in what's left of the
+  // current row, it starts on the next one. Recomputed when the column count changes.
+  const starts = cells.filter((c) => c.classList.contains('ix-start'));
+  function pack() {
+    if (!grid) return;
+    const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
+    let used = 0;
+    starts.forEach((c) => {
+      const size = Number(c.dataset.size) || 1;
+      const wrap = used > 0 && used + size > cols;
+      c.style.gridColumnStart = wrap ? '1' : '';
+      used = ((wrap ? 0 : used) + size) % cols;
+    });
+  }
+  pack();
+  let packTimer: number | undefined;
+  window.addEventListener('resize', () => { clearTimeout(packTimer); packTimer = window.setTimeout(pack, 60); });
+
   // Filtering fades non-matching photos in place; the grid never moves.
   function setFilter(f: string, updateHash = true) {
     active = valid.includes(f) ? f : 'all';
@@ -159,7 +190,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     lbImg.src = el.dataset.src || '';
     lbImg.alt = el.dataset.alt || '';
     lbTitle.textContent = `${el.dataset.title} — ${el.dataset.desc}`;
-    lbCount.textContent = `${String(pos + 1).padStart(3, '0')} / ${String(order.length).padStart(3, '0')}`;
+    lbCount.textContent = `${pos + 1} / ${order.length}`;
   }
   function open(el: HTMLElement) {
     order = items();
