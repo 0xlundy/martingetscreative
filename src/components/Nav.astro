@@ -1,5 +1,11 @@
 ---
 const currentPath = Astro.url.pathname;
+const isStory = /^\/(stories|editorial|personal)(\/|$)/.test(currentPath);
+const links = [
+  { href: '/',        label: 'Stills',  active: currentPath === '/' },
+  { href: '/motion',  label: 'Motion',  active: currentPath.startsWith('/motion') },
+  { href: '/stories', label: 'Stories', active: isStory },
+];
 ---
 
 <header id="site-nav">
@@ -8,18 +14,11 @@ const currentPath = Astro.url.pathname;
     <a href="/" class="nav-logo" aria-label="Home">MGC</a>
 
     <ul class="nav-links" role="list">
-      <li>
-        <a href="/work"
-          class:list={['nav-link', { 'is-active': currentPath.startsWith('/work') }]}>
-          Work
-        </a>
-      </li>
-      <li>
-        <a href="/reel"
-          class:list={['nav-link', { 'is-active': currentPath.startsWith('/reel') }]}>
-          Reel
-        </a>
-      </li>
+      {links.map((l) => (
+        <li>
+          <a href={l.href} class:list={['nav-link', { 'is-active': l.active }]}>{l.label}</a>
+        </li>
+      ))}
     </ul>
 
     <!-- Mobile toggle -->
@@ -31,8 +30,7 @@ const currentPath = Astro.url.pathname;
 
   <!-- Mobile menu -->
   <div id="mobile-menu" aria-hidden="true">
-    <a href="/work" class="mob-link">Work</a>
-    <a href="/reel" class="mob-link">Reel</a>
+    {links.map((l) => <a href={l.href} class="mob-link">{l.label}</a>)}
   </div>
 </header>
 

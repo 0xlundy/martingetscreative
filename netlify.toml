@@ -5,16 +5,28 @@
 [build.environment]
   NODE_VERSION = "22"
 
-# 301 the legacy gallery URLs to the new /work page.
+# Old URLs -> new sections (Stills = /, Motion, Stories).
+[[redirects]]
+  from = "/work"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/reel"
+  to = "/motion"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/editorial"
-  to = "/work#editorial"
+  to = "/stories"
   status = 301
   force = true
 
 [[redirects]]
   from = "/personal"
-  to = "/work"
+  to = "/stories"
   status = 301
   force = true
 

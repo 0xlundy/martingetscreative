@@ -1,6 +1,6 @@
 ---
-// The reel on its own page, one full screen, followed by the film case studies
-// that used to sit on the home page.
+// Motion: the reel full screen, then the films that have video.
+// Their write-ups live under Stories.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
 import { getCollection } from 'astro:content';
@@ -15,10 +15,11 @@ const personal = await getCollection('personal');
 const pick = (coll: typeof editorial, slug: string) => coll.find((e) => e.slug === slug);
 
 const films = [
-  { entry: pick(editorial, 'make-it-here'), base: 'editorial' },
-  { entry: pick(editorial, 'cine-rent-west'), base: 'editorial' },
-  { entry: pick(personal, 'against-the-code'), base: 'personal' },
+  ...editorial.map((entry) => ({ entry, base: 'editorial' })),
+  ...personal.map((entry) => ({ entry, base: 'personal' })),
 ]
+  .filter(({ entry }) => entry.data.vimeoId || entry.data.youtubeId || entry.data.video)
+  .sort((a, b) => a.entry.data.order - b.entry.data.order)
   .filter((x) => x.entry)
   .map(({ entry, base }, i) => ({
     num: String(i + 1).padStart(3, '0'),
@@ -35,7 +36,7 @@ const films = [
 
 <BaseLayout
   mono
-  title="Reel | Martin Van Londen, Cinematographer, Portland OR"
+  title="Motion | Martin Van Londen, Cinematographer, Portland OR"
   description="Cinematography reel and selected films by Martin Van Londen, director of photography based in Portland, Oregon. Available worldwide."
 >
   <section class="rl-stage">
@@ -68,7 +69,7 @@ const films = [
         </li>
       ))}
     </ol>
-    <p class="rl-back"><a href="/">← Photo index</a></p>
+    <p class="rl-back"><a href="/stories">Stories →</a></p>
   </section>
 </BaseLayout>
 

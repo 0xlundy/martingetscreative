@@ -1,6 +1,6 @@
 ---
-// Home = the photo index. Every still from src/data/work.ts in one dense grid,
-// numbered, with filters that fade (never reshuffle). The reel lives at /reel.
+// Home = Stills: every photo from src/data/work.ts in one dense numbered grid.
+// Shoots stay together; single shots fill the gaps; filters show one category.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { work, categories } from '../data/work';
 import { thumb, thumbSrcset } from '../data/thumbs';
@@ -9,18 +9,15 @@ const catLabel = Object.fromEntries(categories.map((c) => [c.id, c.label]));
 const counts = Object.fromEntries(categories.map((c) => [c.id, work.filter((w) => w.category === c.id).length]));
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
-// Keep each shoot together: every shoot (and each run of one-off photos in a
-// category) starts on a fresh row and is numbered as one project, e.g. 04.1, 04.2.
-let group = 0;
-let sub = 0;
-const cells = work.map((w, i) => {
-  const prev = work[i - 1];
-  const sameGroup = prev && prev.category === w.category && (prev.shoot ?? null) === (w.shoot ?? null);
-  if (sameGroup) sub++;
-  else { group++; sub = 1; }
-  return { w, i, start: !sameGroup, group, num: `${pad2(group)}.${sub}` };
-});
-const groupSize = (g: number) => cells.filter((c) => c.group === g).length;
+// Each shoot is a group (kept together on one row); a photo with no shoot is a
+// "single" and gets used to fill the empty end of a row. The browser does the
+// packing (see the script below) so it adapts to 5, 4 or 2 columns.
+const cells = work.map((w, i) => ({
+  w,
+  i,
+  group: w.shoot ? `${w.category}:${w.shoot}` : `single:${i}`,
+  single: !w.shoot || work.filter((x) => x.shoot === w.shoot && x.category === w.category).length === 1,
+}));
 const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 ---
 
@@ -50,8 +47,8 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   </section>
 
   <ol class="ix-grid" id="ix-grid">
-    {cells.map(({ w, i, start, group, num }) => (
-      <li class:list={['ix-cell', { 'ix-start': start }]} data-category={w.category} data-size={start ? groupSize(group) : undefined}>
+    {cells.map(({ w, i, group, single }) => (
+      <li class="ix-cell" data-category={w.category} data-group={group} data-single={single ? '1' : undefined}>
         <button
           type="button"
           class="ix-item"
@@ -74,7 +71,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
             />
           </span>
           <span class="ix-meta">
-            <span class="ix-num">{num}</span>
+            <span class="ix-num">{String(i + 1).padStart(2, '0')}</span>
             <span class="ix-title">{w.title}</span>
             <span class="ix-desc">{w.desc}</span>
             <span class="ix-cat">{catLabel[w.category]}</span>
@@ -100,9 +97,9 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
       </ul>
     </div>
     <div class="ix-col">
-      <p class="ix-label">Motion</p>
-      <p><a href="/reel">Watch the reel →</a></p>
-      <p><a href="/work">Full work archive →</a></p>
+      <p class="ix-label">More</p>
+      <p><a href="/motion">Motion — reel + films →</a></p>
+      <p><a href="/stories">Stories — projects in depth →</a></p>
     </div>
   </section>
 
@@ -140,33 +137,70 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   const valid = ['all', 'editorial', 'commissioned', 'street', 'conceptual'];
   let active = 'all';
 
-  // Keep each shoot on one row: if a shoot won't fit in what's left of the
-  // current row, it starts on the next one. Recomputed when the column count changes.
-  const starts = cells.filter((c) => c.classList.contains('ix-start'));
+  // ─── Packing ──────────────────────────────────
+  // Shoots stay on one row. When the next shoot won't fit in what's left of a
+  // row, single shots fill that space; leftover singles go at the end.
+  let seq: HTMLElement[] = [];
+  const pad2 = (n: number) => String(n).padStart(2, '0');
+
   function pack() {
     if (!grid) return;
     const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
-    let used = 0;
-    starts.forEach((c) => {
-      const size = Number(c.dataset.size) || 1;
-      const wrap = used > 0 && used + size > cols;
-      c.style.gridColumnStart = wrap ? '1' : '';
-      used = ((wrap ? 0 : used) + size) % cols;
+    const shown = cells.filter((c) => !c.hidden);
+    const groups: HTMLElement[][] = [];
+    const singles: HTMLElement[] = [];
+    const byKey = new Map<string, HTMLElement[]>();
+    shown.forEach((c) => {
+      if (c.dataset.single) { singles.push(c); return; }
+      const k = c.dataset.group!;
+      if (!byKey.has(k)) { byKey.set(k, []); groups.push(byKey.get(k)!); }
+      byKey.get(k)!.push(c);
     });
-  }
-  pack();
-  let packTimer: number | undefined;
-  window.addEventListener('resize', () => { clearTimeout(packTimer); packTimer = window.setTimeout(pack, 60); });
 
-  // Filtering fades non-matching photos in place; the grid never moves.
+    seq = [];
+    const forceLeft = new Set<HTMLElement>();
+    const numbered: { cells: HTMLElement[]; shoot: boolean }[] = [];
+    let used = 0;
+    for (const g of groups) {
+      if (used > 0 && used + g.length > cols) {
+        while (used < cols && singles.length) {
+          const s = singles.shift()!;
+          seq.push(s); numbered.push({ cells: [s], shoot: false }); used++;
+        }
+        if (used < cols) forceLeft.add(g[0]);
+        used = 0;
+      }
+      seq.push(...g); numbered.push({ cells: g, shoot: true });
+      used = (used + g.length) % cols;
+    }
+    singles.forEach((s) => { seq.push(s); numbered.push({ cells: [s], shoot: false }); });
+
+    seq.forEach((c, i) => {
+      c.style.order = String(i);
+      c.style.gridColumnStart = forceLeft.has(c) ? '1' : '';
+    });
+    numbered.forEach((n, gi) => n.cells.forEach((c, k) => {
+      const el = c.querySelector('.ix-num');
+      if (el) el.textContent = n.shoot ? `${pad2(gi + 1)}.${k + 1}` : pad2(gi + 1);
+    }));
+  }
+
+  let lastCols = 0;
+  window.addEventListener('resize', () => {
+    const cols = grid ? getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length : 0;
+    if (cols !== lastCols) { lastCols = cols; pack(); }
+  });
+
+  // ─── Filters: show only the chosen category, packed tight ──
   function setFilter(f: string, updateHash = true) {
     active = valid.includes(f) ? f : 'all';
-    cells.forEach((c) => c.classList.toggle('is-dim', active !== 'all' && c.dataset.category !== active));
+    cells.forEach((c) => { c.hidden = active !== 'all' && c.dataset.category !== active; });
     filters.forEach((b) => {
       const on = b.dataset.filter === active;
       b.classList.toggle('is-active', on);
       b.setAttribute('aria-pressed', String(on));
     });
+    pack();
     if (updateHash) history.replaceState(null, '', active === 'all' ? location.pathname : '#' + active);
   }
   filters.forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.filter || 'all')));
@@ -181,8 +215,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   let pos = -1;
   let opener: HTMLElement | null = null;
 
-  const items = () =>
-    cells.filter((c) => !c.classList.contains('is-dim')).map((c) => c.querySelector('.ix-item') as HTMLElement);
+  const items = () => seq.map((c) => c.querySelector('.ix-item') as HTMLElement);
 
   function show(i: number) {
     pos = (i + order.length) % order.length;
@@ -209,7 +242,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 
   grid?.addEventListener('click', (e) => {
     const el = (e.target as HTMLElement).closest<HTMLElement>('.ix-item');
-    if (!el || el.closest('.is-dim')) return;
+    if (!el) return;
     open(el);
   });
   lb.querySelector('.ix-lb-prev')?.addEventListener('click', () => show(pos - 1));
@@ -318,18 +351,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   .ix-item:hover .ix-title,
   .ix-item:focus-visible .ix-title { text-decoration: underline; text-underline-offset: 3px; }
 
-  /* Filter fade: dimmed photos keep their place under a page-colored veil. */
-  .ix-cell::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--color-bg);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 220ms ease;
-  }
-  .ix-cell.is-dim::after { opacity: 0.86; pointer-events: auto; }
-  .ix-cell.is-dim .ix-item { cursor: default; }
+  .ix-cell[hidden] { display: none; }
 
   /* ─── About (below the work) ─────────────────── */
   .ix-about {

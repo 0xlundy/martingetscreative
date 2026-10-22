@@ -60,10 +60,21 @@ a {
 body.is-mono {
   --font-family-display: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
   --font-family-sans:    'IBM Plex Mono', ui-monospace, Menlo, monospace;
+  --color-accent: var(--color-text);
   font-size: 12px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
+
+/* Shared video player + story pages: square, quiet controls (2px radius max). */
+body.is-mono .video-facade { border-radius: 0; }
+body.is-mono .play-btn {
+  width: auto; height: auto; padding: 8px 14px; border-radius: 2px;
+  background: var(--color-text); color: var(--color-bg);
+}
+body.is-mono .play-btn svg { width: 12px; height: 13px; }
+body.is-mono .video-title { display: none; }
+body.is-mono .category-pill { color: var(--color-muted); border-color: var(--color-border); font-weight: 500; }
 
 /* Nav + footer line up with the full-bleed grid and drop the bold display look. */
 body.is-mono .nav-inner,
@@ -226,3 +237,6 @@ body.is-mono footer { margin-top: 72px; }
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
 }
+
+/* Long-form story text stays in normal case so it reads easily. */
+body.is-mono .prose { text-transform: none; letter-spacing: 0; }

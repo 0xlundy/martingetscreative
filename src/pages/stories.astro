@@ -1,0 +1,117 @@
+---
+// Stories: every project write-up (src/content/editorial + personal) as one index.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { existsSync } from 'node:fs';
+
+// Only show a cover that actually exists in public/ (a missing one shows the title instead).
+const hasFile = (src?: string) => Boolean(src) && existsSync(`public${decodeURIComponent(src!)}`);
+
+const editorial = await getCollection('editorial');
+const personal = await getCollection('personal');
+
+const stories = [
+  ...editorial.map((entry) => ({ entry, base: 'editorial', kind: 'Commercial' })),
+  ...personal.map((entry) => ({ entry, base: 'personal', kind: 'Personal' })),
+]
+  .sort((a, b) => a.entry.data.order - b.entry.data.order || b.entry.data.publishDate.valueOf() - a.entry.data.publishDate.valueOf())
+  .map(({ entry, base, kind }, i) => ({
+    num: String(i + 1).padStart(2, '0'),
+    href: `/${base}/${entry.slug}`,
+    title: entry.data.title,
+    client: entry.data.client,
+    role: entry.data.role,
+    kind,
+    when: entry.data.status ?? entry.data.year,
+    hasVideo: Boolean(entry.data.vimeoId || entry.data.youtubeId || entry.data.video),
+    cover: hasFile(entry.data.cover) ? entry.data.cover : undefined,
+    coverAlt: entry.data.coverAlt ?? entry.data.title,
+    description: entry.data.description,
+  }));
+---
+
+<BaseLayout
+  title="Stories | Martin Van Londen, Director of Photography, Portland OR"
+  description="Project stories by Martin Van Londen: documentary, commercial and personal work, with the role he played on each."
+>
+  <section class="st-head">
+    <h1>Stories</h1>
+    <p>{stories.length} projects — what it was, and what I did on it</p>
+  </section>
+
+  <ol class="st-list">
+    {stories.map((s) => (
+      <li>
+        <a href={s.href} class="st-item">
+          <span class="st-frame">
+            {s.cover ? <img src={s.cover} alt={s.coverAlt} loading="lazy" decoding="async" /> : <span class="st-nocover">{s.title}</span>}
+          </span>
+          <span class="st-meta">
+            <span class="st-num">{s.num}</span>
+            <span class="st-title">{s.title}{s.client && s.client !== s.title ? ` — ${s.client}` : ''}</span>
+            <span class="st-when">{s.when}</span>
+            <span class="st-role">{s.role}{s.hasVideo ? ' · Film' : ''} · {s.kind}</span>
+            <span class="st-desc">{s.description}</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>
+
+<style>
+  .st-head {
+    padding: 88px 5px 20px;
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .st-head h1 { font: inherit; color: var(--color-text); }
+  .st-head p { color: var(--color-muted); }
+
+  .st-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 5px;
+    padding: 0 5px;
+  }
+  @media (min-width: 1200px) { .st-list { grid-template-columns: repeat(3, 1fr); } }
+
+  .st-item { display: block; }
+  .st-frame {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+  .st-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .st-frame { position: relative; }
+  .st-nocover { position: absolute; inset: 0; display: grid; place-items: center; color: var(--color-faint); }
+
+  .st-meta {
+    display: grid;
+    grid-template-columns: 3.2em 1fr auto;
+    column-gap: 6px;
+    padding: 6px 10px 0 0;
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+  .st-num   { color: var(--color-faint); grid-row: span 3; }
+  .st-title { color: var(--color-text); }
+  .st-when  { color: var(--color-faint); grid-column: 3; grid-row: 1; }
+  .st-role  { color: var(--color-muted); grid-column: 2 / -1; }
+  .st-desc  {
+    color: var(--color-faint);
+    grid-column: 2 / -1;
+    text-transform: none;
+    margin-top: 4px;
+    max-width: 60ch;
+  }
+  .st-item:hover .st-title { text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 899px) {
+    .st-head { padding-top: 80px; }
+    .st-list { grid-template-columns: 1fr; }
+  }
+</style>
