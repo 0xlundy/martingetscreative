@@ -255,7 +255,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     function finish() {
       if (done) return;
       done = true;
-      root.classList.remove('play-intro');
+      root.classList.remove('play-intro', 'intro-go', 'intro-reveal');
       overlay!.remove();
       anims.forEach((a) => a.cancel());
     }
@@ -266,8 +266,16 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 
     const fontsReady = Promise.race([document.fonts?.ready ?? Promise.resolve(), wait(900)]);
 
+    const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
+
     (async () => {
-      await Promise.all([fontsReady, wait(1400)]);
+      // 1. Let the page finish its first heavy frames, then build the card.
+      await fontsReady;
+      await Promise.race([new Promise((r) => (window as any).requestIdleCallback ? (window as any).requestIdleCallback(r, { timeout: 400 }) : setTimeout(r, 120)), wait(400)]);
+      await nextFrame(); await nextFrame();
+      if (done) return;
+      root.classList.add('intro-go');
+      await wait(1450);
       if (done) return;
 
       // 2. Clear the supporting lines so the move is just the wordmark.
@@ -295,6 +303,10 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
       // 4. Land: swap to the real header logo in the same frame, then reveal.
       small.style.opacity = '1';
       big.style.visibility = 'hidden';
+      root.classList.add('intro-reveal');
+      // The grid paints now, while nothing is moving; fades start after it.
+      await nextFrame(); await nextFrame();
+      if (done) return;
       headerBits.forEach((el, i) =>
         run(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: i * 70, easing: EASE_OUT }));
       await run(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: 520, delay: 140, easing: EASE_OUT });
@@ -414,6 +426,10 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     will-change: opacity;
   }
   :global(html.play-intro body) { overflow: hidden; }
+  /* Don't paint the photo grid behind the card; it's revealed after the logo lands. */
+  :global(html.play-intro:not(.intro-reveal) #main-content),
+  :global(html.play-intro:not(.intro-reveal) footer) { visibility: hidden; }
+  :global(html.play-intro) .intro { visibility: visible; }
   :global(html.play-intro #brand-mark),
   :global(html.play-intro #site-nav .brand-line),
   :global(html.play-intro #site-nav .nav-links) { opacity: 0; }
@@ -435,13 +451,13 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     transform-origin: 0 0;
     will-change: transform;
     backface-visibility: hidden;
-    animation: intro-in 640ms cubic-bezier(0.23, 1, 0.32, 1) both;
+    opacity: 0;
   }
   .intro-rule {
     width: min(60vw, 420px);
     height: 1px;
     background: var(--color-muted);
-    animation: rule-in 520ms 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
+    transform: scaleX(0);
   }
   .intro-sub {
     font-family: var(--font-family-brand);
@@ -450,8 +466,12 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     letter-spacing: 0.32em;
     margin-right: -0.32em;
     color: var(--color-text);
-    animation: sub-in 520ms 380ms cubic-bezier(0.23, 1, 0.32, 1) both;
+    opacity: 0;
   }
+  /* The card only starts building once the page has settled (see script). */
+  :global(html.intro-go) .intro-mgc { animation: intro-in 640ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+  :global(html.intro-go) .intro-rule { animation: rule-in 520ms 220ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+  :global(html.intro-go) .intro-sub { animation: sub-in 520ms 380ms cubic-bezier(0.23, 1, 0.32, 1) both; }
   @keyframes intro-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes rule-in  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   @keyframes sub-in   { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
