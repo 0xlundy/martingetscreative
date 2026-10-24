@@ -29,10 +29,6 @@ export const work: WorkItem[] = [
   // Opener
   { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
 
-  // Sansei Sensibility (2)
-  { src: '/images/portraits/08-dscf7929.jpg', alt: 'Carol Takami Tolman, documentary interview portrait for Sansei Sensibility',                 title: 'Sensi Sensibility', desc: 'Carol Takami Tolman, Sansei',                                  category: 'editorial', shoot: 'sensi-sensibility' },
-  { src: '/images/stories/20-dscf7092.jpg',   alt: 'Oregon Supreme Court Justice Lynn Nakamoto, documentary interview portrait', title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Oregon Supreme Court Justice', category: 'editorial', shoot: 'sensi-sensibility' },
-
   // Portland Book Festival — Literary Arts (4)
   { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival' },
   { src: '/images/stories/DSCF2588.jpg', alt: 'On-stage conversation under the Literary Arts backdrop',              title: 'Portland Book Festival', desc: 'Main Stage',     category: 'editorial', shoot: 'portland-book-festival' },
@@ -48,6 +44,10 @@ export const work: WorkItem[] = [
   { src: '/images/stories/DSCF9434_look.jpg',   alt: 'Detail of a customized scooter front end at Honcho',           title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
   { src: '/images/stories/DSCF9472_look.jpg',   alt: 'Motorcycle on a red-lit stage with a dachshund walking past',  title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
   { src: '/images/stories/honcho-set-2988.jpg', alt: 'Honcho stage set with motorcycles under red and blue lighting', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
+
+  // Sansei Sensibility (2)
+  { src: '/images/portraits/08-dscf7929.jpg', alt: 'Carol Takami Tolman, documentary interview portrait for Sansei Sensibility',                 title: 'Sensi Sensibility', desc: 'Carol Takami Tolman, Sansei',                                  category: 'editorial', shoot: 'sensi-sensibility' },
+  { src: '/images/stories/20-dscf7092.jpg',   alt: 'Oregon Supreme Court Justice Lynn Nakamoto, documentary interview portrait', title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Oregon Supreme Court Justice', category: 'editorial', shoot: 'sensi-sensibility' },
 
   // Portland Cocktail Week (4)
   { src: '/images/stories/14-dscf6926.jpg', alt: 'Documentary portrait at cocktail event',           title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
