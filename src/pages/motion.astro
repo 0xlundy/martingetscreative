@@ -1,11 +1,12 @@
 ---
 // Motion: the reel, one full screen. Nothing else.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import VideoEmbed from '../components/VideoEmbed.astro';
 
 // ── Reel Vimeo ID (swap when the reel is re-cut) ────────────
 const REEL_VIMEO_ID = '901325832';
 // Vimeo's own thumbnail for the reel, so the poster never depends on a build-time lookup.
+// Plays on arrival, muted (browsers only allow silent autoplay); viewers unmute in the player.
+const REEL_SRC = `https://player.vimeo.com/video/${REEL_VIMEO_ID}?autoplay=1&muted=1&loop=1&playsinline=1&autopause=0&title=0&byline=0&portrait=0&dnt=1&color=ffffff`;
 const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683a715fbbfdbd2ac269731a8783d993195b8c81f3b9523b-d_1280?region=us';
 ---
 
@@ -15,12 +16,19 @@ const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683
 >
   <section class="rl-stage">
     <div class="rl-player">
-      <VideoEmbed vimeoId={REEL_VIMEO_ID} poster={REEL_POSTER} title="Martin Van Londen Reel" />
+      <div class="rl-frame" style={`background-image:url(${REEL_POSTER})`}>
+        <iframe
+          src={REEL_SRC}
+          title="Martin Van Londen Reel"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
     </div>
     <div class="rl-caption">
       <h1>Reel</h1>
       <span>Martin Van Londen — Director of Photography</span>
-      <span class="rl-dim">Portland, OR</span>
+      <span class="rl-dim">Sound off — use the player to unmute</span>
     </div>
   </section>
 </BaseLayout>
@@ -29,7 +37,7 @@ const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683
   /* One full screen: the player is as large as the viewport allows at 16:9. */
   .rl-stage {
     min-height: 100svh;
-    padding: 64px 5px 14px;
+    padding: 76px 5px 14px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -37,7 +45,21 @@ const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683
     gap: 10px;
   }
   .rl-player,
-  .rl-caption { width: min(100%, calc((100svh - 64px - 60px) * 16 / 9)); }
+  .rl-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
+    background: var(--color-surface) center / cover no-repeat;
+  }
+  .rl-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .rl-caption { width: min(100%, calc((100svh - 76px - 60px) * 16 / 9)); }
+  .rl-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
+    background: var(--color-surface) center / cover no-repeat;
+  }
+  .rl-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .rl-caption {
     display: flex;
     gap: 18px;
@@ -48,9 +70,16 @@ const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683
   .rl-dim { color: var(--color-faint); margin-left: auto; }
 
   @media (max-width: 899px) {
-    .rl-stage { min-height: 70svh; padding-top: 80px; }
+    .rl-stage { min-height: 70svh; padding-top: 120px; }
     .rl-player, .rl-caption { width: 100%; }
-    .rl-caption { padding-inline: 7px; gap: 4px 14px; }
+    .rl-frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    max-width: 100%;
+    background: var(--color-surface) center / cover no-repeat;
+  }
+  .rl-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .rl-caption { padding-inline: 7px; gap: 4px 14px; }
     .rl-dim { margin-left: 0; }
   }
 </style>

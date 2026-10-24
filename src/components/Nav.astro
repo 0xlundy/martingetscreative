@@ -11,7 +11,13 @@ const links = [
 <header id="site-nav">
   <nav class="nav-inner">
 
-    <a href="/" class="nav-logo" aria-label="Home">MGC</a>
+    <a href="/" class="brand" aria-label="MGC, Martin Van Londen: home">
+      <span class="brand-mark" id="brand-mark">MGC</span>
+      <span class="brand-line">
+        <span class="brand-name">Martin Van Londen</span>
+        <span class="brand-role">Photographer · Director of Photography</span>
+      </span>
+    </a>
 
     <ul class="nav-links" role="list">
       {links.map((l) => (
@@ -68,7 +74,7 @@ const links = [
   }
 
   #site-nav.is-scrolled {
-    background: rgba(7,7,7,0.9);
+    background: rgba(10,10,10,0.92);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom-color: var(--color-border);
@@ -78,11 +84,43 @@ const links = [
     max-width: 1440px;
     margin-inline: auto;
     padding-inline: 2rem;
-    height: 64px;
+    height: 76px;
     display: flex;
     align-items: center;
     gap: 2rem;
   }
+
+  /* ─── Brand: MGC wordmark + who/what ─── */
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+  .brand-mark {
+    font-family: var(--font-family-brand);
+    font-weight: 800;
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    color: var(--color-text);
+    display: block;
+  }
+  .brand-line {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-left: 14px;
+    border-left: 1px solid var(--color-border);
+    font-size: 11px;
+    line-height: 1.25;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+  .brand-name { color: var(--color-text); }
+  .brand-role { color: var(--color-muted); }
 
   .nav-logo {
     font-family: var(--font-family-display);
@@ -162,8 +200,16 @@ const links = [
   .mob-link:hover { color: var(--color-text); }
 
   /* Two links fit on any phone, so they stay visible (no hamburger). */
+  /* Phones: logo + name on top, the three sections on a row below. */
   @media (max-width: 640px) {
-    .nav-inner { padding-inline: 1rem; }
-    .nav-links { gap: 1.5rem; }
+    .nav-inner {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 12px 1rem 10px;
+      row-gap: 12px;
+    }
+    .brand-mark { font-size: 30px; }
+    .brand-line { font-size: 10px; letter-spacing: 0.08em; }
+    .nav-links { margin-left: 0; width: 100%; gap: 1.5rem; }
   }
 </style>

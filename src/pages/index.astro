@@ -26,12 +26,30 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   title="Cinematographer & Commercial Photographer Portland OR | Martin Van Londen"
   description="Portland, OR cinematographer and commercial photographer with twenty years creating campaign, documentary, and editorial content. Available for projects worldwide."
 >
+  <!-- Intro: the MGC title card, which then flies into the header logo.
+       Hidden unless the inline script below turns it on (once per visit). -->
+  <script is:inline>
+    try {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce && !sessionStorage.getItem('mgc-intro')) document.documentElement.classList.add('play-intro');
+    } catch (e) {}
+  </script>
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-card">
+      <span class="intro-mgc" id="intro-mgc">MGC</span>
+      <span class="intro-rule"></span>
+      <span class="intro-sub">Martin Gets Creative</span>
+    </div>
+  </div>
+
   <section class="ix-head">
-    <div class="ix-id">
-      <h1>Martin Van Londen</h1>
-      <p>Director of Photography + Photographer</p>
-      <p>Portland, OR · Available worldwide</p>
-      <a href="mailto:martinvanlonden@gmail.com">martinvanlonden@gmail.com</a>
+    <div class="ix-bio">
+      <h1 class="ix-lead">Photographer and director of photography in Portland, Oregon. Twenty years of campaign, editorial and documentary work.</h1>
+      <p class="ix-sub">
+        <span>Documentary work supported by the Andy Warhol Foundation</span>
+        <span>Available worldwide</span>
+        <a href="mailto:martinvanlonden@gmail.com">martinvanlonden@gmail.com</a>
+      </p>
     </div>
 
     <div class="ix-filters" role="group" aria-label="Filter photos by category">
@@ -84,7 +102,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   <section class="ix-about">
     <div class="ix-col">
       <p class="ix-label">About</p>
-      <p>Twenty years behind the frame. I know what makes a story land, and how to build the shot that gets it there.</p>
+      <p>I know what makes a story land, and how to build the shot that gets it there.</p>
       <p>Director, DP, and commercial photographer based in Portland, Oregon. My documentary work has been supported by the Andy Warhol Foundation. On the commercial side, I've shot campaigns and editorial content for clients across the Pacific Northwest and beyond. I think in strategy as much as images. I produce content and direct social, not just shoot and edit.</p>
     </div>
     <div class="ix-col">
@@ -206,6 +224,57 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   filters.forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.filter || 'all')));
   setFilter(location.hash.slice(1) || 'all', false);
 
+  // ─── Intro handoff: title card → header logo ──
+  (function intro() {
+    const root = document.documentElement;
+    if (!root.classList.contains('play-intro')) return;
+    const overlay = document.getElementById('intro');
+    const big = document.getElementById('intro-mgc');
+    const small = document.getElementById('brand-mark');
+    if (!overlay || !big || !small) { root.classList.remove('play-intro'); return; }
+    try { sessionStorage.setItem('mgc-intro', '1'); } catch (e) {}
+
+    let done = false;
+    const anims: Animation[] = [];
+    function finish() {
+      if (done) return;
+      done = true;
+      anims.forEach((a) => a.cancel());
+      root.classList.remove('play-intro');
+      overlay!.remove();
+    }
+    overlay.addEventListener('click', finish);
+    window.addEventListener('keydown', finish, { once: true });
+    window.addEventListener('wheel', finish, { once: true, passive: true });
+    window.addEventListener('touchmove', finish, { once: true, passive: true });
+
+    const fontsReady = Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 800))]);
+    const hold = new Promise((r) => setTimeout(r, 1300));
+    Promise.all([fontsReady, hold]).then(() => {
+      if (done) return;
+      const from = big.getBoundingClientRect();
+      const to = small.getBoundingClientRect();
+      const scale = to.height / from.height;
+      const dx = to.left - from.left;
+      const dy = to.top - from.top;
+      const ease = 'cubic-bezier(.7,0,.2,1)';
+      big.style.animation = 'none';
+      anims.push(big.animate(
+        [{ transform: 'translate(0,0) scale(1)' }, { transform: `translate(${dx}px, ${dy}px) scale(${scale})` }],
+        { duration: 900, easing: ease, fill: 'forwards' },
+      ));
+      overlay.querySelectorAll<HTMLElement>('.intro-rule, .intro-sub').forEach((el) => {
+        el.style.animation = 'none';
+        anims.push(el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: 'ease-out', fill: 'forwards' }));
+      });
+      anims.push(overlay.animate(
+        [{ backgroundColor: getComputedStyle(overlay).backgroundColor }, { backgroundColor: 'transparent' }],
+        { duration: 500, delay: 450, easing: 'ease-out', fill: 'forwards' },
+      ));
+      anims[0].finished.then(finish).catch(() => {});
+    });
+  })();
+
   // ─── Lightbox ───────────────────────────────────
   const lb = document.getElementById('ix-lb') as HTMLElement;
   const lbImg = lb.querySelector('.ix-lb-img') as HTMLImageElement;
@@ -270,22 +339,93 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 <style>
   /* ─── Head ───────────────────────────────────── */
   .ix-head {
-    padding: 88px 5px 20px;
+    padding: 104px 5px 20px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 5px;
     align-items: end;
   }
-  .ix-id h1 { font: inherit; font-weight: 500; color: var(--color-text); }
-  .ix-id p, .ix-id a { color: var(--color-muted); }
-  .ix-id a:hover { color: var(--color-text); }
+  .ix-bio { grid-column: 1 / span 3; }
+  .ix-lead {
+    font-family: var(--font-family-brand);
+    font-weight: 500;
+    font-size: clamp(22px, 2.3vw, 34px);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    text-wrap: balance;
+    color: var(--color-text);
+    max-width: 30ch;
+  }
+  .ix-sub {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+    margin-top: 18px;
+    color: var(--color-muted);
+  }
+  .ix-sub a { color: var(--color-text); }
+  .ix-sub a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ─── Intro ──────────────────────────────────── */
+  .intro { display: none; }
+  :global(html.play-intro) .intro {
+    display: grid;
+    place-items: center;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: var(--color-bg);
+    cursor: pointer;
+  }
+  :global(html.play-intro) body { overflow: hidden; }
+  :global(html.play-intro) #brand-mark { opacity: 0; }
+  .intro-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(14px, 2vw, 26px);
+  }
+  .intro-mgc {
+    font-family: var(--font-family-brand);
+    font-weight: 800;
+    font-size: clamp(96px, 16vw, 220px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    color: var(--color-text);
+    transform-origin: 0 0;
+    will-change: transform;
+    animation: intro-in 700ms cubic-bezier(.2,.7,.2,1) both;
+  }
+  .intro-rule {
+    width: min(60vw, 420px);
+    height: 1px;
+    background: var(--color-muted);
+    transform-origin: 50% 50%;
+    animation: rule-in 600ms 250ms cubic-bezier(.2,.7,.2,1) both;
+  }
+  .intro-sub {
+    font-family: var(--font-family-brand);
+    font-weight: 500;
+    font-size: clamp(13px, 1.6vw, 22px);
+    letter-spacing: 0.32em;
+    margin-right: -0.32em;
+    color: var(--color-text);
+    animation: fade-in 600ms 450ms ease both;
+  }
+  @keyframes intro-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes rule-in  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes fade-in  { from { opacity: 0; } to { opacity: 1; } }
 
   .ix-filters {
-    grid-column: 2 / -1;
+    grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
     gap: 4px 18px;
-    justify-content: flex-end;
+    margin-top: 40px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border);
   }
   .ix-filter {
     font: inherit;
@@ -411,8 +551,9 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 
   /* ─── Phones ─────────────────────────────────── */
   @media (max-width: 899px) {
-    .ix-head { grid-template-columns: 1fr; gap: 14px; padding-top: 80px; }
-    .ix-filters { grid-column: auto; justify-content: flex-start; gap: 2px 14px; }
+    .ix-head { grid-template-columns: 1fr; gap: 14px; padding-top: 120px; }
+    .ix-filters { grid-column: auto; gap: 2px 14px; margin-top: 18px; }
+    .ix-bio { grid-column: auto; }
     .ix-grid { grid-template-columns: repeat(2, 1fr); gap: 12px 5px; }
     .ix-meta { grid-template-columns: 2.8em 1fr; font-size: 10px; }
     .ix-cat { display: none; }
