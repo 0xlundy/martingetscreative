@@ -45,12 +45,13 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
 
   <section class="ix-head">
     <div class="ix-bio">
-      <h1 class="ix-lead">Photographer and director of photography in Portland, Oregon. Twenty years of campaign, editorial and documentary work.</h1>
+      <h1 class="ix-lead">Twenty years behind the frame. I know what makes a story land, and how to build the shot that gets it there.</h1>
       <p class="ix-sub">
+        <span>Portland, Oregon</span>
         <span>Documentary work supported by the Andy Warhol Foundation</span>
-        <span>Available worldwide</span>
         <a href="mailto:martinvanlonden@gmail.com">martinvanlonden@gmail.com</a>
       </p>
+      <p class="ix-avail"><span class="ix-dot" aria-hidden="true"></span>Available worldwide</p>
     </div>
 
     <div class="ix-filters" role="group" aria-label="Filter photos by category">
@@ -103,8 +104,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   <section class="ix-about">
     <div class="ix-col">
       <p class="ix-label">About</p>
-      <p>I know what makes a story land, and how to build the shot that gets it there.</p>
-      <p>Director, DP, and commercial photographer based in Portland, Oregon. My documentary work has been supported by the Andy Warhol Foundation. On the commercial side, I've shot campaigns and editorial content for clients across the Pacific Northwest and beyond. I think in strategy as much as images. I produce content and direct social, not just shoot and edit.</p>
+      <p>On the commercial side, I've shot campaigns and editorial content for clients across the Pacific Northwest and beyond. I think in strategy as much as images. I produce content and direct social, not just shoot and edit.</p>
     </div>
     <div class="ix-col">
       <p class="ix-label">Services</p>
@@ -395,7 +395,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     text-transform: none;
     text-wrap: balance;
     color: var(--color-text);
-    max-width: 30ch;
+    max-width: 34ch;
   }
   .ix-sub {
     display: flex;
@@ -405,6 +405,24 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     color: var(--color-muted);
   }
   .ix-sub a { color: var(--color-text); }
+  .ix-avail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    color: var(--color-text);
+  }
+  .ix-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00d0bf;
+    box-shadow: 0 0 6px #00d0bf88;
+    flex-shrink: 0;
+    animation: avail-pulse 2.5s ease infinite;
+  }
+  @keyframes avail-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  @media (prefers-reduced-motion: reduce) { .ix-dot { animation: none; } }
   .ix-sub a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* ─── Intro ──────────────────────────────────── */
