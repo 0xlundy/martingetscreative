@@ -48,6 +48,11 @@ export const work: WorkItem[] = [
   // Save Max Auto (more frames from the beach shoot to come)
   { src: '/images/commissioned/savemax-auto/savemax-auto-raptor-cowboy-hat.jpg', alt: 'Model in a cowboy hat sitting on the hood of a black Ford Raptor with its amber lights on, studio cyc', title: 'Save Max Auto', desc: 'Raptor Campaign', category: 'commissioned', shoot: 'savemax-auto' },
 
+  // PSU Football x Vika apparel (3)
+  { src: '/images/commissioned/psu-football/psu-vika-coach-point.jpg',    alt: 'Coach in a PSU cap and black Vika hoodie pointing toward the camera on a grey studio cyc', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
+  { src: '/images/commissioned/psu-football/psu-vika-player-hoodie.jpg',  alt: 'Player in a black Vika hoodie and skull cap holding a football, looking off camera',      title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
+  { src: '/images/commissioned/psu-football/psu-vika-two-players.jpg',    alt: 'Two players posing with Born for the Storm and PDX Football backpacks in a studio',        title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
+
   // Mercury League (3)
   { src: '/images/portraits/07-dscf6551.jpg', alt: 'Studio portrait, editorial photography',             title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
   { src: '/images/portraits/06-dscf6116.jpg', alt: 'Editorial portrait, soft lighting',                  title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
