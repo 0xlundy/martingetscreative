@@ -35,6 +35,7 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     } catch (e) {}
   </script>
   <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-bg"></div>
     <div class="intro-card">
       <span class="intro-mgc" id="intro-mgc">MGC</span>
       <span class="intro-rule"></span>
@@ -224,55 +225,82 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   filters.forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.filter || 'all')));
   setFilter(location.hash.slice(1) || 'all', false);
 
-  // ─── Intro handoff: title card → header logo ──
+  // ─── Intro: title card → header logo ──────────
+  // 1. Card builds in (CSS, ~0.9s).  2. Rule + tagline fade out.
+  // 3. MGC flies into the header slot (transform only, eased in-out).
+  // 4. It lands; header text fades in; only THEN does the black lift off the photos.
   (function intro() {
     const root = document.documentElement;
     if (!root.classList.contains('play-intro')) return;
     const overlay = document.getElementById('intro');
+    const bg = overlay?.querySelector<HTMLElement>('.intro-bg');
     const big = document.getElementById('intro-mgc');
     const small = document.getElementById('brand-mark');
-    if (!overlay || !big || !small) { root.classList.remove('play-intro'); return; }
+    if (!overlay || !bg || !big || !small) { root.classList.remove('play-intro'); return; }
     try { sessionStorage.setItem('mgc-intro', '1'); } catch (e) {}
+
+    const EASE_OUT = 'cubic-bezier(0.23, 1, 0.32, 1)';
+    const EASE_MOVE = 'cubic-bezier(0.65, 0, 0.35, 1)';
+    const headerBits = Array.from(document.querySelectorAll<HTMLElement>('#site-nav .brand-line, #site-nav .nav-links'));
 
     let done = false;
     const anims: Animation[] = [];
+    const run = (el: Element, k: Keyframe[], o: KeyframeAnimationOptions) => {
+      const a = el.animate(k, { fill: 'forwards', ...o });
+      anims.push(a);
+      return a.finished;
+    };
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
     function finish() {
       if (done) return;
       done = true;
-      anims.forEach((a) => a.cancel());
       root.classList.remove('play-intro');
       overlay!.remove();
+      anims.forEach((a) => a.cancel());
     }
     overlay.addEventListener('click', finish);
     window.addEventListener('keydown', finish, { once: true });
     window.addEventListener('wheel', finish, { once: true, passive: true });
     window.addEventListener('touchmove', finish, { once: true, passive: true });
 
-    const fontsReady = Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 800))]);
-    const hold = new Promise((r) => setTimeout(r, 1300));
-    Promise.all([fontsReady, hold]).then(() => {
+    const fontsReady = Promise.race([document.fonts?.ready ?? Promise.resolve(), wait(900)]);
+
+    (async () => {
+      await Promise.all([fontsReady, wait(1400)]);
       if (done) return;
+
+      // 2. Clear the supporting lines so the move is just the wordmark.
+      overlay.querySelectorAll<HTMLElement>('.intro-rule, .intro-sub').forEach((el) => {
+        el.style.animation = 'none';
+        run(el, [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-6px)' }],
+          { duration: 220, easing: EASE_OUT });
+      });
+      await wait(160);
+      if (done) return;
+
+      // 3. Fly: one compositor-only transform from card position to header slot.
+      big.style.animation = 'none';
       const from = big.getBoundingClientRect();
       const to = small.getBoundingClientRect();
       const scale = to.height / from.height;
       const dx = to.left - from.left;
       const dy = to.top - from.top;
-      const ease = 'cubic-bezier(.7,0,.2,1)';
-      big.style.animation = 'none';
-      anims.push(big.animate(
-        [{ transform: 'translate(0,0) scale(1)' }, { transform: `translate(${dx}px, ${dy}px) scale(${scale})` }],
-        { duration: 900, easing: ease, fill: 'forwards' },
-      ));
-      overlay.querySelectorAll<HTMLElement>('.intro-rule, .intro-sub').forEach((el) => {
-        el.style.animation = 'none';
-        anims.push(el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: 'ease-out', fill: 'forwards' }));
-      });
-      anims.push(overlay.animate(
-        [{ backgroundColor: getComputedStyle(overlay).backgroundColor }, { backgroundColor: 'transparent' }],
-        { duration: 500, delay: 450, easing: 'ease-out', fill: 'forwards' },
-      ));
-      anims[0].finished.then(finish).catch(() => {});
-    });
+      await run(big, [
+        { transform: 'translate3d(0, 0, 0) scale(1)' },
+        { transform: `translate3d(${dx}px, ${dy}px, 0) scale(${scale})` },
+      ], { duration: 950, easing: EASE_MOVE });
+      if (done) return;
+
+      // 4. Land: swap to the real header logo in the same frame, then reveal.
+      small.style.opacity = '1';
+      big.style.visibility = 'hidden';
+      headerBits.forEach((el, i) =>
+        run(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: i * 70, easing: EASE_OUT }));
+      await run(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: 520, delay: 140, easing: EASE_OUT });
+      small.style.opacity = '';
+      finish();
+    })().catch(finish);
   })();
 
   // ─── Lightbox ───────────────────────────────────
@@ -368,19 +396,29 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   .ix-sub a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* ─── Intro ──────────────────────────────────── */
+  /* Sits under the header (z 100) so the logo can dock into its slot;
+     header text and the photos stay hidden until the logo has landed. */
   .intro { display: none; }
   :global(html.play-intro) .intro {
     display: grid;
     place-items: center;
     position: fixed;
     inset: 0;
-    z-index: 500;
-    background: var(--color-bg);
+    z-index: 90;
     cursor: pointer;
   }
-  :global(html.play-intro) body { overflow: hidden; }
-  :global(html.play-intro) #brand-mark { opacity: 0; }
+  .intro-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--color-bg);
+    will-change: opacity;
+  }
+  :global(html.play-intro body) { overflow: hidden; }
+  :global(html.play-intro #brand-mark),
+  :global(html.play-intro #site-nav .brand-line),
+  :global(html.play-intro #site-nav .nav-links) { opacity: 0; }
   .intro-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -396,14 +434,14 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     color: var(--color-text);
     transform-origin: 0 0;
     will-change: transform;
-    animation: intro-in 700ms cubic-bezier(.2,.7,.2,1) both;
+    backface-visibility: hidden;
+    animation: intro-in 640ms cubic-bezier(0.23, 1, 0.32, 1) both;
   }
   .intro-rule {
     width: min(60vw, 420px);
     height: 1px;
     background: var(--color-muted);
-    transform-origin: 50% 50%;
-    animation: rule-in 600ms 250ms cubic-bezier(.2,.7,.2,1) both;
+    animation: rule-in 520ms 220ms cubic-bezier(0.23, 1, 0.32, 1) both;
   }
   .intro-sub {
     font-family: var(--font-family-brand);
@@ -412,11 +450,11 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     letter-spacing: 0.32em;
     margin-right: -0.32em;
     color: var(--color-text);
-    animation: fade-in 600ms 450ms ease both;
+    animation: sub-in 520ms 380ms cubic-bezier(0.23, 1, 0.32, 1) both;
   }
-  @keyframes intro-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes intro-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes rule-in  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-  @keyframes fade-in  { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes sub-in   { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
   .ix-filters {
     grid-column: 1 / -1;

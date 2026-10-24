@@ -1,8 +1,8 @@
 ---
 title: "Where We Goin"
 description: "Documentary series directed by Devin Boss. I was DP on both episodes. Episode One won Best Documentary Short at Portland Film Festival 2023 and was an Official Selection at McMinnville Short Film Festival 2024."
-cover: /images/personal/where-we-goin.jpg
-coverAlt: "Three people talking and laughing on a gravel lot above the Willamette River, with the Portland skyline and Broadway Bridge behind them"
+cover: /images/personal/where-we-goin/wwg-episode-one-poster.jpg
+coverAlt: "Where We Goin, Episode One title card: DJ O.G. One x The Creative Homies, with Portland Film Festival and McMinnville Short Film Festival laurels"
 publishDate: 2024-06-01
 role: "Director of Photography, Episodes 1 + 2"
 year: 2024
@@ -15,7 +15,7 @@ order: 1
 
 *Where We Goin* is a documentary series about Portland's creative community, directed by Devin Boss and produced by North East Productions, Zoe Piliafas and Donovan Scribes. Episode One, *DJ O.G. One x The Creative Homies*, has screened on the festival circuit and at independent venues across the region.
 
-![Where We Goin, Episode One title card: DJ O.G. One x The Creative Homies, with festival laurels](/images/personal/where-we-goin/wwg-episode-one-poster.jpg)
+![Three people talking and laughing on a gravel lot above the Willamette River, with the Portland skyline and Broadway Bridge behind them](/images/personal/where-we-goin/wwg-waterfront.jpg)
 
 ## Recognition
 
