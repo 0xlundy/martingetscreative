@@ -18,59 +18,13 @@ export interface WorkItem {
 }
 
 export const categories: { id: Category; label: string }[] = [
-  { id: 'editorial',    label: 'Editorial' },
   { id: 'commissioned', label: 'Commissioned' },
+  { id: 'editorial',    label: 'Editorial' },
   { id: 'street',       label: 'Field Notes' },
   { id: 'conceptual',   label: 'Conceptual' },
 ];
 
 export const work: WorkItem[] = [
-  // ─── Editorial (event + BTS) ─────────────────────────────
-  // Opener
-  { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
-
-  // Portland Book Festival — Literary Arts (4)
-  { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival' },
-  { src: '/images/stories/DSCF2588.jpg', alt: 'On-stage conversation under the Literary Arts backdrop',              title: 'Portland Book Festival', desc: 'Main Stage',     category: 'editorial', shoot: 'portland-book-festival' },
-  { src: '/images/stories/DSCF2668.jpg', alt: 'Festival audience seated for a session',                              title: 'Portland Book Festival', desc: 'Festival Crowd', category: 'editorial', shoot: 'portland-book-festival' },
-  { src: '/images/stories/DSCF2702.jpg', alt: 'Authors in conversation at the microphone during a panel',           title: 'Portland Book Festival', desc: 'Author Panel',   category: 'editorial', shoot: 'portland-book-festival' },
-
-  // Honcho — One Moto Opening Party — day (3)
-  { src: '/images/stories/DSCF9436_look.jpg', alt: 'Rider on a red Vespa scooter at the Honcho One Moto opening party', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
-  { src: '/images/stories/DSCF9459_look.jpg', alt: 'Group portrait of the scooter crew at Honcho',                     title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
-  { src: '/images/stories/DSCF9489_look.jpg', alt: 'Crowd gathered among motorcycles at the Honcho party',            title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
-
-  // Honcho — One Moto Opening Party — after dark (3)
-  { src: '/images/stories/DSCF9434_look.jpg',   alt: 'Detail of a customized scooter front end at Honcho',           title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
-  { src: '/images/stories/DSCF9472_look.jpg',   alt: 'Motorcycle on a red-lit stage with a dachshund walking past',  title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
-  { src: '/images/stories/honcho-set-2988.jpg', alt: 'Honcho stage set with motorcycles under red and blue lighting', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
-
-  // Sansei Sensibility (2)
-  { src: '/images/portraits/08-dscf7929.jpg', alt: 'Carol Takami Tolman, documentary interview portrait for Sansei Sensibility',                 title: 'Sensi Sensibility', desc: 'Carol Takami Tolman, Sansei',                                  category: 'editorial', shoot: 'sensi-sensibility' },
-  { src: '/images/stories/20-dscf7092.jpg',   alt: 'Oregon Supreme Court Justice Lynn Nakamoto, documentary interview portrait', title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Oregon Supreme Court Justice', category: 'editorial', shoot: 'sensi-sensibility' },
-
-  // Portland Cocktail Week (4)
-  { src: '/images/stories/14-dscf6926.jpg', alt: 'Documentary portrait at cocktail event',           title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/stories/15-dscf7874.jpg', alt: 'Havana Club rum bar scene',                        title: 'Portland Cocktail Week', desc: 'Havana Club',        category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/product/27-dscf7695.jpg', alt: 'Pink cosmo cocktails on round table',              title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
-  { src: '/images/product/23-dscf6693.jpg', alt: 'Cocktails in mason jars with citrus garnish',     title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
-
-  // Cine Rent West / BTS (4)
-  { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/DSCF2955.jpg',    alt: 'Film crew and talent on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/12-dscf2988.jpg', alt: 'On-set photography production', title: 'Cine Rent West',       desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS 2023',         category: 'editorial', shoot: 'crw-bts' },
-
-  // Olipop BTS (3)
-  { src: '/images/on-set/DSCF5220.jpg', alt: 'Behind the scenes, Olipop production', title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
-  { src: '/images/on-set/DSCF5218.jpg', alt: 'On-set portrait, blue background',     title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
-  { src: '/images/on-set/DSCF5188.jpg', alt: 'BTS film production photography',      title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
-
-  // Pink Siifu BTS Music Video (2)
-  { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
-  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
-
-
   // ─── Commissioned (portraits / product / campaign / lookbook) ─────────
   // Sotheby's (2)
   { src: '/images/product/21-dscf3670.jpg', alt: 'Gold Air Jordan 3s',             title: "Sotheby's", desc: "Spike Lee's Golden Jordan 3s", category: 'commissioned', shoot: 'sothebys' },
@@ -121,6 +75,52 @@ export const work: WorkItem[] = [
   { src: '/images/portraits/DSCF0576.jpg',    alt: 'Introspective studio portrait',                           title: 'Chi Duly',           desc: 'Press Photos',              category: 'commissioned' },
   { src: '/images/portraits/IG%20Post.5.jpg', alt: 'Full-length commercial portrait, utility vest and jeans', title: 'ILoveMakonnen',      desc: 'Press Photos 2025',         category: 'commissioned' },
   { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art, 2023',           category: 'commissioned' },
+
+
+  // ─── Editorial (event + BTS) ─────────────────────────────
+  // Opener
+  { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
+
+  // Portland Book Festival — Literary Arts (4)
+  { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival' },
+  { src: '/images/stories/DSCF2588.jpg', alt: 'On-stage conversation under the Literary Arts backdrop',              title: 'Portland Book Festival', desc: 'Main Stage',     category: 'editorial', shoot: 'portland-book-festival' },
+  { src: '/images/stories/DSCF2668.jpg', alt: 'Festival audience seated for a session',                              title: 'Portland Book Festival', desc: 'Festival Crowd', category: 'editorial', shoot: 'portland-book-festival' },
+  { src: '/images/stories/DSCF2702.jpg', alt: 'Authors in conversation at the microphone during a panel',           title: 'Portland Book Festival', desc: 'Author Panel',   category: 'editorial', shoot: 'portland-book-festival' },
+
+  // Honcho — One Moto Opening Party — day (3)
+  { src: '/images/stories/DSCF9436_look.jpg', alt: 'Rider on a red Vespa scooter at the Honcho One Moto opening party', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
+  { src: '/images/stories/DSCF9459_look.jpg', alt: 'Group portrait of the scooter crew at Honcho',                     title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
+  { src: '/images/stories/DSCF9489_look.jpg', alt: 'Crowd gathered among motorcycles at the Honcho party',            title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day' },
+
+  // Honcho — One Moto Opening Party — after dark (3)
+  { src: '/images/stories/DSCF9434_look.jpg',   alt: 'Detail of a customized scooter front end at Honcho',           title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
+  { src: '/images/stories/DSCF9472_look.jpg',   alt: 'Motorcycle on a red-lit stage with a dachshund walking past',  title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
+  { src: '/images/stories/honcho-set-2988.jpg', alt: 'Honcho stage set with motorcycles under red and blue lighting', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night' },
+
+  // Sansei Sensibility (2)
+  { src: '/images/portraits/08-dscf7929.jpg', alt: 'Carol Takami Tolman, documentary interview portrait for Sansei Sensibility',                 title: 'Sensi Sensibility', desc: 'Carol Takami Tolman, Sansei',                                  category: 'editorial', shoot: 'sensi-sensibility' },
+  { src: '/images/stories/20-dscf7092.jpg',   alt: 'Oregon Supreme Court Justice Lynn Nakamoto, documentary interview portrait', title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Oregon Supreme Court Justice', category: 'editorial', shoot: 'sensi-sensibility' },
+
+  // Portland Cocktail Week (4)
+  { src: '/images/stories/14-dscf6926.jpg', alt: 'Documentary portrait at cocktail event',           title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/stories/15-dscf7874.jpg', alt: 'Havana Club rum bar scene',                        title: 'Portland Cocktail Week', desc: 'Havana Club',        category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/product/27-dscf7695.jpg', alt: 'Pink cosmo cocktails on round table',              title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+  { src: '/images/product/23-dscf6693.jpg', alt: 'Cocktails in mason jars with citrus garnish',     title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
+
+  // Cine Rent West / BTS (4)
+  { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/DSCF2955.jpg',    alt: 'Film crew and talent on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/12-dscf2988.jpg', alt: 'On-set photography production', title: 'Cine Rent West',       desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS 2023',         category: 'editorial', shoot: 'crw-bts' },
+
+  // Olipop BTS (3)
+  { src: '/images/on-set/DSCF5220.jpg', alt: 'Behind the scenes, Olipop production', title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
+  { src: '/images/on-set/DSCF5218.jpg', alt: 'On-set portrait, blue background',     title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
+  { src: '/images/on-set/DSCF5188.jpg', alt: 'BTS film production photography',      title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts' },
+
+  // Pink Siifu BTS Music Video (2)
+  { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
+  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
 
 
   // ─── Field Notes (observational: landscape / city / people) ──────────
