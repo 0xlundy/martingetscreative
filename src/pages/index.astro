@@ -226,36 +226,46 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
   setFilter(location.hash.slice(1) || 'all', false);
 
   // ─── Intro: title card → header logo ──────────
-  // 1. Card builds in (CSS, ~0.9s).  2. Rule + tagline fade out.
-  // 3. MGC flies into the header slot (transform only, eased in-out).
-  // 4. It lands; header text fades in; only THEN does the black lift off the photos.
+  // One continuous move, no hard stops:
+  //   card builds → brief hold → MGC gathers (anticipation) → lifts and sweeps
+  //   along an arc into the header slot → as it settles, the page rises out of
+  //   the black and the name slides out from behind the logo.
+  // Everything is transform/opacity (compositor only). The photo grid is
+  // painted during the static hold, so nothing heavy happens while it moves.
   (function intro() {
     const root = document.documentElement;
     if (!root.classList.contains('play-intro')) return;
     const overlay = document.getElementById('intro');
     const bg = overlay?.querySelector<HTMLElement>('.intro-bg');
+    const rule = overlay?.querySelector<HTMLElement>('.intro-rule');
+    const sub = overlay?.querySelector<HTMLElement>('.intro-sub');
     const big = document.getElementById('intro-mgc');
     const small = document.getElementById('brand-mark');
-    if (!overlay || !bg || !big || !small) { root.classList.remove('play-intro'); return; }
+    if (!overlay || !bg || !rule || !sub || !big || !small) { root.classList.remove('play-intro'); return; }
     try { sessionStorage.setItem('mgc-intro', '1'); } catch (e) {}
 
     const EASE_OUT = 'cubic-bezier(0.23, 1, 0.32, 1)';
-    const EASE_MOVE = 'cubic-bezier(0.65, 0, 0.35, 1)';
-    const headerBits = Array.from(document.querySelectorAll<HTMLElement>('#site-nav .brand-line, #site-nav .nav-links'));
+    const EASE_IN_OUT = 'cubic-bezier(0.65, 0, 0.35, 1)';
+    const FLIGHT = 1300;          // ms, anticipation blended into travel
+    const brandLine = document.querySelector<HTMLElement>('#site-nav .brand-line');
+    const navLinks = document.querySelector<HTMLElement>('#site-nav .nav-links');
+    const content = Array.from(document.querySelectorAll<HTMLElement>('.ix-head, .ix-grid'));
 
     let done = false;
     const anims: Animation[] = [];
     const run = (el: Element, k: Keyframe[], o: KeyframeAnimationOptions) => {
-      const a = el.animate(k, { fill: 'forwards', ...o });
+      const a = el.animate(k, { fill: 'both', ...o });
       anims.push(a);
       return a.finished;
     };
     const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
 
     function finish() {
       if (done) return;
       done = true;
       root.classList.remove('play-intro', 'intro-go', 'intro-reveal');
+      small!.style.opacity = '';
       overlay!.remove();
       anims.forEach((a) => a.cancel());
     }
@@ -264,53 +274,86 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     window.addEventListener('wheel', finish, { once: true, passive: true });
     window.addEventListener('touchmove', finish, { once: true, passive: true });
 
-    const fontsReady = Promise.race([document.fonts?.ready ?? Promise.resolve(), wait(900)]);
+    // Flight path, sampled into keyframes so x, y and scale can each have their
+    // own timing: y leads x slightly, so the logo lifts first and then sweeps
+    // left (an arc), instead of sliding diagonally in a straight line.
+    const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    function flightFrames(dx: number, dy: number, endScale: number): Keyframe[] {
+      // The anticipation (a small swell and dip) is blended into the start of
+      // the travel instead of preceding it, so velocity never drops to zero
+      // mid-move. It only stops at the very start and the very end.
+      const N = 80, SWELL = 0.035, DIP = 6, BUMP_END = 0.32;
+      const frames: Keyframe[] = [];
+      for (let i = 0; i < N; i++) {
+        const p = i / (N - 1);
+        const bump = p < BUMP_END ? Math.sin(Math.PI * (p / BUMP_END)) : 0;
+        const x = dx * easeInOutCubic(p);
+        const y = dy * easeInOutCubic(Math.min(1, p * 1.12)) + DIP * bump;
+        const sc = 1 + SWELL * bump + (endScale - 1) * easeInOutCubic(Math.min(1, p * 1.06));
+        frames.push({ offset: p, transform: `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${sc.toFixed(5)})` });
+      }
+      return frames;
+    }
 
-    const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r(null)));
+    const fontsReady = Promise.race([document.fonts?.ready ?? Promise.resolve(), wait(900)]);
 
     (async () => {
       // 1. Let the page finish its first heavy frames, then build the card.
       await fontsReady;
       await Promise.race([new Promise((r) => (window as any).requestIdleCallback ? (window as any).requestIdleCallback(r, { timeout: 400 }) : setTimeout(r, 120)), wait(400)]);
+      // Paint the page under the black now, before anything moves, and let the
+      // first screen of photos load + decode (capped so a slow network can't stall it).
+      root.classList.add('intro-reveal');
+      const firstImgs = Array.from(document.querySelectorAll<HTMLImageElement>('.ix-grid img')).slice(0, 15);
+      await Promise.race([Promise.allSettled(firstImgs.map((im) => im.decode())), wait(700)]);
       await nextFrame(); await nextFrame();
       if (done) return;
       root.classList.add('intro-go');
-      await wait(1450);
+
+      // 2. The card builds, then holds a beat.
+      await wait(1200);
       if (done) return;
 
-      // 2. Clear the supporting lines so the move is just the wordmark.
-      overlay.querySelectorAll<HTMLElement>('.intro-rule, .intro-sub').forEach((el) => {
-        el.style.animation = 'none';
-        run(el, [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-6px)' }],
-          { duration: 220, easing: EASE_OUT });
-      });
-      await wait(160);
-      if (done) return;
-
-      // 3. Fly: one compositor-only transform from card position to header slot.
+      // 3. The move.
+      // Pin the card's finished state before handing off from CSS to WAAPI.
+      big.style.opacity = '1';
       big.style.animation = 'none';
+      rule.style.animation = 'none';
+      sub.style.animation = 'none';
       const from = big.getBoundingClientRect();
       const to = small.getBoundingClientRect();
-      const scale = to.height / from.height;
+      const endScale = to.height / from.height;
       const dx = to.left - from.left;
       const dy = to.top - from.top;
-      await run(big, [
-        { transform: 'translate3d(0, 0, 0) scale(1)' },
-        { transform: `translate3d(${dx}px, ${dy}px, 0) scale(${scale})` },
-      ], { duration: 950, easing: EASE_MOVE });
-      if (done) return;
 
-      // 4. Land: swap to the real header logo in the same frame, then reveal.
+      // Supporting lines hand off as the wordmark leaves: the rule draws back in
+      // toward the logo's side, the tagline drifts down and dissolves.
+      run(rule, [{ transform: 'scaleX(1)', transformOrigin: '0 50%' }, { transform: 'scaleX(0)', transformOrigin: '0 50%' }],
+        { duration: 560, delay: 60, easing: EASE_IN_OUT });
+      run(sub, [{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(10px)' }],
+        { duration: 480, easing: EASE_OUT });
+
+      const landed = run(big, flightFrames(dx, dy, endScale), { duration: FLIGHT, easing: 'linear' });
+
+      // Arrival, overlapping the logo's final deceleration so there's no cut:
+      // the black lifts, the page rises into place, the name slides out.
+      const arrive = FLIGHT * 0.86;
+      run(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: 950, delay: arrive, easing: 'cubic-bezier(0.25, 0.1, 0.25, 1)' });
+      content.forEach((el, i) =>
+        run(el, [{ transform: 'translateY(28px)' }, { transform: 'translateY(0)' }],
+          { duration: 1200, delay: arrive + i * 120, easing: EASE_OUT }));
+      if (brandLine) run(brandLine, [{ opacity: 0, transform: 'translateX(-14px)' }, { opacity: 1, transform: 'translateX(0)' }],
+        { duration: 700, delay: FLIGHT - 120, easing: EASE_OUT });
+      if (navLinks) run(navLinks, [{ opacity: 0 }, { opacity: 1 }],
+        { duration: 600, delay: FLIGHT + 60, easing: EASE_OUT });
+
+      await landed;
+      if (done) return;
+      // Swap to the real header logo in the same frame it lands.
       small.style.opacity = '1';
       big.style.visibility = 'hidden';
-      root.classList.add('intro-reveal');
-      // The grid paints now, while nothing is moving; fades start after it.
-      await nextFrame(); await nextFrame();
-      if (done) return;
-      headerBits.forEach((el, i) =>
-        run(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: i * 70, easing: EASE_OUT }));
-      await run(bg, [{ opacity: 1 }, { opacity: 0 }], { duration: 520, delay: 140, easing: EASE_OUT });
-      small.style.opacity = '';
+
+      await Promise.all(anims.map((a) => a.finished));
       finish();
     })().catch(finish);
   })();

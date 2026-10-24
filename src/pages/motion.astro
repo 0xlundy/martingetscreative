@@ -45,13 +45,6 @@ const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683
     gap: 10px;
   }
   .rl-player,
-  .rl-frame {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    max-width: 100%;
-    background: var(--color-surface) center / cover no-repeat;
-  }
-  .rl-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .rl-caption { width: min(100%, calc((100svh - 76px - 60px) * 16 / 9)); }
   .rl-frame {
     position: relative;
@@ -72,14 +65,7 @@ const REEL_POSTER = 'https://i.vimeocdn.com/video/2166087987-73032c7b3d3fb441683
   @media (max-width: 899px) {
     .rl-stage { min-height: 70svh; padding-top: 120px; }
     .rl-player, .rl-caption { width: 100%; }
-    .rl-frame {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    max-width: 100%;
-    background: var(--color-surface) center / cover no-repeat;
-  }
-  .rl-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .rl-caption { padding-inline: 7px; gap: 4px 14px; }
+    .rl-caption { padding-inline: 7px; gap: 4px 14px; }
     .rl-dim { margin-left: 0; }
   }
 </style>
