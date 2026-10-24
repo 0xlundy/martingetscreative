@@ -45,6 +45,9 @@ export const work: WorkItem[] = [
   { src: '/images/stories/DSCF7297.jpg', alt: 'Two subjects reviewing papers on a brightly lit table in a dark studio',            title: 'Against the Code', desc: 'On Set',       category: 'commissioned', shoot: 'against-the-code' },
   { src: '/images/stories/DSCF7326.jpg', alt: 'Studio portrait of a subject in an ATC jacket holding a tablet',                     title: 'Against the Code', desc: 'Portrait',     category: 'commissioned', shoot: 'against-the-code' },
 
+  // Save Max Auto (more frames from the beach shoot to come)
+  { src: '/images/commissioned/savemax-auto/savemax-auto-raptor-cowboy-hat.jpg', alt: 'Model in a cowboy hat sitting on the hood of a black Ford Raptor with its amber lights on, studio cyc', title: 'Save Max Auto', desc: 'Raptor Campaign', category: 'commissioned', shoot: 'savemax-auto' },
+
   // Mercury League (3)
   { src: '/images/portraits/07-dscf6551.jpg', alt: 'Studio portrait, editorial photography',             title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
   { src: '/images/portraits/06-dscf6116.jpg', alt: 'Editorial portrait, soft lighting',                  title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
@@ -80,6 +83,21 @@ export const work: WorkItem[] = [
   // ─── Editorial (event + BTS) ─────────────────────────────
   // Opener
   { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
+
+  // Portland Timbers youth camp (3)
+  { src: '/images/editorial/timbers-camp/timbers-camp-autograph.jpg', alt: 'Kids crowding around a Portland Timbers player signing autographs on a grass field', title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp' },
+  { src: '/images/editorial/timbers-camp/timbers-camp-dribble.jpg',   alt: 'Kids in green camp jerseys dribbling soccer balls across a sunny park field',      title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp' },
+  { src: '/images/editorial/timbers-camp/timbers-camp-high-five.jpg', alt: 'Coach in a yellow shirt high-fiving two young campers holding soccer balls',        title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp' },
+
+  // First Ink tattoo studio (3)
+  { src: '/images/editorial/first-ink/first-ink-kylee-portrait.jpg', alt: 'Smiling tattoo artist pointing to the tattoos on her arm inside her studio',       title: 'First Ink', desc: 'Tattoo Studio Portrait', category: 'editorial', shoot: 'first-ink' },
+  { src: '/images/editorial/first-ink/first-ink-otter-needle.jpg',   alt: 'Close-up of a gloved hand tattooing a fine-line otter and daisies on skin',       title: 'First Ink', desc: 'At the Needle',          category: 'editorial', shoot: 'first-ink' },
+  { src: '/images/editorial/first-ink/first-ink-studio-wide.jpg',    alt: 'Wide view of an artist tattooing a client under a ring light in a warm, cluttered studio', title: 'First Ink', desc: 'In the Studio', category: 'editorial', shoot: 'first-ink' },
+
+  // Mother PAC — behind the scenes (3)
+  { src: '/images/editorial/mother-pac/mother-pac-interview-setup.jpg', alt: 'Wide behind-the-scenes view of a crew setting up an interview on a white studio cyc', title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac' },
+  { src: '/images/editorial/mother-pac/mother-pac-on-the-cyc.jpg',      alt: 'Woman in a white vest gesturing as she speaks on a white studio cyc',                  title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac' },
+  { src: '/images/editorial/mother-pac/mother-pac-talent-prep.jpg',     alt: 'Crew member prepping talent in a pink tweed jacket beside the camera',                  title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac' },
 
   // Portland Book Festival — Literary Arts (4)
   { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival' },
