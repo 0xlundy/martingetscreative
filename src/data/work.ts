@@ -45,7 +45,7 @@ export const work: WorkItem[] = [
   // PSU Football
   { src: '/images/commissioned/psu-football/psu-vika-coach-point.jpg',    alt: 'Coach in a PSU cap and black Vika hoodie pointing toward the camera on a grey studio cyc', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
   { src: '/images/commissioned/psu-football/psu-vika-player-hoodie.jpg',  alt: 'Player in a black Vika hoodie and skull cap holding a football, looking off camera',      title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
-  { src: '/images/commissioned/psu-football/psu-vika-team-lineup.jpg', alt: 'PSU football players and their coach lined up in Vika apparel on a white studio cyc, backpacks at their feet', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football', pos: '52% 55%' },
+  { src: '/images/commissioned/psu-football/psu-vika-duo.jpg', alt: 'Two players in Vika apparel on a studio cyc, one in a black hoodie holding a backpack, the other with a green PDX Football backpack', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football', pos: '58% 50%' },
   { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia',          desc: 'CES Promo',            category: 'commissioned' },
 
   // Against the Code
