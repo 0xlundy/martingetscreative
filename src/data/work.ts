@@ -71,15 +71,17 @@ export const work: WorkItem[] = [
   { src: '/images/personal/DSCF1534.jpg', alt: 'Wild Things fashion shoot, zebra print pants, front view', title: 'Wild Things', desc: 'Lookbook 2024', category: 'commissioned', shoot: 'wild-things' },
   { src: '/images/personal/DSCF1684.jpg', alt: 'Wild Things fashion shoot, satin top, back view',          title: 'Wild Things', desc: 'Lookbook 2024', category: 'commissioned', shoot: 'wild-things' },
 
+  // Majik Stick (2)
+  { src: '/images/portraits/01-dscf3979.jpg', alt: 'Woman holding a rose quartz facial roller to her jaw against a tan backdrop',                          title: 'Majik Stick', desc: 'Commercial Portrait, 2023',                category: 'commissioned', shoot: 'majik-stick', pos: '62% 50%' },
+  { src: '/images/portraits/02-dscf4314.jpg', alt: 'Woman in a hair towel looking up while using rose quartz facial rollers',                  title: 'Majik Stick', desc: 'Commercial Portrait, 2023', category: 'commissioned', shoot: 'majik-stick' },
+
   // Singles (fill row ends, in this order)
   { src: '/images/commissioned/savemax-auto/savemax-auto-raptor-cowboy-hat.jpg', alt: 'Model in a cowboy hat sitting on the hood of a black Ford Raptor with its amber lights on, studio cyc', title: 'Save Max Auto', desc: 'Raptor Campaign', category: 'commissioned', shoot: 'savemax-auto', pos: '48% 55%' },
   { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike',          desc: 'Studio Product',            category: 'commissioned' },
   { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia',          desc: 'CES 2019 Promo',            category: 'commissioned' },
   { src: '/images/portraits/IG%20Post.5.jpg', alt: 'Full-length commercial portrait, utility vest and jeans', title: 'ILoveMakonnen',      desc: 'Press Photos 2025',         category: 'commissioned', pos: '50% 58%', zoom: 1.3 },
-  { src: '/images/portraits/DSCF0576.jpg',    alt: 'Introspective studio portrait',                           title: 'Chi Duly',           desc: 'Press Photos',              category: 'commissioned' },
-  { src: '/images/portraits/01-dscf3979.jpg', alt: 'Full-length editorial portrait',                          title: 'Editorial Portrait', desc: 'Commercial',                category: 'commissioned', pos: '62% 50%' },
-  { src: '/images/portraits/02-dscf4314.jpg', alt: 'Close-up portrait with dramatic shadow',                  title: 'M A J I K  S T I C K', desc: 'Commercial Portrait, 2023', category: 'commissioned' },
   { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art, 2023',           category: 'commissioned' },
+  { src: '/images/portraits/DSCF0576.jpg',    alt: 'Introspective studio portrait',                           title: 'Chi Duly',           desc: 'Press Photos',              category: 'commissioned' },
 
   // ─── Editorial ────────────────────────────────
   // Portland Timbers youth camp
