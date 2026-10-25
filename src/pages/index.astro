@@ -166,33 +166,41 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
     if (!grid) return;
     const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
     const shown = cells.filter((c) => !c.hidden);
-    const groups: HTMLElement[][] = [];
-    const singles: HTMLElement[] = [];
-    const byKey = new Map<string, HTMLElement[]>();
-    shown.forEach((c) => {
-      if (c.dataset.single) { singles.push(c); return; }
-      const k = c.dataset.group!;
-      if (!byKey.has(k)) { byKey.set(k, []); groups.push(byKey.get(k)!); }
-      byKey.get(k)!.push(c);
-    });
+    // Each category is packed on its own (Commissioned, then Editorial, ...), so a
+    // single shot only ever fills gaps inside its own category.
+    const cats: string[] = [];
+    shown.forEach((c) => { const k = c.dataset.category!; if (!cats.includes(k)) cats.push(k); });
 
     seq = [];
     const forceLeft = new Set<HTMLElement>();
     const numbered: { cells: HTMLElement[]; shoot: boolean }[] = [];
-    let used = 0;
-    for (const g of groups) {
-      if (used > 0 && used + g.length > cols) {
-        while (used < cols && singles.length) {
-          const s = singles.shift()!;
-          seq.push(s); numbered.push({ cells: [s], shoot: false }); used++;
+    for (const cat of cats) {
+      const groups: HTMLElement[][] = [];
+      const singles: HTMLElement[] = [];
+      const byKey = new Map<string, HTMLElement[]>();
+      shown.filter((c) => c.dataset.category === cat).forEach((c) => {
+        if (c.dataset.single) { singles.push(c); return; }
+        const k = c.dataset.group!;
+        if (!byKey.has(k)) { byKey.set(k, []); groups.push(byKey.get(k)!); }
+        byKey.get(k)!.push(c);
+      });
+      let used = 0;
+      let first = true;
+      const start = (c: HTMLElement) => { if (first && seq.length) forceLeft.add(c); first = false; };
+      for (const g of groups) {
+        if (used > 0 && used + g.length > cols) {
+          while (used < cols && singles.length) {
+            const s = singles.shift()!;
+            start(s); seq.push(s); numbered.push({ cells: [s], shoot: false }); used++;
+          }
+          if (used < cols) forceLeft.add(g[0]);
+          used = 0;
         }
-        if (used < cols) forceLeft.add(g[0]);
-        used = 0;
+        start(g[0]); seq.push(...g); numbered.push({ cells: g, shoot: true });
+        used = (used + g.length) % cols;
       }
-      seq.push(...g); numbered.push({ cells: g, shoot: true });
-      used = (used + g.length) % cols;
+      singles.forEach((s) => { start(s); seq.push(s); numbered.push({ cells: [s], shoot: false }); });
     }
-    singles.forEach((s) => { seq.push(s); numbered.push({ cells: [s], shoot: false }); });
 
     seq.forEach((c, i) => {
       c.style.order = String(i);
