@@ -43,7 +43,7 @@ export const work: WorkItem[] = [
   { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike',          desc: 'Studio Product',            category: 'commissioned' },
 
   // PSU Football
-  { src: '/images/commissioned/psu-football/psu-vika-coach-point.jpg',    alt: 'Coach in a PSU cap and black Vika hoodie pointing toward the camera on a grey studio cyc', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
+  { src: '/images/commissioned/psu-football/psu-vika-coach-tight.jpg', alt: 'PSU coach in a black Vika hoodie reaching his hand toward the lens', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football', pos: '45% 40%' },
   { src: '/images/commissioned/psu-football/psu-vika-player-hoodie.jpg',  alt: 'Player in a black Vika hoodie and skull cap holding a football, looking off camera',      title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
   { src: '/images/commissioned/psu-football/psu-vika-duo.jpg', alt: 'Two players in Vika apparel on a studio cyc, one in a black hoodie holding a backpack, the other with a green PDX Football backpack', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football', pos: '58% 50%' },
   { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia',          desc: 'CES Promo',            category: 'commissioned' },
@@ -102,6 +102,12 @@ export const work: WorkItem[] = [
   { src: '/images/editorial/first-ink/first-ink-otter-needle.jpg',   alt: 'Close-up of a gloved hand tattooing a fine-line otter and daisies on skin',       title: 'First Ink', desc: 'At the Needle',          category: 'editorial', shoot: 'first-ink', pos: '45% 50%' },
   { src: '/images/editorial/first-ink/first-ink-studio-wide.jpg',    alt: 'Wide view of an artist tattooing a client under a ring light in a warm, cluttered studio', title: 'First Ink', desc: 'In the Studio', category: 'editorial', shoot: 'first-ink' },
 
+  // Music videos: BXBY $HUUT, Pink Siifu, Fly Anakin (4)
+  { src: '/images/editorial/cash-money/bxby-shuut-cash-money-bts.jpg', alt: 'BXBY $HUUT in glasses and a cap, holding a stack of cash, posed on the hood of a white car under blue and pink light', title: 'BXBY $HUUT', desc: '"Cash Money" Music Video, Behind the Scenes', category: 'editorial', shoot: 'music-videos' },
+  { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'music-videos' },
+  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'music-videos', pos: '52% 52%', zoom: 1.3 },
+  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS',         category: 'editorial', shoot: 'music-videos' },
+
   // Portland Book Festival
   { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival' },
   { src: '/images/stories/DSCF2588.jpg', alt: 'On-stage conversation under the Literary Arts backdrop',              title: 'Portland Book Festival', desc: 'Main Stage',     category: 'editorial', shoot: 'portland-book-festival' },
@@ -114,11 +120,9 @@ export const work: WorkItem[] = [
   { src: '/images/product/27-dscf7695.jpg', alt: 'Pink cosmo cocktails on round table',              title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week', pos: '56% 50%' },
   { src: '/images/product/23-dscf6693.jpg', alt: 'Cocktails in mason jars with citrus garnish',     title: 'Portland Cocktail Week', desc: 'Palomar Activation', category: 'editorial', shoot: 'pdx-cocktail-week' },
 
-  // Sansei Sensibility + Pink Siifu
+  // Sansei Sensibility
   { src: '/images/portraits/08-dscf7929.jpg', alt: 'Carol Takami Tolman, documentary interview portrait for Sansei Sensibility',                 title: 'Sensi Sensibility', desc: 'Carol Takami Tolman, Sansei',                                  category: 'editorial', shoot: 'sensi-sensibility' },
   { src: '/images/stories/20-dscf7092.jpg',   alt: 'Oregon Supreme Court Justice Lynn Nakamoto, documentary interview portrait', title: 'Sensi Sensibility', desc: 'Lynn Nakamoto, Oregon Supreme Court Justice', category: 'editorial', shoot: 'sensi-sensibility' },
-  { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts' },
-  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'pink-siifu-bts', pos: '52% 52%', zoom: 1.3 },
 
   // Honcho day
   { src: '/images/stories/DSCF9436_look.jpg', alt: 'Rider on a red Vespa scooter at the Honcho One Moto opening party', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day', pos: '62% 68%', zoom: 1.3 },
@@ -134,7 +138,6 @@ export const work: WorkItem[] = [
   { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
   { src: '/images/on-set/DSCF2955.jpg',    alt: 'Film crew and talent on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
   { src: '/images/on-set/12-dscf2988.jpg', alt: 'On-set photography production', title: 'Cine Rent West',       desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS',         category: 'editorial', shoot: 'crw-bts' },
 
   // Mother PAC BTS
   { src: '/images/editorial/mother-pac/mother-pac-interview-setup.jpg', alt: 'Wide behind-the-scenes view of a crew setting up an interview on a white studio cyc', title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac' },
@@ -148,7 +151,7 @@ export const work: WorkItem[] = [
 
   // Singles
   { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
-  { src: '/images/editorial/cash-money/bxby-shuut-cash-money-bts.jpg', alt: 'BXBY $HUUT in glasses and a cap, holding a stack of cash, posed on the hood of a white car under blue and pink light', title: 'BXBY $HUUT', desc: '"Cash Money" Music Video, Behind the Scenes', category: 'editorial', shoot: 'cash-money' },
+  { src: '/images/personal/IG-Post-1.jpg',                   alt: 'Black vintage car with doors open',         title: 'Lincoln Continental',     desc: 'Suicide Doors',  category: 'editorial', pos: '35% 80%', zoom: 1.15 },
 
   // ─── Field Notes ──────────────────────────────
   { src: '/images/personal/CG2I0590.jpg', alt: 'New York City skyline at dusk',                  title: 'New York',       desc: 'First Light from Dumbo', category: 'street' },
@@ -156,13 +159,12 @@ export const work: WorkItem[] = [
   { src: '/images/personal/85320006.jpg', alt: 'Black and white 35mm film portrait, brick wall', title: 'Rasheed Jamal',  desc: '120mm',                  category: 'street', pos: '40% 50%' },
   { src: '/images/personal/DSCF8336.jpg', alt: 'Pink moon rising over forested hills at blue hour', title: 'Moonrise', desc: 'Blue Hour', category: 'street' },
   { src: '/images/field-notes/field-notes-mt-hood.jpg', alt: 'Mt. Hood above a glacial river valley with autumn brush in the foreground', title: 'Mt. Hood', desc: 'White River', category: 'street', pos: '45% 45%' },
-  { src: '/images/field-notes/field-notes-grazing.jpg', alt: 'Black angus cattle grazing low in the grass with the sun flaring through the trees', title: 'Grazing', desc: 'Golden Hour', category: 'street', pos: '42% 50%' },
-  { src: '/images/field-notes/field-notes-angus.jpg', alt: 'Black angus cow with ear tags looking straight into the lens', title: 'Angus', desc: 'Eye Contact', category: 'street' },
+  { src: '/images/field-notes/field-notes-angus.jpg', alt: 'Black angus cow with ear tags looking straight into the lens', title: 'Angus', desc: 'Sauvies Island', category: 'street' },
+  { src: '/images/field-notes/field-notes-grazing.jpg', alt: 'Black angus cattle grazing low in the grass with the sun flaring through the trees', title: 'Grazing', desc: 'Sauvies Island', category: 'street', pos: '45% 50%' },
 
   // ─── Conceptual ───────────────────────────────
   { src: '/images/personal/CG2I2330.jpg',                    alt: 'Single cherry on white background',         title: 'Maraschino Cherry',       desc: 'Macro Still Life',    category: 'conceptual' },
   { src: '/images/personal/ethereal%20cloud%20portrait.jpg', alt: 'Ethereal portrait against cotton candy sky', title: 'Ethereal Cloud Portrait', desc: 'Studio Concept',      category: 'conceptual', pos: '56% 50%' },
   { src: '/images/personal/DSCF5312.jpg',                    alt: 'RGB light painting',                        title: 'Spectrum Painting',       desc: 'Long Exposure Study', category: 'conceptual', pos: '70% 50%' },
   { src: '/images/personal/IMG_0022-1.jpg',                  alt: 'Fixed gear bicycle with spinning wheels',   title: 'Fixie Bike',              desc: 'Portland',      category: 'conceptual' },
-  { src: '/images/personal/IG-Post-1.jpg',                   alt: 'Black vintage car with doors open',         title: 'Lincoln Continental',     desc: 'Suicide Doors',  category: 'conceptual', pos: '35% 80%', zoom: 1.15 },
 ];
