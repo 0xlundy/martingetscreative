@@ -28,27 +28,43 @@ export const categories: { id: Category; label: string }[] = [
 
 export const work: WorkItem[] = [
   // ─── Commissioned ─────────────────────────────
-  // Order is tuned so rows fill at 4 across: series of 3 + one single, pairs of 2.
-  // Sneakers: Sotheby's + Adidas
+  // Rows fill at 4 across: series of 3 are each followed by one single.
+
+  // Sotheby's + Save Max Auto
   { src: '/images/product/21-dscf3670.jpg', alt: 'Gold Air Jordan 3s',             title: "Sotheby's", desc: "Spike Lee's Golden Jordan 3s", category: 'commissioned', shoot: 'sothebys', pos: '50% 45%', zoom: 1.18 },
   { src: '/images/product/22-dscf3694.jpg', alt: 'Nike Air Jordan 1s sole detail', title: "Sotheby's", desc: 'Jordan 1 Colette',             category: 'commissioned', shoot: 'sothebys', pos: '52% 45%', zoom: 1.18 },
-  { src: '/images/product/24-b0000052.jpg', alt: 'Adidas Boston running shoes',        title: 'Adidas Boston',          desc: 'Product Campaign',    category: 'commissioned', shoot: 'adidas-boston', pos: '42% 55%' },
-  { src: '/images/stories/18-cg2i8745.jpg', alt: 'Adidas Boston Marathon documentary', title: 'Adidas Boston Marathon', desc: '2019 Social Content', category: 'commissioned', shoot: 'adidas-boston', pos: '36% 50%' },
+  { src: '/images/commissioned/savemax-auto/savemax-auto-raptor-cowboy-hat.jpg', alt: 'Model in a cowboy hat sitting on the hood of a black Ford Raptor with its amber lights on, studio cyc', title: 'Save Max Auto', desc: 'Raptor Campaign', category: 'commissioned', shoot: 'savemax-auto', pos: '48% 55%' },
+  { src: '/images/commissioned/savemax-auto/savemax-auto-cash-fan.jpg', alt: 'Model in a cowboy hat fanning a stack of cash beside a black truck in the studio', title: 'Save Max Auto', desc: 'Raptor Campaign', category: 'commissioned', shoot: 'savemax-auto' },
 
   // Rashad Floyd
   { src: '/images/portraits/DSCF4523_web.jpg', alt: 'Rashad Floyd raising his arms behind three Emmy statuettes', title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
   { src: '/images/portraits/DSCF4601_web.jpg', alt: 'Rashad Floyd holding two Emmy statuettes',                   title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys' },
   { src: '/images/portraits/DSCF4640_web.jpg', alt: 'Overhead portrait of Rashad Floyd with his Emmys',          title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys', pos: '50% 50%', zoom: 1.15 },
+  { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike',          desc: 'Studio Product',            category: 'commissioned' },
 
   // PSU Football
   { src: '/images/commissioned/psu-football/psu-vika-coach-point.jpg',    alt: 'Coach in a PSU cap and black Vika hoodie pointing toward the camera on a grey studio cyc', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
   { src: '/images/commissioned/psu-football/psu-vika-player-hoodie.jpg',  alt: 'Player in a black Vika hoodie and skull cap holding a football, looking off camera',      title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football' },
-  { src: '/images/commissioned/psu-football/psu-vika-two-players.jpg',    alt: 'Two players posing with Born for the Storm and PDX Football backpacks in a studio',        title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football', pos: '42% 50%' },
+  { src: '/images/commissioned/psu-football/psu-vika-team-lineup.jpg', alt: 'PSU football players and their coach lined up in Vika apparel on a white studio cyc, backpacks at their feet', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football', pos: '52% 55%' },
+  { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia',          desc: 'CES Promo',            category: 'commissioned' },
 
   // Against the Code
   { src: '/images/stories/DSCF7135.jpg', alt: 'Subject writing at a desk beside a vintage TV glowing with static in a dark studio', title: 'Against the Code', desc: 'Concept Still', category: 'commissioned', shoot: 'against-the-code' },
   { src: '/images/stories/DSCF7297.jpg', alt: 'Two subjects reviewing papers on a brightly lit table in a dark studio',            title: 'Against the Code', desc: 'On Set',       category: 'commissioned', shoot: 'against-the-code' },
   { src: '/images/stories/DSCF7326.jpg', alt: 'Studio portrait of a subject in an ATC jacket holding a tablet',                     title: 'Against the Code', desc: 'Portrait',     category: 'commissioned', shoot: 'against-the-code', pos: '50% 40%' },
+  { src: '/images/portraits/DSCF0576.jpg',    alt: 'Introspective studio portrait',                           title: 'Chi Duly',           desc: 'Press Photos',              category: 'commissioned' },
+
+  // Adidas Boston
+  { src: '/images/stories/18-cg2i8745.jpg', alt: 'Adidas Boston Marathon documentary', title: 'Adidas Boston Marathon', desc: 'Social Content', category: 'commissioned', shoot: 'adidas-boston', pos: '36% 50%' },
+  { src: '/images/product/24-b0000052.jpg', alt: 'Adidas Boston running shoes',        title: 'Adidas Boston',          desc: 'Product Campaign',    category: 'commissioned', shoot: 'adidas-boston', pos: '42% 55%' },
+  { src: '/images/stories/adidas-boston-waterfront-run.jpg', alt: 'High wide view of a runner in a blue jacket running along a Boston harbor dock lined with pilings', title: 'Adidas Boston', desc: 'Waterfront Run', category: 'commissioned', shoot: 'adidas-boston', pos: '40% 50%' },
+  { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art',           category: 'commissioned' },
+
+  // ILoveMakonnen (4)
+  { src: '/images/portraits/makonnen-cloak.jpg', alt: 'ILoveMakonnen in a black hooded cloak with gold chains against a teal wall', title: 'ILoveMakonnen', desc: 'Press Photos and Release Art', category: 'commissioned', shoot: 'makonnen' },
+  { src: '/images/portraits/makonnen-marthas-world.jpg', alt: 'ILoveMakonnen in sunglasses and a black Martha\'s World jacket with leather gloves', title: 'ILoveMakonnen', desc: 'Press Photos and Release Art', category: 'commissioned', shoot: 'makonnen' },
+  { src: '/images/portraits/IG%20Post.5.jpg', alt: 'Full-length commercial portrait, utility vest and jeans', title: 'ILoveMakonnen',      desc: 'Press Photos and Release Art',         category: 'commissioned', shoot: 'makonnen', pos: '50% 58%', zoom: 1.3 },
+  { src: '/images/portraits/makonnen-red-silhouette.jpg', alt: 'ILoveMakonnen as a black silhouette against a red studio backdrop', title: 'ILoveMakonnen', desc: 'Press Photos and Release Art', category: 'commissioned', shoot: 'makonnen' },
 
   // Trail Blazers HBCU
   { src: '/images/stories/16-dscf5004.jpg', alt: 'Trail Blazers HBCU activation, purple fraternity', title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu', pos: '56% 50%' },
@@ -56,9 +72,9 @@ export const work: WorkItem[] = [
   { src: '/images/stories/DSCF3302.jpg',    alt: 'HBCU fraternity documentary',                     title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu', pos: '50% 46%', zoom: 1.12 },
 
   // Mercury League
-  { src: '/images/portraits/07-dscf6551.jpg', alt: 'Studio portrait, editorial photography',             title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
-  { src: '/images/portraits/06-dscf6116.jpg', alt: 'Editorial portrait, soft lighting',                  title: 'Mercury League',                desc: 'Lookbook 2025',  category: 'commissioned', shoot: 'mercury-league' },
-  { src: '/images/personal/DSCF3443.jpg',     alt: 'Street portrait, red flannel against graffiti wall', title: 'Mercury League, Individualist', desc: 'Editorial 2025', category: 'commissioned', shoot: 'mercury-league' },
+  { src: '/images/portraits/07-dscf6551.jpg', alt: 'Studio portrait, editorial photography',             title: 'Mercury League',                desc: 'Lookbook',  category: 'commissioned', shoot: 'mercury-league' },
+  { src: '/images/portraits/06-dscf6116.jpg', alt: 'Editorial portrait, soft lighting',                  title: 'Mercury League',                desc: 'Lookbook',  category: 'commissioned', shoot: 'mercury-league' },
+  { src: '/images/personal/DSCF3443.jpg',     alt: 'Street portrait, red flannel against graffiti wall', title: 'Mercury League, Individualist', desc: 'Editorial', category: 'commissioned', shoot: 'mercury-league' },
 
   // National Ice Cream Day
   { src: '/images/product/National%20Ice%20Cream%20Day%20Shoot-083.jpg', alt: 'Assorted ice cream cups overhead', title: 'National Ice Cream Day', desc: 'Campaign Photography', category: 'commissioned', shoot: 'ice-cream-day' },
@@ -66,22 +82,14 @@ export const work: WorkItem[] = [
   { src: '/images/product/National%20Ice%20Cream%20Day%20Shoot-287.jpg', alt: 'Waffle cones scattered overhead',  title: 'National Ice Cream Day', desc: 'Campaign Photography', category: 'commissioned', shoot: 'ice-cream-day' },
 
   // Lord Knows + Wild Things
-  { src: '/images/portraits/03-cg2i3851.jpg', alt: 'Studio portrait with directional lighting',             title: 'Lord Knows Clothing', desc: 'Tank Head, 2019', category: 'commissioned', shoot: 'lord-knows' },
-  { src: '/images/portraits/04-dscf4385.jpg', alt: 'Portrait in black balaclava, dramatic studio lighting', title: 'Lord Knows Clothing', desc: 'Lookbook 2024',   category: 'commissioned', shoot: 'lord-knows', pos: '50% 40%' },
-  { src: '/images/personal/DSCF1534.jpg', alt: 'Wild Things fashion shoot, zebra print pants, front view', title: 'Wild Things', desc: 'Lookbook 2024', category: 'commissioned', shoot: 'wild-things' },
-  { src: '/images/personal/DSCF1684.jpg', alt: 'Wild Things fashion shoot, satin top, back view',          title: 'Wild Things', desc: 'Lookbook 2024', category: 'commissioned', shoot: 'wild-things' },
+  { src: '/images/portraits/03-cg2i3851.jpg', alt: 'Studio portrait with directional lighting',             title: 'Lord Knows Clothing', desc: 'Tank Head', category: 'commissioned', shoot: 'lord-knows' },
+  { src: '/images/portraits/04-dscf4385.jpg', alt: 'Portrait in black balaclava, dramatic studio lighting', title: 'Lord Knows Clothing', desc: 'Lookbook',   category: 'commissioned', shoot: 'lord-knows', pos: '50% 40%' },
+  { src: '/images/personal/DSCF1534.jpg', alt: 'Wild Things fashion shoot, zebra print pants, front view', title: 'Wild Things', desc: 'Lookbook', category: 'commissioned', shoot: 'wild-things' },
+  { src: '/images/personal/DSCF1684.jpg', alt: 'Wild Things fashion shoot, satin top, back view',          title: 'Wild Things', desc: 'Lookbook', category: 'commissioned', shoot: 'wild-things' },
 
-  // Majik Stick (2)
-  { src: '/images/portraits/01-dscf3979.jpg', alt: 'Woman holding a rose quartz facial roller to her jaw against a tan backdrop',                          title: 'Majik Stick', desc: 'Commercial Portrait, 2023',                category: 'commissioned', shoot: 'majik-stick', pos: '62% 50%' },
-  { src: '/images/portraits/02-dscf4314.jpg', alt: 'Woman in a hair towel looking up while using rose quartz facial rollers',                  title: 'Majik Stick', desc: 'Commercial Portrait, 2023', category: 'commissioned', shoot: 'majik-stick' },
-
-  // Singles (fill row ends, in this order)
-  { src: '/images/commissioned/savemax-auto/savemax-auto-raptor-cowboy-hat.jpg', alt: 'Model in a cowboy hat sitting on the hood of a black Ford Raptor with its amber lights on, studio cyc', title: 'Save Max Auto', desc: 'Raptor Campaign', category: 'commissioned', shoot: 'savemax-auto', pos: '48% 55%' },
-  { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike',          desc: 'Studio Product',            category: 'commissioned' },
-  { src: '/images/product/26-ecascadia.jpg',  alt: 'Freightliner eCascadia electric truck',                            title: 'eCascadia',          desc: 'CES 2019 Promo',            category: 'commissioned' },
-  { src: '/images/portraits/IG%20Post.5.jpg', alt: 'Full-length commercial portrait, utility vest and jeans', title: 'ILoveMakonnen',      desc: 'Press Photos 2025',         category: 'commissioned', pos: '50% 58%', zoom: 1.3 },
-  { src: '/images/portraits/DSCF3257.jpg',    alt: 'Portrait wearing goalie mask with layered chains',        title: 'Liba Racci',         desc: 'Cover Art, 2023',           category: 'commissioned' },
-  { src: '/images/portraits/DSCF0576.jpg',    alt: 'Introspective studio portrait',                           title: 'Chi Duly',           desc: 'Press Photos',              category: 'commissioned' },
+  // Majik Stick
+  { src: '/images/portraits/01-dscf3979.jpg', alt: 'Woman holding a rose quartz facial roller to her jaw against a tan backdrop',                          title: 'Majik Stick', desc: 'Commercial Portrait',                category: 'commissioned', shoot: 'majik-stick', pos: '62% 50%' },
+  { src: '/images/portraits/02-dscf4314.jpg', alt: 'Woman in a hair towel looking up while using rose quartz facial rollers',                  title: 'Majik Stick', desc: 'Commercial Portrait', category: 'commissioned', shoot: 'majik-stick' },
 
   // ─── Editorial ────────────────────────────────
   // Portland Timbers youth camp
@@ -126,7 +134,7 @@ export const work: WorkItem[] = [
   { src: '/images/on-set/10-dscf2102.jpg', alt: 'Arriflex film camera on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
   { src: '/images/on-set/DSCF2955.jpg',    alt: 'Film crew and talent on set', title: 'Cine Rent West',         desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
   { src: '/images/on-set/12-dscf2988.jpg', alt: 'On-set photography production', title: 'Cine Rent West',       desc: 'Behind the Scenes', category: 'editorial', shoot: 'crw-bts' },
-  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS 2023',         category: 'editorial', shoot: 'crw-bts' },
+  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS',         category: 'editorial', shoot: 'crw-bts' },
 
   // Mother PAC BTS
   { src: '/images/editorial/mother-pac/mother-pac-interview-setup.jpg', alt: 'Wide behind-the-scenes view of a crew setting up an interview on a white studio cyc', title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac' },
@@ -143,15 +151,18 @@ export const work: WorkItem[] = [
   { src: '/images/editorial/cash-money/bxby-shuut-cash-money-bts.jpg', alt: 'BXBY $HUUT in glasses and a cap, holding a stack of cash, posed on the hood of a white car under blue and pink light', title: 'BXBY $HUUT', desc: '"Cash Money" Music Video, Behind the Scenes', category: 'editorial', shoot: 'cash-money' },
 
   // ─── Field Notes ──────────────────────────────
-  { src: '/images/personal/CG2I0590.jpg', alt: 'New York City skyline at dusk',                  title: 'New York',       desc: 'First Light from Dumbo, 2018', category: 'street' },
-  { src: '/images/personal/CG2I0275.jpg', alt: 'Sandwich viewed through sticky notes wall',      title: 'Pho French Dip', desc: 'Bodega LES NYC, 2018',         category: 'street' },
-  { src: '/images/personal/85320006.jpg', alt: 'Black and white 35mm film portrait, brick wall', title: 'Rasheed Jamal',  desc: '120mm, 2022',                  category: 'street', pos: '40% 50%' },
+  { src: '/images/personal/CG2I0590.jpg', alt: 'New York City skyline at dusk',                  title: 'New York',       desc: 'First Light from Dumbo', category: 'street' },
+  { src: '/images/personal/CG2I0275.jpg', alt: 'Sandwich viewed through sticky notes wall',      title: 'Pho French Dip', desc: 'Bodega LES NYC',         category: 'street' },
+  { src: '/images/personal/85320006.jpg', alt: 'Black and white 35mm film portrait, brick wall', title: 'Rasheed Jamal',  desc: '120mm',                  category: 'street', pos: '40% 50%' },
   { src: '/images/personal/DSCF8336.jpg', alt: 'Pink moon rising over forested hills at blue hour', title: 'Moonrise', desc: 'Blue Hour', category: 'street' },
+  { src: '/images/field-notes/field-notes-mt-hood.jpg', alt: 'Mt. Hood above a glacial river valley with autumn brush in the foreground', title: 'Mt. Hood', desc: 'White River', category: 'street', pos: '45% 45%' },
+  { src: '/images/field-notes/field-notes-grazing.jpg', alt: 'Black angus cattle grazing low in the grass with the sun flaring through the trees', title: 'Grazing', desc: 'Golden Hour', category: 'street', pos: '42% 50%' },
+  { src: '/images/field-notes/field-notes-angus.jpg', alt: 'Black angus cow with ear tags looking straight into the lens', title: 'Angus', desc: 'Eye Contact', category: 'street' },
 
   // ─── Conceptual ───────────────────────────────
   { src: '/images/personal/CG2I2330.jpg',                    alt: 'Single cherry on white background',         title: 'Maraschino Cherry',       desc: 'Macro Still Life',    category: 'conceptual' },
   { src: '/images/personal/ethereal%20cloud%20portrait.jpg', alt: 'Ethereal portrait against cotton candy sky', title: 'Ethereal Cloud Portrait', desc: 'Studio Concept',      category: 'conceptual', pos: '56% 50%' },
   { src: '/images/personal/DSCF5312.jpg',                    alt: 'RGB light painting',                        title: 'Spectrum Painting',       desc: 'Long Exposure Study', category: 'conceptual', pos: '70% 50%' },
-  { src: '/images/personal/IMG_0022-1.jpg',                  alt: 'Fixed gear bicycle with spinning wheels',   title: 'Fixie Bike',              desc: 'Portland, 2019',      category: 'conceptual' },
-  { src: '/images/personal/IG-Post-1.jpg',                   alt: 'Black vintage car with doors open',         title: 'Lincoln Continental',     desc: 'Suicide Doors 2024',  category: 'conceptual', pos: '35% 80%', zoom: 1.15 },
+  { src: '/images/personal/IMG_0022-1.jpg',                  alt: 'Fixed gear bicycle with spinning wheels',   title: 'Fixie Bike',              desc: 'Portland',      category: 'conceptual' },
+  { src: '/images/personal/IG-Post-1.jpg',                   alt: 'Black vintage car with doors open',         title: 'Lincoln Continental',     desc: 'Suicide Doors',  category: 'conceptual', pos: '35% 80%', zoom: 1.15 },
 ];
