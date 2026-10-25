@@ -89,6 +89,9 @@ export const work: WorkItem[] = [
   // Opener
   { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', wide: true },
 
+  // BXBY $HUUT "Cash Money" music video (1)
+  { src: '/images/editorial/cash-money/bxby-shuut-cash-money-bts.jpg', alt: 'BXBY $HUUT in glasses and a cap, holding a stack of cash, posed on the hood of a white car under blue and pink light', title: 'BXBY $HUUT', desc: '"Cash Money" Music Video, Behind the Scenes', category: 'editorial', shoot: 'cash-money' },
+
   // Portland Timbers youth camp (3)
   { src: '/images/editorial/timbers-camp/timbers-camp-autograph.jpg', alt: 'Kids crowding around a Portland Timbers player signing autographs on a grass field', title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp' },
   { src: '/images/editorial/timbers-camp/timbers-camp-dribble.jpg',   alt: 'Kids in green camp jerseys dribbling soccer balls across a sunny park field',      title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp' },
