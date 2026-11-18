@@ -7,8 +7,9 @@ publishDate: 2024-07-27
 client: "Oregon Film"
 role: "Producer / DP / Co-Editor"
 year: 2024
-vimeoId: "1044464237"
-vimeoHash: "891ad58464"
+film: "/videos/make-it-here.mp4"
+filmWebm: "/videos/make-it-here.webm"
+filmPoster: "/videos/make-it-here-poster.jpg"
 tags: [documentary, oregon-film, dp, production, editorial]
 featured: true
 order: 1

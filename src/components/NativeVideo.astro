@@ -1,0 +1,54 @@
+---
+/**
+ * NativeVideo — a self-hosted film played by the browser's own player.
+ * No third-party player, no tracking, no extra JS.
+ *
+ *   <NativeVideo mp4="/videos/film.mp4" webm="/videos/film.webm"
+ *                poster="/videos/film-poster.jpg" title="Film" />
+ *
+ * WebM (VP9) is listed first: smaller, so Chrome/Firefox/Edge use it.
+ * Safari and iOS fall through to the MP4 (H.264, moov atom up front so it
+ * starts playing before it has fully downloaded).
+ *
+ * preload="none" by default so a page doesn't spend bandwidth on a film
+ * nobody pressed play on; the poster shows until then.
+ * autoplay=true is for the reel: muted (the only way browsers allow it),
+ * looping, controls kept so viewers can turn the sound on.
+ */
+interface Props {
+  mp4: string;
+  webm?: string;
+  poster?: string;
+  title?: string;
+  autoplay?: boolean;
+  width?: number;
+  height?: number;
+}
+const { mp4, webm, poster, title = 'Video', autoplay = false, width = 1920, height = 1080 } = Astro.props;
+---
+
+<video
+  class="native-video"
+  poster={poster}
+  width={width}
+  height={height}
+  aria-label={title}
+  controls
+  playsinline
+  preload={autoplay ? 'auto' : 'none'}
+  autoplay={autoplay}
+  muted={autoplay}
+  loop={autoplay}
+>
+  {webm && <source src={webm} type="video/webm" />}
+  <source src={mp4} type="video/mp4" />
+</video>
+
+<style>
+  .native-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #000;
+  }
+</style>

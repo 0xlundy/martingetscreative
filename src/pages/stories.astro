@@ -23,7 +23,7 @@ const stories = [
     role: entry.data.role,
     kind,
     when: entry.data.status ?? entry.data.year,
-    hasVideo: Boolean(entry.data.vimeoId || entry.data.youtubeId || entry.data.video),
+    hasVideo: Boolean(entry.data.vimeoId || entry.data.youtubeId || entry.data.video || entry.data.film),
     cover: hasFile(entry.data.cover) ? entry.data.cover : undefined,
     coverAlt: entry.data.coverAlt ?? entry.data.title,
     description: entry.data.description,

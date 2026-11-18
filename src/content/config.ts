@@ -31,6 +31,11 @@ const workSchema = z.object({
   youtubeId:   z.string().optional(),
   video:       z.string().optional(),   // self-hosted video file, e.g. /videos/crw-sizzle.mp4
   videoPoster: z.string().optional(),   // poster image for the self-hosted video
+  film:        z.string().optional(),   // self-hosted main film (MP4, H.264), shown as the page hero
+  filmWebm:    z.string().optional(),   // smaller WebM (VP9) of the same film, used first where supported
+  filmPoster:  z.string().optional(),   // still shown before the film plays
+  filmWidth:   z.number().optional(),
+  filmHeight:  z.number().optional(),
   url:         z.string().url().optional(),
   order:       z.number().default(99),
 });

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
+import NativeVideo from '../components/NativeVideo.astro';
 
 interface Props {
   title:        string;
@@ -16,6 +17,11 @@ interface Props {
   vimeoHash?:   string;
   youtubeId?:   string;
   video?:       string;
+  film?:        string;
+  filmWebm?:    string;
+  filmPoster?:  string;
+  filmWidth?:   number;
+  filmHeight?:  number;
   videoPoster?: string;
   url?:         string;
   publishDate:  Date;
@@ -27,6 +33,7 @@ const {
   title, description, category, cover, coverAlt,
   client, role, year, tags = [],
   vimeoId, vimeoHash, youtubeId, video, videoPoster, url, publishDate,
+  film, filmWebm, filmPoster, filmWidth, filmHeight,
   backHref = '/editorial', backLabel = 'Commercial',
 } = Astro.props;
 
@@ -40,7 +47,11 @@ const hasVideo = vimeoId || youtubeId;
 
     <!-- ─── Hero ─────────────────────────── -->
     <header class="project-hero">
-      {hasVideo ? (
+      {film ? (
+        <div class="hero-video container">
+          <NativeVideo mp4={film} webm={filmWebm} poster={filmPoster || cover} title={title} width={filmWidth} height={filmHeight} />
+        </div>
+      ) : hasVideo ? (
         <div class="hero-video container">
           <VideoEmbed
             vimeoId={vimeoId}

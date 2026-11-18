@@ -6,6 +6,11 @@ coverAlt: "Still from Against the Code, a subject writing at a desk beside a vin
 publishDate: 2025-01-01
 role: "Lead Creative Producer"
 status: "Ongoing"
+film: "/videos/atc-sizzle.mp4"
+filmWebm: "/videos/atc-sizzle.webm"
+filmPoster: "/videos/atc-sizzle-poster.jpg"
+filmWidth: 1920
+filmHeight: 1012
 tags: [documentary, direction, dp, editing, grant, andy-warhol-foundation]
 featured: true
 order: 3
