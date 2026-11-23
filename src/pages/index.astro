@@ -185,22 +185,31 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
         if (!byKey.has(k)) { byKey.set(k, []); groups.push(byKey.get(k)!); }
         byKey.get(k)!.push(c);
       });
+      // Singles left over (a shoot of one) become one-photo groups.
+      singles.forEach((c) => groups.push([c]));
+      // Fill each row: take the next group that still fits in what's left of
+      // the row (looking ahead keeps rows full); a group wider than the grid
+      // wraps on its own.
       let used = 0;
       let first = true;
-      const start = (c: HTMLElement) => { if (first && seq.length) forceLeft.add(c); first = false; };
-      for (const g of groups) {
-        if (used > 0 && used + g.length > cols) {
-          while (used < cols && singles.length) {
-            const s = singles.shift()!;
-            start(s); seq.push(s); numbered.push({ cells: [s], shoot: false }); used++;
-          }
-          if (used < cols) forceLeft.add(g[0]);
-          used = 0;
+      let newRow = false;
+      const queue = groups.slice();
+      while (queue.length) {
+        // Prefer a group that finishes the row exactly, then the next one that fits.
+        let k = used > 0 ? queue.findIndex((g) => used + g.length === cols) : -1;
+        if (k === -1) k = queue.findIndex((g) => used + g.length <= cols);
+        if (k === -1) {
+          if (used > 0) { used = 0; newRow = true; continue; }
+          k = 0;
         }
-        start(g[0]); seq.push(...g); numbered.push({ cells: g, shoot: true });
+        const g = queue.splice(k, 1)[0];
+        if ((first && seq.length) || newRow) forceLeft.add(g[0]);
+        first = false;
+        newRow = false;
+        seq.push(...g);
+        numbered.push({ cells: g, shoot: g.length > 1 });
         used = (used + g.length) % cols;
       }
-      singles.forEach((s) => { start(s); seq.push(s); numbered.push({ cells: [s], shoot: false }); });
     }
 
     seq.forEach((c, i) => {
