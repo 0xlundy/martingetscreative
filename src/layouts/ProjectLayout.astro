@@ -440,6 +440,14 @@ const hasVideo = vimeoId || youtubeId;
     .prose :global(.stat-grid) { grid-template-columns: repeat(2, 1fr); }
   }
 
+  .prose :global(.cutdown-grid) {
+    display: block;
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    margin: 0 auto 2rem;
+  }
+
   /* Tags */
   .tag-row {
     display: flex;
