@@ -17,6 +17,7 @@ export interface WorkItem {
   wide?: boolean;     // single image, full grid width instead of 1 column
   pos?: string;       // thumbnail crop: CSS object-position, e.g. '40% 50%'
   zoom?: number;      // thumbnail crop: push in on the subject (1 = none)
+  cell?: string;      // grid-only version (e.g. backdrop extended so the subject fits the 4:5 cell); the lightbox still opens `src`
 }
 
 export const categories: { id: Category; label: string }[] = [
@@ -37,10 +38,10 @@ export const work: WorkItem[] = [
   { src: '/images/commissioned/savemax-auto/savemax-auto-cash-fan.jpg', alt: 'Model in a cowboy hat fanning a stack of cash beside a black truck in the studio', title: 'Save Max Auto', desc: 'Raptor Campaign', category: 'commissioned', shoot: 'savemax-auto', pos: '84% 24%' },
 
   // Rashad Floyd
-  { src: '/images/portraits/DSCF4523_web.jpg', alt: 'Rashad Floyd raising his arms behind three Emmy statuettes', title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys', pos: '16% 50%' },
+  { src: '/images/portraits/DSCF4523_web.jpg', alt: 'Rashad Floyd raising his arms behind three Emmy statuettes', title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys', pos: '50% 50%' },
   { src: '/images/portraits/DSCF4601_web.jpg', alt: 'Rashad Floyd holding two Emmy statuettes',                   title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys', pos: '29% 50%' },
   { src: '/images/portraits/DSCF4640_web.jpg', alt: 'Overhead portrait of Rashad Floyd with his Emmys',          title: 'Rashad Floyd', desc: 'Emmy Portrait', category: 'commissioned', shoot: 'rashad-floyd-emmys', pos: '71% 50%' },
-  { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike',          desc: 'Studio Product',            category: 'commissioned', shoot: 'studio-product', pos: '0% 50%' },
+  { src: '/images/product/DSCF5603.jpg',      alt: 'Yellow and black racing motorcycle on a studio seamless backdrop', title: 'Superbike',          desc: 'Studio Product',            category: 'commissioned', shoot: 'studio-product', pos: '45% 50%' },
 
   // PSU Football
   { src: '/images/commissioned/psu-football/psu-vika-coach-tight.jpg', alt: 'PSU coach in a black Vika hoodie reaching his hand toward the lens', title: 'PSU Football', desc: 'Vika Apparel Shoot', category: 'commissioned', shoot: 'psu-football', pos: '66% 50%' },
@@ -68,8 +69,8 @@ export const work: WorkItem[] = [
 
   // Trail Blazers HBCU
   { src: '/images/stories/16-dscf5004.jpg', alt: 'Trail Blazers HBCU activation, purple fraternity', title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu', pos: '54% 50%' },
-  { src: '/images/stories/DSCF4570.jpg',    alt: 'HBCU classroom documentary photography',          title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu', pos: '65% 50%', zoom: 1.1 },
-  { src: '/images/stories/DSCF3302.jpg',    alt: 'HBCU fraternity documentary',                     title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu', pos: '0% 100%' },
+  { src: '/images/stories/DSCF4570.jpg',    alt: 'HBCU classroom documentary photography',          title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu', pos: '15% 50%', zoom: 1.1 },
+  { src: '/images/stories/DSCF3302.jpg',    alt: 'HBCU fraternity documentary',                     title: 'Trail Blazers', desc: 'HBCU Activation', category: 'commissioned', shoot: 'trail-blazers-hbcu', pos: '45% 55%', zoom: 1.5 },
 
   // Mercury League
   { src: '/images/portraits/07-dscf6551.jpg', alt: 'Studio portrait, editorial photography',             title: 'Mercury League',                desc: 'Lookbook',  category: 'commissioned', shoot: 'mercury-league', pos: '100% 56%', zoom: 1.15 },
@@ -85,7 +86,7 @@ export const work: WorkItem[] = [
   { src: '/images/portraits/03-cg2i3851.jpg', alt: 'Studio portrait with directional lighting',             title: 'Lord Knows Clothing', desc: 'Tank Head', category: 'commissioned', shoot: 'lord-knows', pos: '9% 0%' },
   { src: '/images/portraits/04-dscf4385.jpg', alt: 'Portrait in black balaclava, dramatic studio lighting', title: 'Lord Knows Clothing', desc: 'Lookbook',   category: 'commissioned', shoot: 'lord-knows', pos: '0% 12%' },
   { src: '/images/personal/DSCF1534.jpg', alt: 'Wild Things fashion shoot, zebra print pants, front view', title: 'Mercury League, Wild Things', desc: 'Lookbook', category: 'commissioned', shoot: 'mercury-league', pos: '0% 0%' },
-  { src: '/images/personal/DSCF1684.jpg', alt: 'Wild Things fashion shoot, satin top, back view',          title: 'Mercury League, Wild Things', desc: 'Lookbook', category: 'commissioned', shoot: 'mercury-league', pos: '0% 100%' },
+  { src: '/images/personal/DSCF1684.jpg', alt: 'Wild Things fashion shoot, satin top, back view',          title: 'Mercury League, Wild Things', desc: 'Lookbook', category: 'commissioned', shoot: 'mercury-league', pos: '50% 70%' },
 
   // Majik Stick
   { src: '/images/portraits/01-dscf3979.jpg', alt: 'Woman holding a rose quartz facial roller to her jaw against a tan backdrop',                          title: 'Majik Stick', desc: 'Commercial Portrait',                category: 'commissioned', shoot: 'majik-stick', pos: '0% 50%' },
@@ -93,8 +94,8 @@ export const work: WorkItem[] = [
 
   // ─── Editorial ────────────────────────────────
   // Portland Timbers youth camp
-  { src: '/images/editorial/timbers-camp/timbers-camp-autograph.jpg', alt: 'Kids crowding around a Portland Timbers player signing autographs on a grass field', title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp', pos: '28% 50%', zoom: 1.1 },
-  { src: '/images/editorial/timbers-camp/timbers-camp-dribble.jpg',   alt: 'Kids in green camp jerseys dribbling soccer balls across a sunny park field',      title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp', pos: '71% 50%' },
+  { src: '/images/editorial/timbers-camp/timbers-camp-autograph.jpg', alt: 'Kids crowding around a Portland Timbers player signing autographs on a grass field', title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp', pos: '50% 40%' },
+  { src: '/images/editorial/timbers-camp/timbers-camp-dribble.jpg',   alt: 'Kids in green camp jerseys dribbling soccer balls across a sunny park field',      title: 'Portland Timbers', desc: 'Youth Soccer Camp', category: 'editorial', shoot: 'timbers-camp', pos: '80% 40%', zoom: 1.15 },
 
   // First Ink
   { src: '/images/editorial/first-ink/first-ink-kylee-portrait.jpg', alt: 'Smiling tattoo artist pointing to the tattoos on her arm inside her studio',       title: 'First Ink', desc: 'Tattoo Studio Portrait', category: 'editorial', shoot: 'first-ink', pos: '75% 50%' },
@@ -104,8 +105,8 @@ export const work: WorkItem[] = [
   // Music videos: BXBY $HUUT, Pink Siifu, Fly Anakin (4)
   { src: '/images/editorial/cash-money/bxby-shuut-cash-money-bts.jpg', alt: 'BXBY $HUUT in glasses and a cap, holding a stack of cash, posed on the hood of a white car under blue and pink light', title: 'BXBY $HUUT', desc: '"Cash Money" Music Video, Behind the Scenes', category: 'editorial', shoot: 'music-videos', pos: '0% 0%' },
   { src: '/images/personal/IG-Post.jpg',       alt: 'Rimowa suitcase with hooded leather jacket',             title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'music-videos', pos: '100% 50%', zoom: 1.1 },
-  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'music-videos', pos: '0% 50%', zoom: 1.3 },
-  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS',         category: 'editorial', shoot: 'music-videos', pos: '16% 50%' },
+  { src: '/images/portraits/05-ig-post-4.jpg', alt: 'Full-length fashion portrait, leather vest and bandana', title: 'Pink Siifu', desc: 'BTS Music Video', category: 'editorial', shoot: 'music-videos', pos: '50% 50%', zoom: 1.3 },
+  { src: '/images/on-set/11-dscf2117.jpg', alt: 'Behind the scenes on film set', title: 'Fly Anakin Music Video', desc: 'BTS',         category: 'editorial', shoot: 'music-videos', pos: '45% 45%', zoom: 1.6 },
 
   // Portland Book Festival
   { src: '/images/stories/DSCF2509.jpg', alt: 'Portland Book Festival marquee glowing over the street crowd at dusk', title: 'Portland Book Festival', desc: 'Literary Arts',  category: 'editorial', shoot: 'portland-book-festival', pos: '100% 50%' },
@@ -126,7 +127,7 @@ export const work: WorkItem[] = [
   // Honcho day
   { src: '/images/stories/DSCF9436_look.jpg', alt: 'Rider on a red Vespa scooter at the Honcho One Moto opening party', title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day', pos: '0% 100%', zoom: 1.15 },
   { src: '/images/stories/DSCF9459_look.jpg', alt: 'Group portrait of the scooter crew at Honcho',                     title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day', pos: '16% 50%' },
-  { src: '/images/stories/DSCF9489_look.jpg', alt: 'Crowd gathered among motorcycles at the Honcho party',            title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day', pos: '16% 50%' },
+  { src: '/images/stories/DSCF9489_look.jpg', alt: 'Crowd gathered among motorcycles at the Honcho party',            title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-day', pos: '50% 50%' },
 
   // Honcho after dark
   { src: '/images/stories/DSCF9434_look.jpg',   alt: 'Detail of a customized scooter front end at Honcho',           title: 'Honcho', desc: 'One Moto Opening Party', category: 'editorial', shoot: 'honcho-night', pos: '0% 100%' },
@@ -140,21 +141,21 @@ export const work: WorkItem[] = [
 
   // Mother PAC BTS
   { src: '/images/editorial/mother-pac/mother-pac-interview-setup.jpg', alt: 'Wide behind-the-scenes view of a crew setting up an interview on a white studio cyc', title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac', pos: '35% 50%' },
-  { src: '/images/editorial/mother-pac/mother-pac-on-the-cyc.jpg',      alt: 'Woman in a white vest gesturing as she speaks on a white studio cyc',                  title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac', pos: '35% 50%' },
+  { src: '/images/editorial/mother-pac/mother-pac-on-the-cyc.jpg',      alt: 'Woman in a white vest gesturing as she speaks on a white studio cyc',                  title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac', pos: '60% 45%', zoom: 1.1 },
   { src: '/images/editorial/mother-pac/mother-pac-talent-prep.jpg',     alt: 'Crew member prepping talent in a pink tweed jacket beside the camera',                  title: 'Mother PAC', desc: 'Behind the Scenes', category: 'editorial', shoot: 'mother-pac', pos: '24% 50%' },
 
   // Olipop BTS
   { src: '/images/on-set/DSCF5220.jpg', alt: 'Behind the scenes, Olipop production', title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts', pos: '29% 50%' },
-  { src: '/images/on-set/DSCF5218.jpg', alt: 'On-set portrait, blue background',     title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts', pos: '38% 50%', zoom: 1.7 },
+  { src: '/images/on-set/DSCF5218.jpg', alt: 'On-set portrait, blue background',     title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts', pos: '60% 55%', zoom: 1.7 },
   { src: '/images/on-set/DSCF5188.jpg', alt: 'BTS film production photography',      title: 'Olipop', desc: 'Behind the Scenes', category: 'editorial', shoot: 'olipop-bts', pos: '0% 50%' },
 
   // Singles
   { src: '/images/stories/13-dscf5257.jpg', alt: 'Documentary storytelling photography', title: 'Gregory Gourdet', desc: 'OXO and Amazon Set Photo', category: 'editorial', shoot: 'editorial-selects', pos: '50% 50%' },
-  { src: '/images/personal/IG-Post-1.jpg',                   alt: 'Black vintage car with doors open',         title: 'Lincoln Continental',     desc: 'Suicide Doors',  category: 'editorial', shoot: 'editorial-selects', pos: '9% 50%' },
+  { src: '/images/personal/IG-Post-1.jpg',                   alt: 'Black vintage car with doors open',         title: 'Lincoln Continental',     desc: 'Suicide Doors',  category: 'editorial', shoot: 'editorial-selects', pos: '30% 60%' },
 
   // ─── Field Notes ──────────────────────────────
   { src: '/images/personal/CG2I0590.jpg', alt: 'New York City skyline at dusk',                  title: 'New York',       desc: 'First Light from Dumbo', category: 'street', shoot: 'city', pos: '24% 50%' },
-  { src: '/images/personal/CG2I0275.jpg', alt: 'Sandwich viewed through sticky notes wall',      title: 'Pho French Dip', desc: 'Bodega LES NYC',         category: 'street', shoot: 'city', pos: '10% 50%' },
+  { src: '/images/personal/CG2I0275.jpg', alt: 'Sandwich viewed through sticky notes wall',      title: 'Pho French Dip', desc: 'Bodega LES NYC',         category: 'street', shoot: 'city', pos: '55% 50%' },
   { src: '/images/personal/85320006.jpg', alt: 'Black and white 35mm film portrait, brick wall', title: 'Rasheed Jamal',  desc: '120mm',                  category: 'street', shoot: 'city', pos: '28% 50%' },
   { src: '/images/personal/DSCF8336.jpg', alt: 'Pink moon rising over forested hills at blue hour', title: 'Moonrise', desc: 'Blue Hour', category: 'street', shoot: 'mountains', pos: '0% 50%' },
   { src: '/images/field-notes/field-notes-mt-hood.jpg', alt: 'Mt. Hood above a glacial river valley with autumn brush in the foreground', title: 'Mt. Hood', desc: 'White River', category: 'street', shoot: 'mountains', pos: '29% 50%' },
@@ -162,8 +163,8 @@ export const work: WorkItem[] = [
   { src: '/images/field-notes/field-notes-grazing.jpg', alt: 'Black angus cattle grazing low in the grass with the sun flaring through the trees', title: 'Grazing', desc: 'Sauvies Island', category: 'street', shoot: 'sauvies-island', pos: '54% 50%' },
 
   // ─── Conceptual ───────────────────────────────
-  { src: '/images/personal/CG2I2330.jpg',                    alt: 'Single cherry on white background',         title: 'Maraschino Cherry',       desc: 'Macro Still Life',    category: 'conceptual', shoot: 'studio-concepts', pos: '100% 50%' },
+  { src: '/images/personal/CG2I2330.jpg',                    alt: 'Single cherry on white background',         title: 'Maraschino Cherry',       desc: 'Macro Still Life',    category: 'conceptual', shoot: 'studio-concepts', pos: '50% 45%', zoom: 1.15 },
   { src: '/images/personal/ethereal%20cloud%20portrait.jpg', alt: 'Ethereal portrait against cotton candy sky', title: 'Ethereal Cloud Portrait', desc: 'Studio Concept',      category: 'conceptual', shoot: 'studio-concepts', pos: '65% 50%' },
-  { src: '/images/personal/DSCF5312.jpg',                    alt: 'RGB light painting',                        title: 'Spectrum Painting',       desc: 'Long Exposure Study', category: 'conceptual', shoot: 'studio-concepts', pos: '29% 50%' },
-  { src: '/images/personal/IMG_0022-1.jpg',                  alt: 'Fixed gear bicycle with spinning wheels',   title: 'Fixie Bike',              desc: 'Portland',      category: 'conceptual', shoot: 'studio-concepts', pos: '0% 50%' },
+  { src: '/images/personal/DSCF5312.jpg',                    alt: 'RGB light painting',                        title: 'Spectrum Painting',       desc: 'Long Exposure Study', category: 'conceptual', shoot: 'studio-concepts', pos: '78% 50%' },
+  { src: '/images/personal/IMG_0022-1.jpg',                  alt: 'Fixed gear bicycle with spinning wheels',   title: 'Fixie Bike',              desc: 'Portland',      category: 'conceptual', shoot: 'studio-concepts', cell: '/images/personal/IMG_0022-1-cell.jpg', pos: '71% 50%' },
 ];

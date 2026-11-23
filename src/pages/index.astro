@@ -81,8 +81,8 @@ const SIZES = '(min-width: 1200px) 20vw, (min-width: 900px) 25vw, 50vw';
         >
           <span class="ix-frame">
             <img
-              src={thumb(w.src, 480)}
-              srcset={thumbSrcset(w.src)}
+              src={thumb(w.cell ?? w.src, 480)}
+              srcset={thumbSrcset(w.cell ?? w.src)}
               sizes={SIZES}
               alt={w.alt}
               style={w.pos || w.zoom ? `--pos:${w.pos || '50% 50%'};--zoom:${w.zoom || 1}` : undefined}
